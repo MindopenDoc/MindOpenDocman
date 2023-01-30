@@ -83,6 +83,8 @@ if (!isset($_REQUEST['submit'])) {
         $comment = $filedata->getComment();
         $owner_id = $filedata->getOwner();
         $department = $filedata->getDepartment();
+        $designation = $filedata->getDesignation();
+
 
         //CHM
         $table_name_query = "SELECT table_name FROM {$GLOBALS['CONFIG']['db_prefix']}udf WHERE field_type = '4'";
@@ -115,6 +117,15 @@ if (!isset($_REQUEST['submit'])) {
             array_push($cats_array, $avail_category);
         }
 
+     // populate DESIGNATION list 
+        $designation_query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}designation ORDER BY name";
+        $designation_stmt = $pdo->prepare($designation_query);
+        $designation_stmt->execute(array());
+        $designation_list = $designation_stmt->fetchAll();
+        // END DESIGNATION
+        $designation_perms_array = array();
+        $designation_perms_array = $designation_list;
+
 
         //////Populate department perm list/////////////////
         $dept_perms_array = array();
@@ -139,6 +150,7 @@ if (!isset($_REQUEST['submit'])) {
         $GLOBALS['smarty']->assign('file_id', $filedata->getId());
         $GLOBALS['smarty']->assign('realname', $filedata->name);
         $GLOBALS['smarty']->assign('allDepartments', $avail_departments);
+        $GLOBALS['smarty']->assign('allDesignations', $designation_perms_array);
         $GLOBALS['smarty']->assign('current_user_dept', $current_user_dept);
         $GLOBALS['smarty']->assign('t_name', $t_name);
         $GLOBALS['smarty']->assign('is_admin', $user_perms_obj->user_obj->isAdmin());
@@ -149,6 +161,7 @@ if (!isset($_REQUEST['submit'])) {
         $GLOBALS['smarty']->assign('pre_selected_owner', $owner_id);
         $GLOBALS['smarty']->assign('pre_selected_category', $category);
         $GLOBALS['smarty']->assign('pre_selected_department', $department);
+        $GLOBALS['smarty']->assign('pre_selected_designation', $designation);
         $GLOBALS['smarty']->assign('description', $description);
         $GLOBALS['smarty']->assign('comment', $comment);
         $GLOBALS['smarty']->assign('db_prefix', $GLOBALS['CONFIG']['db_prefix']);
@@ -201,7 +214,9 @@ if (!isset($_REQUEST['submit'])) {
     if (isset($_REQUEST['file_department'])) {
         $filedata->setDepartment($_REQUEST['file_department']);
     }
-
+    if (isset($_REQUEST['designation'])) {
+        $filedata->setDesignation($_REQUEST['designation']);
+    }
     // Update the file with the new values
     $filedata->updateData();
 

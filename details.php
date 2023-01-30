@@ -75,6 +75,8 @@ $description = $file_data_obj->getDescription();
 $comment = $file_data_obj->getComment();
 $status = $file_data_obj->getStatus();
 $reviewer = $file_data_obj->getReviewerName();
+$designation = $file_data_obj->getDesignationName();
+
 // corrections
 if ($description == '') {
     $description = msg('message_no_description_available');
@@ -82,6 +84,10 @@ if ($description == '') {
 
 if ($comment == '') {
     $comment = msg('message_no_author_comments_available');
+}
+
+if ($designation == '') {
+    $designation = msg('file is not assigned to any designation');
 }
 
 $reviewer_comments_str = $file_data_obj->getReviewerComments();
@@ -204,7 +210,8 @@ $file_detail_array = array(
     'revision' => $revision,
     'file_under_review' => $file_under_review,
     'reviewer' => $reviewer,
-    'status' => $status
+    'status' => $status,
+    'designation'=>$designation
 );
 
 if ($status > 0) {

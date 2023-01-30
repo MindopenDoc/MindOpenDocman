@@ -61,6 +61,7 @@ if (!defined('FileData_class')) {
         public $filesize;
         public $isLocked;
         protected $connection;
+        public $designation;
 
         public function __construct($id, $connection)
         {
@@ -118,6 +119,7 @@ if (!defined('FileData_class')) {
                 comment,
                 status,
                 department,
+                Designation,
                 default_rights,
                 keyword
               FROM
@@ -139,6 +141,7 @@ if (!defined('FileData_class')) {
                     $this->comment = stripslashes($row['comment']);
                     $this->status = $row['status'];
                     $this->department = $row['department'];
+                    $this->designation = $row['Designation'];
                     $this->default_rights = $row['default_rights'];
                     $this->keyword = $row['keyword'];
                 }
@@ -163,7 +166,8 @@ if (!defined('FileData_class')) {
                 comment = :comment,
                 status = :status,
                 department = :department,
-                default_rights = :default_rights
+                default_rights = :default_rights,
+                Designation = :designation
                WHERE
                 id = :id
             ";
@@ -177,6 +181,7 @@ if (!defined('FileData_class')) {
                 ':status' => $this->status,
                 ':department' => $this->department,
                 ':default_rights' => $this->default_rights,
+                ':designation' => $this->designation,
                 ':id' => $this->id
             ));
         }
@@ -399,6 +404,14 @@ if (!defined('FileData_class')) {
         }
 
         /**
+         * return the designatin ID of the file
+         * @return int
+         */
+        public function getDesignation()
+        {
+            return $this->designation;
+        }
+        /**
          * @param int $value
          */
         public function setDepartment($value)
@@ -406,6 +419,13 @@ if (!defined('FileData_class')) {
             $this->department = $value;
         }
 
+         /**
+         * @param int $value
+         */
+        public function setDesignation($value)
+        {
+            $this->designation = $value;
+        }
         /**
          * return the name of the department of the file
          * @return string
@@ -426,6 +446,25 @@ if (!defined('FileData_class')) {
             return $result;
         }
 
+         /**
+         * return the name of the designation of the file
+         * @return string
+         */
+        public function getDesignationName()
+        {
+            $query = "SELECT name FROM {$GLOBALS['CONFIG']['db_prefix']}designation WHERE id = :designation_id";
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute(array(':designation_id' => $this->getDesignation()));
+            $result = $stmt->fetchColumn();
+            if ($stmt->rowCount() == 0) {
+                // echo('ERROR: No database entry exists in designation table for ID = '. e::h($this->getDesignation()) .'.');
+                // return "ERROR";
+                //exit;
+            }
+
+            return $result;
+        }
+        
         /**
          * return the date that the file was created
          * @return string

@@ -33,6 +33,19 @@
     </tr>
     <tr>
         <td>
+            Designation
+        </td>
+        <td>
+               
+            <select name="designation">
+            {foreach from=$allDesignations|smarty:nodefaults item=design}
+                <option value="{$design.id|escape}" {if $pre_selected_designation eq $design.id}selected='selected'{/if}>{$design.name|escape:'html'}</option>
+            {/foreach}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
             {$g_lang_editpage_assign_department}
         </td>
         <td>

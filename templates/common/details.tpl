@@ -29,6 +29,9 @@
         <th valign=top align=right>{$g_lang_label_created_date}:</th><td> {$file_detail.created|escape:'html'}</td>
     </tr>
     <tr>
+        <th valign=top align=right>File Assign Designation:</th><td> {$file_detail.designation|escape:'html'}</td>
+        </tr>
+        <tr>
         <th valign=top align=right>{$g_lang_owner}:</th>
         <td>
             <a href="mailto:{$file_detail.owner_email|escape:'html'}?Subject=Regarding%20your%20document:{$file_detail.realname|escape:'html'}&Body=Hello%20{$file_detail.owner_fullname|escape:'html'}"> {$file_detail.owner|escape:'html'}</a>
