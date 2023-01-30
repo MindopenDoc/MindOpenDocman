@@ -26,6 +26,7 @@ if (!defined('classHeader')) {
     include_once('Department_class.php');
     include_once('User_Perms_class.php');
     include_once('FileData_class.php');
+    include_once('CommentsData_class.php');
     include_once('Department_class.php');
     include_once('Dept_Perms_class.php');
     include_once('UserPermission_class.php');

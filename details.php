@@ -64,6 +64,9 @@ $user_obj = new User($file_data_obj->getOwner(), $pdo);
 
 $owner_full_name = $file_data_obj->getOwnerFullName();
 
+// comments Data 
+$comments_data_obj = new CommentsData($request_id, $pdo);
+$depth_data_comments =  $comments_data_obj->loadDepthData();
 // display details
 $owner_id = $file_data_obj->getOwner();
 $category = $file_data_obj->getCategoryName();
@@ -265,8 +268,8 @@ $GLOBALS['smarty']->assign('my_delete_link', $my_delete_link);
 callPluginMethod('onDuringDetails', $file_data_obj->id);
 
 $GLOBALS['smarty']->assign('file_detail', $file_detail_array);
+$GLOBALS['smarty']->assign('depth_data_comments', $depth_data_comments);
 display_smarty_template('details.tpl');
-
 // Call the plugin API
 callPluginMethod('onAfterDetails', $file_data_obj->id);
 

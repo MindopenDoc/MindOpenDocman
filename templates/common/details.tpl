@@ -1,3 +1,4 @@
+
 <table border="0" width=100% cellspacing="4" cellpadding="1">
     <form name="data">
         <input type="hidden" name="to" value="{$file_detail.to_value|escape:'html'}" />
@@ -104,6 +105,24 @@
         </td>
     </tr>
 </table>
+<table border="1">
+    <tr>
+        <td style="text-align: center;"> Comments </td> 
+        <td style="text-align: center;"> Comment by </td>
+        <td style="text-align: center;"> Comment on </td>
+    </tr>
+        {foreach from=$depth_data_comments|smarty:nodefaults item=depdatCom}
+            <tr>
+                <td style="text-align: center;" >{$depdatCom.name|escape}</td>     
+                <td style="text-align: center;" >{$depdatCom.created_by|escape}</td>
+                <td style="text-align: center;" >{$depdatCom.created_date|escape}</td>
+            </tr>
+        {/foreach}
+    
+</table>
+
+
+
 {literal}
 <script type="text/javascript">
 	var message_window;
