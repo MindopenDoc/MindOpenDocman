@@ -29,6 +29,42 @@
 {/literal}
 
 <dl class="accordion">
+<dt><a href="">Designation permission</a></dt>
+    <dd>
+        <table id="designation_permissions_table" class="display">
+            <thead>
+                <tr>
+                    <td>Designation</td>
+                    <td>Forbidden</td>
+                    <td>None</td>
+                    <td>View</td>
+                    <td>Read</td>
+                    <td>Write</td>
+                    <td>Admin</td>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach from=$designation_list item=design}
+                    {if $design.selected eq 'selected'}
+                        {assign var="selected" value="checked='checked'"}
+                    {else}
+                        {assign var="noneselected" value="checked='checked'"}
+                    {/if}
+                <tr>
+                    <td>{$design.name|escape:'html'}</td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="-1" {if $design.rights eq '-1'}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="0" {if $design.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="1" {if $design.rights eq 1}checked="checked"{/if} {$selected} /></td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="2" {if $design.rights eq 2}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="3" {if $design.rights eq 3}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="designation_permission[{$design.id}]" value="4" {if $design.rights eq 4}checked="checked"{/if} /></td>
+                </tr>
+                    {assign var="selected" value=""}
+                {/foreach}       
+            </tbody>
+        </table>
+    </dd>
+    <hr />
     <dt><a href="">{$g_lang_filepermissionspage_edit_department_permissions}</a></dt>
     <dd>
         <table id="department_permissions_table" class="display">

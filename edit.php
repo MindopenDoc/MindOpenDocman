@@ -124,7 +124,12 @@ if (!isset($_REQUEST['submit'])) {
         $designation_list = $designation_stmt->fetchAll();
         // END DESIGNATION
         $designation_perms_array = array();
-        $designation_perms_array = $designation_list;
+        foreach ($designation_list as $design) {
+            $designation_list_perms['name'] = $design['name'];
+            $designation_list_perms['id'] = $design['id'];
+            $designation_list_perms['rights'] = $filedata->getDesignRights($design['id']);
+            array_push($designation_perms_array, $designation_list_perms);
+        }
 
 
         //////Populate department perm list/////////////////
@@ -150,7 +155,7 @@ if (!isset($_REQUEST['submit'])) {
         $GLOBALS['smarty']->assign('file_id', $filedata->getId());
         $GLOBALS['smarty']->assign('realname', $filedata->name);
         $GLOBALS['smarty']->assign('allDepartments', $avail_departments);
-        $GLOBALS['smarty']->assign('allDesignations', $designation_perms_array);
+        $GLOBALS['smarty']->assign('designation_list', $designation_perms_array);
         $GLOBALS['smarty']->assign('current_user_dept', $current_user_dept);
         $GLOBALS['smarty']->assign('t_name', $t_name);
         $GLOBALS['smarty']->assign('is_admin', $user_perms_obj->user_obj->isAdmin());
@@ -233,7 +238,13 @@ if (!isset($_REQUEST['submit'])) {
     $del_dept_perms_stmt = $pdo->prepare($del_dept_perms_query);
     $del_dept_perms_stmt->bindParam(':file_id', $fileId);
     $del_dept_perms_stmt->execute();
-    
+
+    // clean ou old dessignation permission
+    $del_design_perms_query = "DELETE FROM {$GLOBALS['CONFIG']['db_prefix']}designation_perms WHERE fid = :file_id";
+    $del_design_perms_stmt = $pdo->prepare($del_design_perms_query);
+    $del_design_perms_stmt->bindParam(':file_id', $fileId);
+    $del_design_perms_stmt->execute();
+
     $result_array = array(); // init;
 
     foreach ($_REQUEST['user_permission'] as $user_id=>$permission) {
@@ -278,6 +289,30 @@ if (!isset($_REQUEST['submit'])) {
         $update_dept_perms_stmt->bindParam(':dept_id', $dept_id);
         $update_dept_perms_stmt->bindParam(':file_id', $filedata->getId());
         $update_dept_perms_stmt->execute();
+    }
+    
+    //UPDATE Designation Rights into dept_design
+    foreach ($_POST['designation_permission'] as $design_id => $design_perm) {
+        $update_design_perms_query = "
+            INSERT INTO
+                {$GLOBALS['CONFIG']['db_prefix']}designation_perms
+            (
+                fid,
+                design_id,
+                rights
+            )
+            VALUES
+            (
+                :file_id,
+                :design_id,
+                :design_perm
+            )
+            ";
+        $update_design_perms_stmt = $pdo->prepare($update_design_perms_query);
+        $update_design_perms_stmt->bindParam(':design_perm', $design_perm);
+        $update_design_perms_stmt->bindParam(':design_id', $design_id);
+        $update_design_perms_stmt->bindParam(':file_id', $filedata->getId());
+        $update_design_perms_stmt->execute();
     }
 
     $message = 'Document successfully updated';

@@ -401,6 +401,28 @@ if (!isset($_POST['submit'])) {
         $history_stmt = $pdo->prepare($history_query);
         $history_stmt->bindParam(':username', $username);
         $history_stmt->execute();
+
+        //Insert Designation Rights into dept_perms
+        foreach ($_POST['designation_permission'] as $design_id=>$design_perm) {
+            $design_perms_query = "
+                INSERT INTO 
+                    {$GLOBALS['CONFIG']['db_prefix']}designation_perms 
+                    (
+                        fid, 
+                        rights, 
+                        design_id
+                    ) VALUES (
+                        $fileId, 
+                        :design_perm, 
+                        :design_id
+                    )";
+                
+            $design_perms_stmt = $pdo->prepare($design_perms_query);
+            $design_perms_stmt->bindParam(':design_perm', $design_perm);
+            $design_perms_stmt->bindParam(':design_id', $design_id);
+            $design_perms_stmt->execute();
+        }
+
         //Insert Department Rights into dept_perms
         foreach ($_POST['department_permission'] as $dept_id=>$dept_perm) {
             $dept_perms_query = "

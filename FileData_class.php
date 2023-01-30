@@ -497,6 +497,33 @@ if (!defined('FileData_class')) {
         {
             return databaseData::getName();
         }
+        /**
+         * Return the designation rights on this file for a given department
+         * @param int $designation 
+         * @return int
+         */
+        public function getDesignRights($design_id)
+        {
+            $query = "
+              SELECT
+                rights
+              FROM
+                {$GLOBALS['CONFIG']['db_prefix']}designation_perms
+			  WHERE
+			    fid = :fid
+	  		  AND
+          design_id = :design_id
+            ";
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute(array(
+                ':fid' => $this->id,
+                ':design_id' => $design_id
+            ));
+            $result = $stmt->fetchColumn();
+
+            return $result;
+        }
+
 
         /**
          * Return the dept rights on this file for a given department
