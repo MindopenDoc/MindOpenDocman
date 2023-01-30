@@ -46,8 +46,9 @@
         $parentTableColumn = parentElementTableColumn($parentTable);
         $Query="SELECT id FROM $parentTable WHERE $parentTableColumn LIKE '$currentElemt';";
         $result = $conn->query($Query);
+        // print_r($result);
         if($result->num_rows === 1){
-            
+            // print_r($result);
             $id = NULL;
             while($row= $result->fetch_assoc()){
                 $id = $row['id'];
@@ -59,14 +60,14 @@
                 while($row=$data_result->fetch_assoc()){
                     array_push($return_res,$row);
                 }
-                echo json_encode($return_res);
+                echo  json_encode($return_res);
             }
             else{
-                echo json_encode(array("No records found !"));
+                echo  json_encode(array("No records found !"));
             }
         }
         else{
-            echo json_encode(array("No records found !"));
+            echo  json_encode(array("No records found !"));
         }
         
 
