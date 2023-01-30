@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+include('odm-load.php');
+
+if (!isset($_SESSION['uid'])) {
+    redirect_visitor();
+}
+
+include('udf_functions.php');
+require_once("AccessLog_class.php");
+require_once("File_class.php");
+require_once('Reviewer_class.php');
+require_once('Email_class.php');
+
+$user_obj = new User($_SESSION['uid'], $pdo);
+
+if (!$user_obj->canAdd()) {
+    redirect_visitor('out.php');
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +33,6 @@
     <title>MindRuby Doc  - Files List</title>
   </head>
   <body>
-    
     <div class="container-fluid my-3">
         <div class="row">
             <div class="col-md-2">
