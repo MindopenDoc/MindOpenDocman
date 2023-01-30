@@ -18,7 +18,8 @@
 			<div class="row">
 				<div class="col-md-3 pt-5">
 					<div id="tree">
-
+					</div>
+                    <div id="tree12">
 					</div>
 				</div>
                 <div class="col-md-9 p-4 pt-5" >
@@ -75,23 +76,6 @@
 					icon: "fa fa-inbox fa-fw",
 					text: "Department",
                     nodes:[
-                    {
-                        icon: "",
-                        text: "Information Systems",
-                        value:"1"
-                    },
-                    {
-                        icon: "",
-                        text: "Salesforce"
-                    },
-                    {
-                        icon: "",
-                        text: "ESP .NET"
-                    },
-                    {
-                        icon: "",
-                        text: "Business development"
-                    }
                     ]
 				},
 				{
@@ -207,8 +191,10 @@
                     ]
 				}
 			];
-		function DrawBtree(jsonTreeDataParam) {
-			$('#tree').bstreeview({
+		function DrawBtree(jsonTreeDataParam,elemet) {
+            console.log("this Drawbtree is called ?");
+            // $("#tree").html("")
+			$(elemet).bstreeview({
 				data: jsonTreeDataParam,
                 expandIcon: 'fa fa-angle-down fa-fw',
                 collapseIcon: 'fa fa-angle-right fa-fw',
@@ -217,7 +203,10 @@
                 openNodeLinkOnNewTab: true
 			});
 		};
-        DrawBtree(jsonTreeData);
+        // console.log("This is old node tree JSON :: ",jsonTreeData);
+        DrawBtree(jsonTreeData,"#tree");
+
+
         $(document).ready(function(){
             let listGrp = document.querySelectorAll(".list-group-item");
             listGrp.forEach(function(elemt){
@@ -230,10 +219,26 @@
                         $.get(`Controller\\AjaxControl\\getAllTableLabels.php?currentElemt=${currentElemt}`, function(data, status){
                             data = JSON.parse(data);
                             console.log("This is the Return value ::",data);
-                            jsonTreeData[currentIndex]['nodes'] = data;
-                            DrawBtree();
-                            console.log(jsonTreeData[currentIndex]);
+                            let funcIntoJson = jsonTreeData;
+                            vijay = [];
+                            data.forEach(element => {
+                                vijay.push({text : element});
+                                
+                            });
+                            funcIntoJson[currentIndex]['nodes'] = vijay;
+                            DrawBtree(funcIntoJson,"#tree12");
+                            // console.log("This is new node tree JSON :: ",funcIntoJson);
+                            // -------------------------------------------------------------------------------
+                            // let datatableNode = document.getElementById("tree");
+                            // datatableNode.innerHTML = "";
+                            // datatableNode.classList.toggle("bstreeview");
+                            // console.log(datatableNode.childNodes);
+                            // -------------------------------------------------------------------------------
+
+
+                            // console.log(funcIntoJson);
                         });
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     }
                     else{
                         parentElemt = SwitchCheckCase(parentElemt); 
