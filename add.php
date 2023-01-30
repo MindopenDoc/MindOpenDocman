@@ -286,8 +286,8 @@ if (!isset($_POST['submit'])) {
         if(isset($_POST['keyword'])){
             $keyworddata=$_POST['keyword'];
         }
-        if($_POST['dap'] && $_POST['cat'] && $_POST['subcat']){
-            $dap=$_POST['dap'];
+        if($_POST['file_department'] && $_POST['cat'] && $_POST['subcat']){
+            $dap=$_POST['file_department'];
             $cat=$_POST['cat'];
             $subcat=$_POST['subcat'];
             $file_data_query = "INSERT INTO 

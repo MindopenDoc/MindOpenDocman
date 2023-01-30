@@ -21,7 +21,7 @@ else{
 		print_r(json_encode($SendData));
 
 	} else {
-	  echo "0 results";
+		print_r(json_encode(array()));
 	}
 }
 

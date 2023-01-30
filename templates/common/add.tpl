@@ -52,7 +52,7 @@
         </td>
         <td>
                
-            <select name="file_department">
+            <select name="file_department" id="selected">
             {foreach from=$avail_depts item=dept}
                 <option value="{$dept.id}" {$dept.selected}>{$dept.name|escape:'html'}</option>
             }
