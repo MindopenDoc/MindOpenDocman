@@ -105,22 +105,54 @@
         </td>
     </tr>
 </table>
-<table border="1">
+{if $depth_data_comments }
+    <table border="1" width=100% cellspacing="4" cellpadding="1">
     <tr>
         <td style="text-align: center;"> Comments </td> 
         <td style="text-align: center;"> Comment by </td>
         <td style="text-align: center;"> Comment on </td>
+          {if $isadmin eq 'yes'}
+                <td style="text-align: center;"> Delete Comment </td>
+            {/if}
     </tr>
         {foreach from=$depth_data_comments|smarty:nodefaults item=depdatCom}
             <tr>
                 <td style="text-align: center;" >{$depdatCom.name|escape}</td>     
                 <td style="text-align: center;" >{$depdatCom.created_by|escape}</td>
                 <td style="text-align: center;" >{$depdatCom.created_date|escape}</td>
+                {if $isadmin eq 'yes'}
+                        <td  style="text-align: center;" valign="center">
+                            <form action="addComment_V.php" name="deleteComment" method="POST">
+                                <input type="hidden" value="{$file_id}" name="File_id" />
+                                <input type="hidden" value="{$file_state}" name="File_state" />
+                                <input type="hidden" value="{$depdatCom.id}" name="Comment_id" />
+                                <input  type="submit" value="Delete" name="Comment" />
+                            </form>
+                        </td>
+                    {/if}
             </tr>
         {/foreach}
-    
-</table>
-
+    </table>
+    {else}
+        <h4>No Comments yet... </h4>
+    {/if}
+    <div class="container" style="margin: 2rem 0rem ">
+        <form id="addComment" action="addComment_V.php" name="addComment" method="POST" onsubmit="return checksec();" >
+            <table  width=100% cellspacing="4" cellpadding="1">
+                <tr>
+                    <input type="hidden" value="{$file_id}" name="File_id" />
+                    <input type="hidden" value="{$file_state}" name="File_state" />
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> Comment </td>
+                    <td> <textarea type="text" name="comment" rows="5"   style="width:80%;padding:0.5rem; margin:1rem 1rem" > </textarea> </td>
+                </tr>
+                <tr>
+                    <td colspan="2" > <input style="float:right;" type="submit" value="Add Comment" name="Comment" /></td>
+                </tr>
+            </table>
+        </form>
+</div>
 
 
 {literal}
@@ -150,3 +182,5 @@
 	}
 </script>
 {/literal}
+
+

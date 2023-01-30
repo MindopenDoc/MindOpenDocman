@@ -33,7 +33,7 @@
     <tr>
         <td align="left">
             <a href="{$g_base_url|escape:'html'}/out.php">
-                <img src="{$g_base_url|escape:'html'}/images/logo.gif" title="{$site_title|escape:'html'}" alt="{$site_title|escape:'html'}" border="0">
+                <img src="{$g_base_url|escape:'html'}/images/001logo.png" title="{$site_title|escape:'html'}" alt="{$site_title|escape:'html'}" border="0">
             </a>
         </td>
         <td align="right" >

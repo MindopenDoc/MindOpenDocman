@@ -251,6 +251,9 @@ if ($status == 0 || ($status == -1 && $file_data_obj->isOwner($_SESSION['uid']))
         $edit_link = "edit.php?id=$request_id&state=" . ($state + 1);
         $GLOBALS['smarty']->assign('edit_link', $edit_link);
     }
+    echo "<br>  User permisson as an admin :: ";
+    echo $user_permission_obj->ADMIN_RIGHT;
+    echo "<br>";
 }
 
 ////end if ($status == 0)
@@ -265,9 +268,14 @@ $GLOBALS['smarty']->assign('comments_link', $comments_link);
 $GLOBALS['smarty']->assign('my_delete_link', $my_delete_link);
 
 // Call the plugin API
+
+
 callPluginMethod('onDuringDetails', $file_data_obj->id);
 
 $GLOBALS['smarty']->assign('file_detail', $file_detail_array);
+$GLOBALS['smarty']->assign('file_id', $_GET['id']);
+$GLOBALS['smarty']->assign('file_state', $_GET['state']);
+
 $GLOBALS['smarty']->assign('depth_data_comments', $depth_data_comments);
 display_smarty_template('details.tpl');
 // Call the plugin API

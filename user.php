@@ -222,6 +222,13 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
     $stmt = $pdo->prepare($query);
     $stmt->execute(array(':id' => $_POST['id']));
 
+    // Delete user comments 
+    // $query = "DELETE FROM {$GLOBALS['CONFIG']['db_prefix']}user_comments WHERE created_by = :id ";
+    // $stmt = $pdo->prepare($query);
+    // $stmt->execute(array(':id' => $_POST['id']));
+
+
+    
     // Change owner to root user
     $query = "UPDATE {$GLOBALS['CONFIG']['db_prefix']}data SET owner='{$GLOBALS['CONFIG']['root_id']}' WHERE owner = :id ";
     $stmt = $pdo->prepare($query);
