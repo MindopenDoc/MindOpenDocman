@@ -45,6 +45,7 @@ csrfProtector::init();
 
 include_once('classHeaders.php');
 include_once('mimetypes.php');
+
 require_once('crumb.php');
 include('udf_functions.php');
 require_once('Category_class.php');

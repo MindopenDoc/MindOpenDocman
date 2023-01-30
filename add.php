@@ -130,7 +130,12 @@ if (!isset($_POST['submit'])) {
         $avail_dept_perms['id'] = $dept['id'];
         array_push($dept_perms_array, $avail_dept_perms);
     }
-  
+    // DESIGNATION 
+     $designation_query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}designation ORDER BY name";
+     $designation_stmt = $pdo->prepare($designation_query);
+     $designation_stmt->execute(array());
+     $designation_list = $designation_stmt->fetchAll();
+    // END DESIGNATION
     $allDepartments = Department::getAllDepartments($pdo);
     $GLOBALS['smarty']->assign('allDepartments', $allDepartments);
     $GLOBALS['smarty']->assign('current_user_dept', $current_user_dept);
@@ -142,7 +147,7 @@ if (!isset($_POST['submit'])) {
     $GLOBALS['smarty']->assign('dept_perms_array', $dept_perms_array);
     $GLOBALS['smarty']->assign('user_id', $_SESSION['uid']);
     $GLOBALS['smarty']->assign('db_prefix', $GLOBALS['CONFIG']['db_prefix']);
-    
+    $GLOBALS['smarty']->assign('designation_list', $designation_list);
     display_smarty_template('add.tpl');
     udf_add_file_form();
     // Call the plugin API
@@ -300,7 +305,8 @@ if (!isset($_POST['submit'])) {
             depart,
             dep_category,
             sub_category,
-            keyword
+            keyword,
+            Designation
         )
             VALUES
         (
@@ -317,7 +323,8 @@ if (!isset($_POST['submit'])) {
             $dap,
             $cat,
             $subcat,
-            :keyworddata
+            :keyworddata,
+            :designation
 
         )";
         }
@@ -365,6 +372,7 @@ if (!isset($_POST['submit'])) {
         $file_data_stmt->bindParam(':current_user_dept', $current_user_dept);
         $file_data_stmt->bindParam(':comment', $_REQUEST['comment']);
         $file_data_stmt->bindParam(':keyworddata', $keyworddata);
+        $file_data_stmt->bindParam(':designation', $_REQUEST['designation']);
         $file_data_stmt->execute();
 
         // get id from INSERT operation
@@ -483,3 +491,4 @@ if (!isset($_POST['submit'])) {
 }
 
 draw_footer();
+

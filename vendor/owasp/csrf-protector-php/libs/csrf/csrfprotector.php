@@ -93,6 +93,7 @@ if (!defined('__CSRF_PROTECTOR__')) {
 		 */
 		public static function init($length = null, $action = null)
 		{
+
 			/*
 			 * if mod_csrfp already enabled, no verification, no filtering
 			 * Already done by mod_csrfp
@@ -172,6 +173,7 @@ if (!defined('__CSRF_PROTECTOR__')) {
 		 */
 		public static function authorizePost()
 		{
+
 			//#todo this method is valid for same origin request only, 
 			//enable it for cross origin also sometime
 			//for cross origin the functionality is different
@@ -188,7 +190,9 @@ if (!defined('__CSRF_PROTECTOR__')) {
 
 					//action in case of failed validation
 					self::failedValidationAction();			
-				} else {
+				} 
+				
+				else {
 					self::refreshToken();	//refresh token for successfull validation
 				}
 			} else if (!static::isURLallowed()) {
@@ -219,6 +223,7 @@ if (!defined('__CSRF_PROTECTOR__')) {
 		 * bool - true if its valid else false
 		 */
 		private static function isValidToken($token) {
+
 			if (!isset($_SESSION[self::$config['CSRFP_TOKEN']])) return false;
 			if (!is_array($_SESSION[self::$config['CSRFP_TOKEN']])) return false;
 			foreach ($_SESSION[self::$config['CSRFP_TOKEN']] as $key => $value) {
@@ -249,6 +254,7 @@ if (!defined('__CSRF_PROTECTOR__')) {
 		 */
 		private static function failedValidationAction()
 		{
+			
 			if (!file_exists(__DIR__ ."/../" .self::$config['logDirectory']))
 				throw new logDirectoryNotFoundException("OWASP CSRFProtector: Log Directory Not Found!");
 		

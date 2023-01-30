@@ -69,11 +69,18 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
     $stmt = $pdo->prepare($query);
     $stmt->execute(array());
     $department_list = $stmt->fetchAll();
+    // DESIGNATION 
+    $designation_query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}designation ORDER BY name";
+    $designation_stmt = $pdo->prepare($designation_query);
+    $designation_stmt->execute(array());
+    $designation_list = $designation_stmt->fetchAll();
 
+    // END DESIGNATION
     $GLOBALS['smarty']->assign('onBeforeAddUser', $onBeforeAddUser);
     $GLOBALS['smarty']->assign('mysql_auth', $mysql_auth);
     $GLOBALS['smarty']->assign('rand_password', $rand_password);
     $GLOBALS['smarty']->assign('department_list', $department_list);
+    $GLOBALS['smarty']->assign('designation_list', $designation_list);
 
     display_smarty_template('user_add.tpl');
 
@@ -107,7 +114,7 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
 
         // INSERT into user
         $query = "INSERT INTO {$GLOBALS['CONFIG']['db_prefix']}user
-                    (username, password, department, phone, Email,last_name, first_name, can_add, can_checkin)
+                    (username, password, department, phone, Email,last_name, first_name, can_add, can_checkin,  Designation)
                     VALUES(
                         :username,
                         md5(:password),
@@ -117,7 +124,8 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
                         :lastname,
                         :firstname,
                         :can_add,
-                        :can_checkin
+                        :can_checkin,
+                        :designation
                 )";
 
         $stmt = $pdo->prepare($query);
@@ -130,7 +138,8 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
             ':lastname' => $_POST['last_name'],
             ':firstname' => $_POST['first_name'],
             ':can_add' => $_POST['can_add'],
-            ':can_checkin' => $_POST['can_checkin']
+            ':can_checkin' => $_POST['can_checkin'],
+            ':designation' => $_POST['designation']
         ));
 
         // INSERT into admin
@@ -256,12 +265,22 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
 } elseif (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'Show User') {
     $user_obj = new User($_POST['item'], $pdo);
     draw_header(msg('userpage_show_user') . $user_obj->getName(), $last_message);
-
+   
+    // DESIGNATION
+    $user_designation = $user_obj->designation;
+    $designation_query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}designation where id = $user_designation ";
+    $designation_stmt = $pdo->prepare($designation_query);
+    $designation_stmt->execute();
+    $designation_list = $designation_stmt->fetchAll();
+   
+    // DESIGNATION ENDS
     $GLOBALS['smarty']->assign('user', $user_obj);
     $GLOBALS['smarty']->assign('first_name', $user_obj->first_name);
     $GLOBALS['smarty']->assign('last_name', $user_obj->last_name);
     $GLOBALS['smarty']->assign('isAdmin', $user_obj->isAdmin());
     $GLOBALS['smarty']->assign('isReviewer', $user_obj->isReviewer());
+    $GLOBALS['smarty']->assign('designation', $designation_list[0]['name']);
+
     display_smarty_template('user_show.tpl');
 
     draw_footer();
@@ -300,7 +319,13 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
         $user = $stmt->fetch();
 
         $display_reviewer_row = $user_obj->isAdmin() ? true : false;
+        // DESIGNATION 
+        $designation_query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}designation ORDER BY name";
+        $designation_stmt = $pdo->prepare($designation_query);
+        $designation_stmt->execute(array());
+        $designation_list = $designation_stmt->fetchAll();
 
+        // END DESIGNATION
         $query = "SELECT dept_id, user_id FROM {$GLOBALS['CONFIG']['db_prefix']}dept_reviewer where user_id = :user_id";
         $stmt = $pdo->prepare($query);
         $stmt->execute(array(':user_id' => $_REQUEST['item']));
@@ -363,6 +388,7 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
         $GLOBALS['smarty']->assign('department_select_options', $department_select_options);
         $GLOBALS['smarty']->assign('can_add', $can_add);
         $GLOBALS['smarty']->assign('can_checkin', $can_checkin);
+        $GLOBALS['smarty']->assign('designation_list', $designation_list);
         display_smarty_template('user/edit.tpl');
     }
 
@@ -412,6 +438,11 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
             $query .= " department = :department, ";
         }
     }
+    if ($user_obj->isAdmin()) {
+        if (isset($_POST['designation'])) {
+            $query .= " Designation = :designation, ";
+        }
+    }
     if (isset($_POST['phonenumber'])) {
         $query .= " phone = :phonenumber, ";
     }
@@ -436,6 +467,9 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
     if ($user_obj->isAdmin()) {
         if (isset($_POST['department'])) {
             $stmt->bindParam(':department', $_POST['department']);
+        }
+        if (isset($_POST['department'])) {
+            $stmt->bindParam(':designation', $_POST['designation']);
         }
         $stmt->bindParam(':username', $_POST['username']);
         $stmt->bindParam(':can_add', $_POST['can_add']);

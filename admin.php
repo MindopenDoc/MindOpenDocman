@@ -69,6 +69,10 @@ $request_state = e::h(($_REQUEST['state']+1));
                     <tr>
                         <td><b><a href="<?php echo 'user.php?submit=showpick&state=' . ($request_state); ?>"><?php echo msg('label_display')?></a></b></td>
                     </tr>
+                    <tr>
+                        <td><hr><b><a href="addDesignation_V.php">Add Designation</a></b></td>
+                        <!--  echo 'user.php?submit=adddesignation&state=' . ($request_state);  -->
+                    </tr>
                 </table>
             </td>
             <td>

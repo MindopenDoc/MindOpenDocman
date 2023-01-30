@@ -5,6 +5,7 @@
         <tr><td>{$g_lang_userpage_first_name}</td><td>{$first_name|escape:'html'}</td></tr>
         <tr><td>{$g_lang_userpage_username}</td><td>{$user->username|escape:'html'}</td></tr>
         <tr><td>{$g_lang_userpage_department}</td><td>{$user->department|escape:'html'}</td></tr>
+       <tr><td>Designation</td><td> {$designation|escape:'html'} </td></tr>
         <tr><td>{$g_lang_userpage_email}</td><td>{$user->email|escape:'html'}</td></tr>
         <tr><td>{$g_lang_userpage_phone_number}</td><td>{$user->phone|escape:'html'}</td></tr>
         <tr>

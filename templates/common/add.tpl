@@ -37,6 +37,16 @@
     </tr>
     
     <tr>
+            <td><b>Assign to Designation</b></td>
+        <td>
+            <select name="designation">
+                {foreach from=$designation_list item=item name=designation_list}
+                <option value={$item.id|escape}>{$item.name|escape:'html'}</option>
+                {/foreach}
+            </select>
+        </td>
+        </tr>
+        <tr>
         <td>
             {$g_lang_editpage_assign_department}
         </td>

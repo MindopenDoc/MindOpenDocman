@@ -71,6 +71,7 @@ $settings->load();
 /*
  * Common functions
  */
+
 require_once('functions.php');
 
 /*

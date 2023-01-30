@@ -50,6 +50,16 @@
             </td>
         </tr>
         <tr>
+                <td><b>Designation</b></td>
+                <td>
+                    <select name="designation">
+                        {foreach from=$designation_list item=item name=designation_list}
+                        <option value={$item.id|escape}>{$item.name|escape:'html'}</option>
+                        {/foreach}
+                    </select>
+                </td>
+            <tr>
+            <tr>
             <td><b>{$g_lang_userpage_admin}</b></td>
             <td colspan=1>
                 <input name="admin" type="checkbox" value="1" {if $is_admin}checked{/if} {$mode|escape:'html'} id="cb_admin" />

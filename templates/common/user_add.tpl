@@ -1,3 +1,4 @@
+
 <form name="add_user" id="add_user" action="user.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
         {$onBeforeAddUser}
@@ -42,6 +43,16 @@
                 </select>
             </td>
         <tr>
+            <tr>
+                <td><b>Designation</b></td>
+                <td>
+                    <select name="designation">
+                        {foreach from=$designation_list item=item name=designation_list}
+                        <option value={$item.id|escape}>{$item.name|escape:'html'}</option>
+                        {/foreach}
+                    </select>
+                </td>
+            <tr>
             <td><b>{$g_lang_label_is_admin}?</b></td>
             <td>
                 <input name="admin" type="checkbox" value="1" id="cb_admin">
