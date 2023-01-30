@@ -10,14 +10,14 @@
  <script type="text/javascript"
  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  </script>
+
 {/if}
       <hr>
-
       <footer>
-                 <a href="http://www.mindruby.com/">
+          <a href="http://www.mindruby.com/">
                 <img src="{$g_base_url}/images/001logo.png" title="{$site_title|escape:'html'}" alt="{$site_title|escape:'html'}" border="0">
             </a>
-        <p>Copyright &copy; 2000-2021 Stephen Lawrence</p>
+        
         <p><a href="http://www.opendocman.com/" target="_new">OpenDocMan</a> | 
             <a href="http://www.opendocman.com/forum/" target="_new">Support</a> |
             <a href="http://opendocman.uservoice.com" target="_new">Feedback</a> |
@@ -26,6 +26,7 @@
       </footer>
 
     </div> <!-- /container -->   
+     <script type="text/javascript" src="{$g_base_url}/templates/common/js/newTest.js"></script>
     <script type="text/javascript" src="{$g_base_url}/templates/tweeter/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,14 +1,53 @@
-    #last_message{
-        width: 400px;
-        border: 1px solid;
-        margin: 10px 0px;
-        padding:15px 10px 15px 50px;
-        background-repeat: no-repeat;
-        background-position: 10px center;
-        position:relative;
-        color: #00529B;
-        background-color: #BDE5F8;
-        background-image: url('../images/info.png');
-    }
+#last_message{
+    width: 400px;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    position:relative;
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('../images/info.png');
+}
 
-    label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+
+
+
+
+button.parentChild{
+    width: 100%;
+    margin:0.5rem 0.3rem;
+}
+
+.form-check {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center
+}
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+  
+.form-inline .form-check {
+    width: 100%;
+}
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    width: 30%;
+}
+.form-check-label {
+    margin-bottom: 0;
+}
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.collapse.in {
+    display: block;
+    padding:1rem 0rem;
+}
