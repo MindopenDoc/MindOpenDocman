@@ -1,5 +1,19 @@
 
 <?php
+    use Aura\Html\Escaper as e;
+    require_once("../../File_class.php");
+    session_start();
+    $GLOBALS['state'] = 1;
+    require_once '../../odm-load.php';
+    
+    $dataDir = $GLOBALS['CONFIG']['dataDir'];
+    $userperms_obj = new UserPermission($_SESSION['uid'], $pdo);
+    
+    $showCheckBox = false;
+    $rejectpage = false;
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     $flag=0;
     $servername = "localhost";
     $username = "opendocman";
@@ -11,7 +25,7 @@
     if ($conn->connect_error) {
          die("Connection failed: " . $conn->connect_error);
     }
-
+    
     function parentElementTable($parentElemt){
          
         switch ($parentElemt) {
@@ -58,9 +72,88 @@
             $return_res = array();
             if($data_result->num_rows >= 0){
                 while($row=$data_result->fetch_assoc()){
-                    array_push($return_res,$row);
+                    $fileid = $row['id'];
+                    $file_obj = new FileData($fileid, $pdo);
+                    $userAccessLevel = $userperms_obj->getAuthority($fileid, $file_obj);
+                    $description = $file_obj->getDescription();
+                    $keyword= $file_obj->getkeyword();
+                    if ($file_obj->getStatus() == 0 and $userAccessLevel >= $userperms_obj->VIEW_RIGHT) {
+                        $lock = false;
+                    } else {
+                        $lock = true;
+                    }
+                    if ($description == '') {
+                        $description = msg('message_no_description_available');
+                    }
+            
+                    $created_date = fix_date($file_obj->getCreatedDate());
+                    if ($file_obj->getModifiedDate()) {
+                        $modified_date = fix_date($file_obj->getModifiedDate());
+                    } else {
+                        $modified_date = $created_date;
+                    }
+                    $full_name_array = $file_obj->getOwnerFullName();
+                    $owner_name = $full_name_array[1] . ', ' . $full_name_array[0];
+                    $dept_name = $file_obj->getDeptName();
+                    $realname = $file_obj->getRealname();
+                    //Get the file size in bytes.
+                    $filesize = display_filesize($dataDir . $fileid . '.dat');
+                    if ($userAccessLevel >= $userperms_obj->READ_RIGHT) {
+                        $suffix = strtolower((substr($realname, ((strrpos($realname, ".") + 1)))));
+                        $mimetype = File::mime_by_ext($suffix);
+                        $view_link = 'view_file.php?submit=view&id=' . urlencode(e::h($fileid)) . '&mimetype=' . urlencode("$mimetype");
+                    } else {
+                        $view_link = 'none';
+                    }
+            
+                    $details_link = 'details.php?id=' . e::h($fileid) . '&state=' . (e::h(1 + 1));
+                    $read = array($userperms_obj->READ_RIGHT, 'r');
+                    $write = array($userperms_obj->WRITE_RIGHT, 'w');
+                    $admin = array($userperms_obj->ADMIN_RIGHT, 'a');
+                    $rights = array($read, $write, $admin);
+                    $index_found = -1;
+                    //$rights[max][0] = admin, $rights[max-1][0]=write, ..., $right[min][0]=view
+                    //if $userright matches with $rights[max][0], then this user has all the rights of $rights[max][0]
+                    //and everything below it.
+                    for ($i = sizeof($rights) - 1; $i >= 0; $i--) {
+                        if ($userAccessLevel == $rights[$i][0]) {
+                            $index_found = $i;
+                            $i = 0;
+                        }
+                    }
+                    //Found the user right, now bold every below it.  For those that matches, make them different.
+                            
+                    //For everything above it, blank out
+                    for ($i = $index_found + 1; $i < sizeof($rights); $i++) {
+                        $rights[$i][1] = '-';
+                    }
+                    $file_list_arr[] = array(
+                        'id' => $fileid,
+                        'view_link' => $view_link,
+                        'details_link' => $details_link,
+                        'filename' => $realname,
+                        'description' => $description,
+                        'rights' => $rights,
+                        'created_date' => $created_date,
+                        'modified_date' => $modified_date,
+                        'owner_name' => $owner_name,
+                        'dept_name' => $dept_name,
+                        'filesize' => $filesize,
+                        'lock' => $lock,
+                        'showCheckbox' => $showCheckBox,
+                        'rejectpage' => $rejectpage,
+                        'keyword' => $keyword
+                    );
+                    
                 }
-                echo  json_encode($return_res);
+                // print_r($file_list_arr);
+                try {
+                    echo  json_encode($file_list_arr);
+                }
+                catch(Exception $e) {
+                    echo  json_encode(array("Ritik"));
+                }
+                
             }
             else{
                 echo  json_encode(array("No records found !"));
@@ -70,23 +163,10 @@
             echo  json_encode(array("No records found !"));
         }
         
+        // update in the code to get better results 
 
-
-        // $id="SELECT id FROM $parentElemt WHERE cat_name='$cat'";
-        // $result = $conn->query($id);
-        // if(!$result){
-        //     while($row = $result->fetch_assoc())
-        //     {
-        //         $pr_subcat=$row['id'];
-        //     }
-        //     $sql2="INSERT INTO subcategory (pr_id,sub_cat_name) VALUES ($pr_subcat,'$subcat')";
-        //     if (!$conn->query($sql2) === TRUE) {
-        //         die("Error: " . $sql2. "<br>" . $conn->error);
-         
-        //    }
-        //    header("Location:http://localhost:8080/opendocman/out.php");
-
+        // update yha tak krna ka try krta hai 
     }
     else{
-        echo "Parent ka bina hai yeh current wala !!!";
+        echo  json_encode(array("Parent ka bina hai yeh current wala !!!"));
     }

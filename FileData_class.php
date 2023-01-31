@@ -62,7 +62,8 @@ if (!defined('FileData_class')) {
         public $isLocked;
         protected $connection;
         public $designation;
-
+        public $keyword;
+        
         public function __construct($id, $connection)
         {
             $this->field_name = 'realname';

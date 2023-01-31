@@ -86,23 +86,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header" id="headingSeven">
-                        <button class="btn parentChild collapsed" id="Status" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                            Status
-                        </button>
-                    </div>
-                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input pull-left" type="checkbox" id="inlineCheckbox1" value="option1">             
-                            <label class="form-check-label pull-right" for="inlineCheckbox1"> &nbsp;&nbsp; Approved </label>    
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input pull-left" type="checkbox" id="inlineCheckbox1" value="option1">             
-                            <label class="form-check-label pull-right" for="inlineCheckbox1"> &nbsp;&nbsp; Not Approved </label>    
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="span9">
@@ -128,7 +111,7 @@
                     <th class="">{$g_lang_label_status}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="data_table">
                 {foreach from=$file_list_arr item=item name=file_list}
                 <tr {if $item.lock eq true}class="gradeX"{/if} >
                     {if $item.showCheckbox eq '1'}
@@ -194,13 +177,18 @@
             <div class="span10">
                 <table class="table table-hover" id="hiddenTable" style="display:none;">
                     <thead>
-                        <tr>
+                         <tr>
                             <th scope="col">Id</th>
-                            <th scope="col">File Name</th>
+                            <th scope="col">View</th>
+                            <th scope="col">FileName</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Comment</th>
+                            <th scope="col">Keyword</th>
+                            <th scope="col">Rights</th>
                             <th scope="col">Date Created</th>
-                            <th scope="col">Comment2</th>
+                            <th scope="col">Date Modified</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Size </th>
                         </tr>
                     </thead>
                     <tbody id="data_table" > 

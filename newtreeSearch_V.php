@@ -116,23 +116,6 @@ if (!$user_obj->canAdd()) {
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingSeven">
-                            <button class="btn parentChild collapsed" id="Status" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                Status
-                            </button>
-                        </div>
-                        <div id="collapseSeven" class="collapse p-4" aria-labelledby="headingSeven" data-parent="#accordion">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">             
-                                <label class="form-check-label" for="inlineCheckbox1"> &nbsp;&nbsp; Approved </label>    
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">             
-                                <label class="form-check-label" for="inlineCheckbox1"> &nbsp;&nbsp; Not Approved </label>    
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col-md-9">
@@ -140,11 +123,16 @@ if (!$user_obj->canAdd()) {
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
-                            <th scope="col">File Name</th>
+                            <th scope="col">View</th>
+                            <th scope="col">FileName</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Comment</th>
+                            <th scope="col">Keyword</th>
+                            <th scope="col">Rights</th>
                             <th scope="col">Date Created</th>
                             <th scope="col">Date Modified</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Size </th>
                         </tr>
                     </thead>
                     <tbody id="data_table" > 
@@ -166,7 +154,6 @@ if (!$user_obj->canAdd()) {
                 case 'sub_category': return "sub_category";
                 case 'Designation': return "Designation";
                 case 'Author': return "owner";
-                case 'Status': return "status";
                 case 'FileCategory': return "category";
                 default : return null;
             }
@@ -179,13 +166,12 @@ if (!$user_obj->canAdd()) {
                 $(`#${elemt}`).click(function(){
                     currentElemt = SwitchCheckCase(elemt);
                     $.get(`Controller\\AjaxControl\\getAllTableLabels.php?currentElemt=${currentElemt}`, function(data, status){
-                        data = JSON.parse(data);
-                        // console.log("This is the Return value ::",data);
+                            data = JSON.parse(data);
                         elements = "";
                         data.forEach(element => {
                             elements += `
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="${element.split(" ").join("")}" value="${element}" >
+                                        <input type="radio" name="radioBtn" class="form-check-input" id="${element.split(" ").join("")}" value="${element}" >
                                         <label class="form-check-label" for="${element.split(" ").join("")}">${element}</label>
                                     </div> `;
                         });
@@ -198,26 +184,31 @@ if (!$user_obj->canAdd()) {
                                 parentElemt = currentElemt;
                                 currentElemtforthis = element;
                                 $.get(`Controller\\AjaxControl\\getSearchData.php?currentElemt=${currentElemtforthis}&parentElemt=${parentElemt}`, function(data, status){
-                                    data = JSON.parse(data);
-                                    console.log(data);
-                                    // console.log(data[0]);
                                     data_table_str = "";
-                                    if (data[0] === "No records found !"){
-                                        console.log("This is no records found !!");
-                                        data_table_str += "<tr><td>No Records Found !</td></tr>" ;
-                                        document.getElementById("hiddenTable").style.display = "block" ; 
-                                        document.getElementById("data_table").innerHTML = data_table_str ; //JSON.stringify(arr,null, 4);
-                                        return;
+                                    try {
+                                        data = JSON.parse(data);
                                     }
-                                
+                                    catch(err) {
+                                        
+                                        console.warn("This is no records found !!");
+                                        data_table_str += `<tr ><td colspan="9" align="center"> <h2> No Records Found ! </h2></td></tr>` ;
+                                        document.getElementById("hiddenTable").style.display = "block" ; 
+                                        document.getElementById("data_table").innerHTML = data_table_str;
+                                        return;
+                                    }                                
                                     data.forEach((eachrow)=>{
                                         data_table_str += `<tr> 
                                                             <td>${eachrow['id'] }</td>
-                                                            <td>${eachrow['realname'] }</td>
+                                                            <td><a href="${eachrow['view_link'] }">View</a></td>
+                                                            <td>${eachrow['filename'] }</td>
                                                             <td>${eachrow['description'] }</td>
-                                                            <td>${eachrow['comment'] }</td>
-                                                            <td>${eachrow['created'] }</td>
-                                                            <td>${eachrow['comment'] }</td>
+                                                            <td>${eachrow['keyword'] }</td>
+                                                            <td>${eachrow['rights'][0][1]} |${eachrow['rights'][1][1]} |${eachrow['rights'][2][1] }</td>
+                                                            <td>${eachrow['created_date'] }</td>
+                                                            <td>${eachrow['modified_date'] }</td>
+                                                            <td>${eachrow['owner_name'] }</td>
+                                                            <td>${eachrow['dept_name'] }</td>
+                                                            <td>${eachrow['filesize'] }</td>
                                                         </tr>`;
                                     });  
                                     document.getElementById("hiddenTable").style.display = "block" ; 

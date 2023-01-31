@@ -274,7 +274,10 @@ callPluginMethod('onDuringDetails', $file_data_obj->id);
 
 $GLOBALS['smarty']->assign('file_detail', $file_detail_array);
 $GLOBALS['smarty']->assign('file_id', $_GET['id']);
-$GLOBALS['smarty']->assign('file_state', $_GET['state']);
+if (isset($_GET['state'])){
+    $GLOBALS['smarty']->assign('file_state', $_GET['state']);
+}
+
 
 $GLOBALS['smarty']->assign('depth_data_comments', $depth_data_comments);
 display_smarty_template('details.tpl');

@@ -27,7 +27,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{$g_base_url}/templates/tweeter/images/favicon.ico">
+    <link rel="shortcut icon" href="{$g_base_url}/templates/tweeter/images/faviconMR.png">
 
     <link rel="apple-touch-icon" href="{$g_base_url}/templates/tweeter/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{$g_base_url}/templates/tweeter/images/apple-touch-icon-72x72.png">

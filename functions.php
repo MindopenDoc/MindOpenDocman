@@ -316,7 +316,6 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
         }
 
         $details_link = 'details.php?id=' . e::h($fileid) . '&state=' . (e::h($_REQUEST['state'] + 1));
-
         $read = array($userperms_obj->READ_RIGHT, 'r');
         $write = array($userperms_obj->WRITE_RIGHT, 'w');
         $admin = array($userperms_obj->ADMIN_RIGHT, 'a');

@@ -164,7 +164,7 @@ if (!defined("databaseData_class"));
             $result = $stmt->fetchAll();
             $row_count = $stmt->rowCount();
 
-            if ($row_count > $this->result_limit and result_limit != 'UNLIMITED') {
+            if ($row_count > $this->result_limit and $this->result_limit != 'UNLIMITED') {
                 $this->error='Error: non-unique';
             } elseif ($row_count == 0) {
                 $this->error = 'Error: unable to find id in database';
