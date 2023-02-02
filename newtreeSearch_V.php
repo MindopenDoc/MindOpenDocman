@@ -1,24 +1,4 @@
-<?php
-session_start();
 
-include('odm-load.php');
-
-if (!isset($_SESSION['uid'])) {
-    redirect_visitor();
-}
-
-include('udf_functions.php');
-require_once("AccessLog_class.php");
-require_once("File_class.php");
-require_once('Reviewer_class.php');
-require_once('Email_class.php');
-
-$user_obj = new User($_SESSION['uid'], $pdo);
-
-if (!$user_obj->canAdd()) {
-    redirect_visitor('out.php');
-}
-?>
 
 <!doctype html>
 <html lang="en">
@@ -140,12 +120,19 @@ if (!$user_obj->canAdd()) {
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div id="tree1" data-url="/example_data/"></div>
+            </div>
+        </div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    
     <script>
         function SwitchCheckCase(checkState){
             switch(checkState){
@@ -159,6 +146,7 @@ if (!$user_obj->canAdd()) {
             }
         }
         $(document).ready(function(){
+            var tempgetall;
             let allbtns = document.querySelectorAll(".parentChild");
             elemntArray = []
             allbtns.forEach(element => { elemntArray.push(element['attributes']['id'].value); });
@@ -167,7 +155,8 @@ if (!$user_obj->canAdd()) {
                     currentElemt = SwitchCheckCase(elemt);
                     $.get(`Controller\\AjaxControl\\getAllTableLabels.php?currentElemt=${currentElemt}`, function(data, status){
                             data = JSON.parse(data);
-                        elements = "";
+                            tempgetall = data;
+                            elements = "";
                         data.forEach(element => {
                             elements += `
                                     <div class="form-check">
@@ -183,6 +172,23 @@ if (!$user_obj->canAdd()) {
                                 console.log("this is that parent element !!",currentElemt);
                                 parentElemt = currentElemt;
                                 currentElemtforthis = element;
+                                if (parentElemt === "department" && tempgetall.includes(currentElemtforthis)){
+                                    $.get(`Controller\\AjaxControl\\getCategory.php?currentElemt=${currentElemtforthis}&parentElemt=${parentElemt}`, function(data, status){
+                                        // data = JSON.parse(data);
+                                        console.warn(data);
+                                        // tempgetall = data;
+                                        // elements = "";
+                                        // data.forEach(element => {
+                                        //     elements += `
+                                        //             <div class="form-check">
+                                        //                 <input type="radio" name="radioBtn" class="form-check-input" id="${element.split(" ").join("")}" value="${element}" >
+                                        //                 <label class="form-check-label" for="${element.split(" ").join("")}">${element}</label>
+                                        //             </div> `;
+                                        // });
+                                    });
+                                    console.log("This is information system get subcategory of it ");
+                                    return;
+                                }
                                 $.get(`Controller\\AjaxControl\\getSearchData.php?currentElemt=${currentElemtforthis}&parentElemt=${parentElemt}`, function(data, status){
                                     data_table_str = "";
                                     try {
