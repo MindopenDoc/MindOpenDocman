@@ -14,6 +14,7 @@
     <body>
         <div class="container">
             <div id="tree1"></div>
+            <div id="ViewJSON"></div>
         </div>
     </body>
     <!-- <script src="../templates/tweeter/js/bootstrap.min.js"></script> -->
@@ -51,12 +52,54 @@
         
         
             function myDisplayer(some) {
-                console.warn(some);
+                // console.warn(some);
+                // document.getElementById("ViewJSON").innerHTML = JSON.stringify(some);// some;
                 const $tree = $("#tree1");
                 $tree.tree({
                     autoOpen: 0,
                     data: some,
-                    dragAndDrop: true,
+                    // dragAndDrop: false,
+                    // selectable: false,
+                    onCanSelectNode: function(node) {
+                        if (node.children.length == 0) {
+                            // Nodes without children can be selected
+                            console.warn("PARENT",node);
+                            if( typeof node.name !== "undefined" && node.hasOwnProperty('parent')){
+                                console.log("1",node.name);
+                            }
+                            if(node.parent.name !==  "" && node.parent.hasOwnProperty('parent')){
+                                console.log("12",node.parent.name);
+                            }
+                            if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
+                                console.log("13",node.parent.parent.name);
+                            }
+                            if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
+                                console.log("14",node.parent.parent.parent.name);
+                            }
+                            // console.log("Current :: ",node.name);
+                            // console.log("iska parent Current :: ",node.parent.name);
+                            // console.log("iska parent ka bhi parent Current :: ",node.parent.parent.name);
+                            // console.log("iska parent ka bhi parent aur iska bhi parent Current :: ",node.parent.parent.parent.name);
+                            // var element = node;
+                            // count = 0;
+                            // while(count<=3){
+                            //     // if (typeof element.name == "undefined"){
+                            //     //     break;
+                            //     // }
+                            //     console.log("element::",element.name);
+                            //     // console.log("element Name::",element.name);
+                            //     var element = node.parent;
+
+                            //     count = count+1;
+                            // }
+                            return true;
+                        }
+                        else {
+                            console.warn("CHILD");
+                            // Nodes with children cannot be selected
+                            return false;
+                        }
+                    }
                 });
             }
 

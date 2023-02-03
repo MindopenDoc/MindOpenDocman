@@ -342,7 +342,8 @@ if (!isset($_POST['submit'])) {
             comment,
             default_rights,
             publishable,
-            keyword
+            keyword,
+            Designation
         )
             VALUES
         (
@@ -356,7 +357,8 @@ if (!isset($_POST['submit'])) {
             :comment,
             0,
             $publishable,
-            :keyworddata
+            :keyworddata,
+            :designation
         )";
         }
         // die();
