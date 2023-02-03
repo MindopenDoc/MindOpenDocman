@@ -65,16 +65,20 @@
                             // Nodes without children can be selected
                             console.warn("PARENT",node);
                             if( typeof node.name !== "undefined" && node.hasOwnProperty('parent')){
-                                console.log("1",node.name);
+                                console.log("->>",node.name);
+                                console.log("->>",node.id);
                             }
                             if(node.parent.name !==  "" && node.parent.hasOwnProperty('parent')){
-                                console.log("12",node.parent.name);
+                                console.log("-->>>>",node.parent.name);
+                                console.log("-->>>>",node.parent.id);
                             }
                             if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
-                                console.log("13",node.parent.parent.name);
+                                console.log("--->>>>>>",node.parent.parent.name);
+                                console.log("--->>>>>>",node.parent.parent.id);
                             }
                             if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
-                                console.log("14",node.parent.parent.parent.name);
+                                console.log("---->>>>>>>>",node.parent.parent.parent.name);
+                                console.log("---->>>>>>>>",node.parent.parent.parent.id);
                             }
                             // console.log("Current :: ",node.name);
                             // console.log("iska parent Current :: ",node.parent.name);
