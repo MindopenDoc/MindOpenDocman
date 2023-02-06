@@ -89,6 +89,9 @@ if (!defined('UserPermission_class')) {
             //These 2 below takes half of the execution time for this function
             $user_perms_file_array = ($this->user_perms_obj->getCurrentViewOnly($limit));
             $dept_perms_file_array = ($this->dept_perms_obj->getCurrentViewOnly($limit));
+            $udid=$this->uid;
+            $udesig=$this->user_obj->designation;
+            // AND d.Designation>=$designation_lavel
             $query = "
               SELECT
                 up.fid
@@ -110,12 +113,27 @@ if (!defined('UserPermission_class')) {
                 ':view_right' => $this->VIEW_RIGHT
             ));
             $array = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
+            //anshuman code start
+            //for checking which file accessible in degignation lavel
+            $query2="SELECT up.fid FROM odm_data d, odm_designation_perms up WHERE ( up.design_id = :udid AND d.id = up.fid AND up.rights >1 AND d.publishable = 1)";
+            $stmt = $this->connection->prepare($query2);
+            $stmt->execute(array(
+                ':udid' => $this->user_obj->designation
+            ));
+            $desig_perms_file_array = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            $desig_perms_file_array = array_diff($desig_perms_file_array, $array);
+            // $desig_perms_file_array = array_intersect($array2, $user_perms_file_array);
+            //anshuman code end
             $dept_perms_file_array = array_diff($dept_perms_file_array, $array);
             $dept_perms_file_array = array_diff($dept_perms_file_array, $user_perms_file_array);
             $total_listing = array_merge($user_perms_file_array, $dept_perms_file_array);
             //$total_listing = array_unique( $total_listing);
             //$result_array = array_values($total_listing);
+            //anshuman code start
+            $total_listing = array_diff($total_listing, $desig_perms_file_array);
+            $total_listing = array_merge($total_listing, $desig_perms_file_array);
+
+            //anshuman code end
             return $total_listing;
         }
 

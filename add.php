@@ -286,7 +286,7 @@ if (!isset($_POST['submit'])) {
         if(isset($_POST['keyword'])){
             $keyworddata=$_POST['keyword'];
         }
-        if($_POST['file_department'] && $_POST['cat'] && $_POST['subcat']){
+        if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
             $dap=$_POST['file_department'];
             $cat=$_POST['cat'];
             $subcat=$_POST['subcat'];
