@@ -26,7 +26,10 @@
       </footer>
 
     </div> <!-- /container -->   
-     <script type="text/javascript" src="{$g_base_url}/templates/common/js/newTest.js"></script>
+     <script type="text/javascript" src="{$g_base_url}/templates/common/js/TreeJSCreate.js"></script>
+    <!-- JQTREE JS -->
+     <script type="text/javascript" src="{$g_base_url}/templates/common/js/JqTree/tree.jquery.js"></script>
+     <script type="text/javascript" src="{$g_base_url}/templates/common/js/JqTree/tree.jquery.js.map"></script>
     <script type="text/javascript" src="{$g_base_url}/templates/tweeter/js/bootstrap.min.js"></script>
 </body>
 </html>

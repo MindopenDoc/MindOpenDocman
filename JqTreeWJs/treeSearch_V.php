@@ -17,7 +17,7 @@
             <div id="ViewJSON"></div>
         </div>
     </body>
-    <!-- <script src="../templates/tweeter/js/bootstrap.min.js"></script> -->
+     
     <script src="../includes/jquery.min.js"></script>
     <script src="tree.jquery.js"></script>
     <script>
@@ -56,30 +56,47 @@
                 // document.getElementById("ViewJSON").innerHTML = JSON.stringify(some);// some;
                 const $tree = $("#tree1");
                 $tree.tree({
-                    autoOpen: 0,
+                    autoOpen: 0 ,
                     data: some,
                     // dragAndDrop: false,
                     // selectable: false,
                     onCanSelectNode: function(node) {
                         if (node.children.length == 0) {
                             // Nodes without children can be selected
-                            console.warn("PARENT",node);
+                            // console.warn("PARENT",node);
+                            let TableHeaders = [];
                             if( typeof node.name !== "undefined" && node.hasOwnProperty('parent')){
-                                console.log("->>",node.name);
-                                console.log("->>",node.id);
+                                // console.log("->>",node.name);
+                                TableHeaders.push({"id":node.id,"name":node.name});
+                                // console.log("->>",node.id);
                             }
                             if(node.parent.name !==  "" && node.parent.hasOwnProperty('parent')){
-                                console.log("-->>>>",node.parent.name);
-                                console.log("-->>>>",node.parent.id);
+                                // console.log("-->>>>",node.parent.name);
+                                TableHeaders.push({"id":node.parent.id,"name":node.parent.name});
+                                // console.log("-->>>>",node.parent.id);
                             }
                             if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
-                                console.log("--->>>>>>",node.parent.parent.name);
-                                console.log("--->>>>>>",node.parent.parent.id);
+                                // console.log("--->>>>>>",node.parent.parent.name);
+                                TableHeaders.push({"id":node.parent.parent.id,"name":node.parent.parent.name});
+                                // console.log("--->>>>>>",node.parent.parent.id);
                             }
                             if( node.parent.parent.name !==  "" && node.parent.parent.hasOwnProperty('parent')){
-                                console.log("---->>>>>>>>",node.parent.parent.parent.name);
-                                console.log("---->>>>>>>>",node.parent.parent.parent.id);
+                                // console.log("---->>>>>>>>",node.parent.parent.parent.name);
+                                TableHeaders.push({"id":node.parent.parent.parent.id,"name":node.parent.parent.parent.name});
+                                // console.log("---->>>>>>>>",node.parent.parent.parent.id);
                             }
+                            // for(let every of TableHeaders){
+                            //     console.warn(every.toString());
+                            // }
+                            for (const num of TableHeaders) {
+                                console.warn(num);
+                            }
+                            // console.log("This is URL : ",TableHeaders.toString());
+                            // console.log(`AJAX_REQUEST\\GetAllData.php?qurey=${TableHeaders.toString()}`);
+                            // $.get(`AJAX_REQUEST\\GetAllData.php?qurey=${TableHeaders}`, (data, status)=>{
+                                // console.log(data);
+                            // });
+
                             // console.log("Current :: ",node.name);
                             // console.log("iska parent Current :: ",node.parent.name);
                             // console.log("iska parent ka bhi parent Current :: ",node.parent.parent.name);
