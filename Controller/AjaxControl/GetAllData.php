@@ -115,7 +115,7 @@
                     while($row= $Results_odm_user_perms->fetch_assoc()){
                         $rights = $row['rights'];
                     }
-                    if($rights < 1){
+                    if($rights <= 1){
                         continue;
                     }
                 }
@@ -168,9 +168,9 @@
                     }
                 }
                 //Found the user right, now bold every below it.  For those that matches, make them different.
-                      
-                if (!$file_obj->isPublishable()){
-                    echo "Isko Nhi dikha sakta hai !!!";  
+                
+                //check for publishable file because we don't need to show them !!
+                if (!$file_obj->isPublishable()){ 
                     continue;  
                 }
 
