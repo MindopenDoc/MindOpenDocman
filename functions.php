@@ -545,7 +545,7 @@ function sort_browser()
         ///////////////////////////////////////////////////////////////////////
         echo '</script>'.PHP_EOL;
 ?>
-        <form name = "browser_sort">
+        <form name = "browser_sort" style="display:none;">
             <table name = "browser" border = "0" cellspacing = "1">
             <tr>
               <td><?php echo msg('label_browse_by');?></td>

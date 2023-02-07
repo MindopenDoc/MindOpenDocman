@@ -91,7 +91,7 @@ $request_state = e::h(($_REQUEST['state']+1));
                         <td><b><a href="<?php echo 'department.php?submit=showpick&state=' . ($request_state); ?>"><?php echo msg('label_display')?></a></b></td>
                     </tr>
                     <tr>
-                        <td><hr><b><a href="text.php"><?php echo ('Add_cat&subcat')?></a></b></td>
+                        <td><hr><b><a href="text.php"><?php echo ('Add Category & subcategory')?></a></b></td>
                     </tr>
                 </table>
             </td>

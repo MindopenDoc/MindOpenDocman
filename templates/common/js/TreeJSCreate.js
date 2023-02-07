@@ -26,9 +26,13 @@ var exampleData = [{
 var value;
 
 function SHOWErrorNotFound(){
+    data_table_str= "";
     console.warn("No records found !!");
     data_table_str += `<tr ><td colspan="9" align="center"> <h2> No Records Found ! </h2></td></tr>` ;
     // document.getElementById("hiddenTable").style.display = "block" ; 
+    // document.getElementById("SortView").style.display = "none" ;  
+    document.getElementById("SortView").style.display = "none";
+    // document.getElementById("footHideShow").style.display = "none";
     document.getElementById("data_table").innerHTML = data_table_str;
     return;
 }
@@ -39,7 +43,7 @@ function myDisplayer(some) {
     // document.getElementById("ViewJSON").innerHTML = JSON.stringify(some);// some;
     const $tree = $("#tree1");
     $tree.tree({
-        autoOpen: 0,
+        autoOpen: false,
         data: some,
         // dragAndDrop: false,
         // selectable: false,
@@ -63,7 +67,16 @@ function myDisplayer(some) {
                 const myJson =  JSON.stringify(TableHeaders);
 
                 $.get(`Controller\\AjaxControl\\GetAllData.php?query=${myJson}`, (data, status)=>{
-                    data_table_str = "";                    
+                    data_table_str = "";   
+                    dataTableHeader = `
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>VIEW</th>
+                                            <th>File Name</th>
+                                            <th>Modified Date</th>
+                                            <th>Author</th>
+                                            <th>Department</th>
+                                        </tr>`;                 
                     try {
                         data = JSON.parse(data);
                         if (data[0] === "No records found !"){
@@ -82,18 +95,16 @@ function myDisplayer(some) {
                                             <td>${eachrow['id'] }</td>
                                             <td><a href="${eachrow['view_link'] }">View</a></td>
                                             <td>${eachrow['filename'] }</td>
-                                            <td>${eachrow['description'] }</td>
-                                            <td>${eachrow['keyword'] }</td>
-                                            <td>${eachrow['rights'][0][1]} |${eachrow['rights'][1][1]} |${eachrow['rights'][2][1] }</td>
-                                            <td>${eachrow['created_date'] }</td>
                                             <td>${eachrow['modified_date'] }</td>
                                             <td>${eachrow['owner_name'] }</td>
                                             <td>${eachrow['dept_name'] }</td>
-                                            <td>${eachrow['filesize'] }</td>
                                         </tr>`;
                         count += 1;
                     });   
-                    // document.getElementById("hiddenTable").style.display = "block" ; 
+                    document.getElementById("SortView").style.display = "table-row" ;  
+                    // document.getElementById("footHideShow").style.display = "table-row" ;  
+                    document.getElementById("SortView").innerHTML = dataTableHeader;
+                    document.getElementById("footHideShow").innerHTML = dataTableHeader;
                     document.getElementById("data_table").innerHTML = data_table_str;
                 });
                 return true;

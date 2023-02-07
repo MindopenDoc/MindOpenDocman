@@ -46,7 +46,7 @@ if ($user_obj->isAdmin()) {
     $reviewIdCount = 0;
 }
 if ($reviewIdCount > 0) {
-    echo '<img src="images/exclamation.gif" /> <a href="toBePublished.php?state=1">'.msg('message_documents_waiting'). '</a>: ' . e::h($reviewIdCount)  . '</a><br />';
+    echo '<a href="toBePublished.php?state=1"> <button class="btn btn-large"><img src="images/exclamation.gif" /> '.msg('message_documents_waiting'). ': ' . e::h($reviewIdCount)  . '</button></a> </a><br />';
 }
 
 $rejected_files_obj = $user_obj->getRejectedFileIds();

@@ -238,8 +238,9 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll();
-
+    $dept_arr = array();
     foreach ($result as $row) {
+        array_push($dept_arr,$row);
         echo '<option value="' . e::h($row['id']) . '">' . e::h($row['name']) . '</option>';
     }
     ?>
@@ -259,6 +260,18 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
                                 </tr>
                             </table>
                      </form>
+                     <table border="1" cellspacing="5" cellpadding="5">
+                            <tr>
+                                <td>Department id </td>
+                                <td>Department</td>
+                            </tr>
+                            <?php foreach($dept_arr as $dept){ ?>
+                                    <tr>
+                                        <td><?php print_r($dept['id'])  ?></td>
+                                        <td><?php print_r($dept['name'])  ?></td>
+                                    </tr>
+                           <?php } ?>
+                    </table>
  <?php
     draw_footer();
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'delete') {

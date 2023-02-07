@@ -3,11 +3,13 @@
         <tr>
             <td>S.no</td>
             <td>Designation</td>
+            <td>Department</td>
         </tr>
         {foreach from=$design_perms_array  item="myitem"}
                 <tr>
                     <td>{ $myitem.id }</td>
                     <td>{ $myitem.name  }</td>
+                    <td>{ $myitem.dept_id  }</td>
                 </tr>
         {/foreach}
 </table>
@@ -22,6 +24,15 @@
                 </td>
                 <td colspan=3>
                     <input name="InputDesignation" type="text">
+                </td>
+                <td>
+                    <select name="SelectDepartment">
+                        {foreach from=$alldepartments  item="mydept"}
+                            <option value="{$mydept.id}">
+                                 {$mydept.name}  
+                            </option>
+                        {/foreach}
+                    </select>
                 </td>
             </tr>
             <tr>

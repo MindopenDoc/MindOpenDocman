@@ -23,7 +23,7 @@
     {
          
         $last_message = (isset($_REQUEST['last_message']) ? $_REQUEST['last_message'] : '');
-        draw_header(msg('area_add_new_file'), $last_message);
+        draw_header(msg('Add Designation'), $last_message);
         $current_user_dept = $user_obj->getDeptId();
 
         $index = 0;
@@ -42,47 +42,60 @@
         foreach ($result as $desig) {
             $avail_design_perms['name'] = $desig['name'];
             $avail_design_perms['id'] = $desig['id'];
+            $thisDept = $desig['dept_id'];
+            $dept_query = "SELECT * FROM {$GLOBALS['CONFIG']['db_prefix']}department where id = $thisDept";
+            $Dstmt = $pdo->prepare($dept_query);
+            $Dstmt->execute();
+            $Dresult = $Dstmt->fetchAll();
+            $num_rows_D = $Dstmt->rowCount();
+            if ($num_rows_D === 1){
+                $avail_design_perms['dept_id'] = $Dresult[0]['name'];
+            }
             array_push($design_perms_array, $avail_design_perms);
         }
+        $allDepartments = Department::getAllDepartments($pdo);        
         $GLOBALS['smarty']->assign('is_admin', $user_obj->isAdmin());
         $GLOBALS['smarty']->assign('design_perms_array', $design_perms_array);
+        $GLOBALS['smarty']->assign('alldepartments', $allDepartments);
         $GLOBALS['smarty']->assign('user_id', $_SESSION['uid']);
         $GLOBALS['smarty']->assign('db_prefix', $GLOBALS['CONFIG']['db_prefix']);
         display_smarty_template('addDesignation.tpl');
          
     }else{
         $pdo = $GLOBALS['pdo'];
-        if(isset($_POST['InputDesignation'])){
-            $newDesignation =  $_POST['InputDesignation'];
-            $query = "SELECT * FROM {$GLOBALS['CONFIG']['db_prefix']}designation where name = '$newDesignation'";
+        if(isset($_POST['InputDesignation']) && isset($_POST['SelectDepartment'])){
+            $newDesignation =  trim($_POST['InputDesignation']," ");
+            $SelectDept =  $_POST['SelectDepartment'];
+            $query = "SELECT * FROM {$GLOBALS['CONFIG']['db_prefix']}designation where name = '$newDesignation' and dept_id = $SelectDept";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
             $result = $stmt->fetchAll();
             $num_rows = $stmt->rowCount();
-    
             foreach ($result as $var) {
-                if (strtoupper($_POST['InputDesignation'])  === strtoupper($var['name'])){
+                if (strtoupper($_POST['InputDesignation'])  === strtoupper($var['name']) && $var['dept_id']  == $SelectDept ){
                     echo "Designation already Exist";
-                    header('Location:error.php?ec=26');
+                    header('Location:error.php?last_message='.urlencode("Designation already Exist"));
                     die();
                 }
             }
             $designation_data_query = "INSERT INTO 
             {$GLOBALS['CONFIG']['db_prefix']}designation (
-                name
+                name,
+                dept_id
             )
                 VALUES
             (
-                :name
+                :name,
+                :dept_id
             )";
             $designation_data_stmt = $pdo->prepare($designation_data_query);
-            $designation_data_stmt->bindParam(':name', $_POST['InputDesignation']);
+            $designation_data_stmt->bindParam(':name', $newDesignation);
+            $designation_data_stmt->bindParam(':dept_id', $SelectDept);
             $designation_data_stmt->execute();
             // get id from INSERT operation
             $designationId = $pdo->lastInsertId();
-            header('Location: addDesignation_V.php?last_message'.urlencode("Designation Added"));
+            header('Location: addDesignation_V.php?last_message='.urlencode("Designation Added"));
             exit;
-            echo "we Could move further";
         }
     }
     draw_footer();
