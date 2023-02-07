@@ -29,10 +29,66 @@
 {/literal}
 
 <dl class="accordion">
+    <dt><a href="">{$g_lang_filepermissionspage_edit_department_permissions}</a></dt>
+    <dd>
+        <table id="department_permissions_table" class="display">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td><input type="radio" id="checkAllDepartmentForbidden" value="-1" name="department_permission_check"/></td>
+                    <td><---</td>
+                    <td>Check all</td>
+                    <td>---></td>
+                    <td><input type="radio" id="checkAllDepartmentWrite" value="3" name="department_permission_check"/></td>
+                    <td></td>
+ 
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td>Forbidden</td>
+                    <td>None</td>
+                    <td>View</td>
+                    <td>Read</td>
+                    <td>Write</td>
+                    <td>Admin</td>
+                </tr>
+            </thead>
+            <tbody id="DepartmentPermissionsAll" >
+                {foreach from=$avail_depts item=dept}
+                    {if $dept.selected eq 'selected'}
+                        {assign var="selected" value="checked='checked'"}
+                    {else}
+                        {assign var="noneselected" value="checked='checked'"}
+                    {/if}
+                <tr >
+                    <td>{$dept.name|escape:'html'}</td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="0" {if $dept.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="1" {if $dept.rights eq 1}checked="checked"{/if} {$selected} /></td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="2" {if $dept.rights eq 2}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="3" {if $dept.rights eq 3}checked="checked"{/if} /></td>
+                    <td><input type="radio" name="department_permission[{$dept.id}]" value="4" {if $dept.rights eq 4}checked="checked"{/if} /></td>
+                </tr>
+                    {assign var="selected" value=""}
+                {/foreach}       
+            </tbody>
+        </table>
+    </dd>
+    <hr />
 <dt><a href="">Designation permission</a></dt>
     <dd>
         <table id="designation_permissions_table" class="display">
             <thead>
+                <tr>
+                    <td></td>
+                    <td><input type="radio" id="checkAllDesignationForbidden" value="-1" name="designation_permission_check"/></td>
+                    <td><---</td>
+                    <td>Check all</td>
+                    <td>---></td>
+                    <td><input type="radio" id="checkAllDesignationWrite" value="3" name="designation_permission_check"/></td>
+                    <td></td>
+ 
+                </tr>
                 <tr>
                     <td>Designation</td>
                     <td>Forbidden</td>
@@ -43,7 +99,7 @@
                     <td>Admin</td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="DesignationPermissionsAll">
                 {foreach from=$designation_list item=design}
                     {if $design.selected eq 'selected'}
                         {assign var="selected" value="checked='checked'"}
@@ -58,42 +114,6 @@
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="2" {if $design.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="3" {if $design.rights eq 3}checked="checked"{/if} /></td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="4" {if $design.rights eq 4}checked="checked"{/if} /></td>
-                </tr>
-                    {assign var="selected" value=""}
-                {/foreach}       
-            </tbody>
-        </table>
-    </dd>
-    <hr />
-    <dt><a href="">{$g_lang_filepermissionspage_edit_department_permissions}</a></dt>
-    <dd>
-        <table id="department_permissions_table" class="display">
-            <thead>
-                <tr>
-                    <td>Department</td>
-                    <td>Forbidden</td>
-                    <td>None</td>
-                    <td>View</td>
-                    <td>Read</td>
-                    <td>Write</td>
-                    <td>Admin</td>
-                </tr>
-            </thead>
-            <tbody>
-                {foreach from=$avail_depts item=dept}
-                    {if $dept.selected eq 'selected'}
-                        {assign var="selected" value="checked='checked'"}
-                    {else}
-                        {assign var="noneselected" value="checked='checked'"}
-                    {/if}
-                <tr>
-                    <td>{$dept.name|escape:'html'}</td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="0" {if $dept.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="1" {if $dept.rights eq 1}checked="checked"{/if} {$selected} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="2" {if $dept.rights eq 2}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="3" {if $dept.rights eq 3}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="4" {if $dept.rights eq 4}checked="checked"{/if} /></td>
                 </tr>
                     {assign var="selected" value=""}
                 {/foreach}       
