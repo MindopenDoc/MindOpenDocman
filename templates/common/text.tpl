@@ -19,7 +19,7 @@
         if ($result->num_rows > 0) {
     {/php}
     <tr>
-    <td> Select Category :     </td>
+    <td> Select Document Category :     </td>
         <td>
         <select id="selectedCategory" class="form-control m-2" name ="cat" disabled>
             <option >Select An Category</option>
@@ -27,7 +27,7 @@
         </td>
     </tr>
     <tr>
-    <td> Select Subcategory :     </td>
+    <td> Select Document Subcategory :     </td>
         <td>
         <select id="selectedSubCategory" class="form-control m-2" name ="subcat" disabled>
             <option >Select An Sub-category</option>

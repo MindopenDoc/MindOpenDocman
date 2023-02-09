@@ -123,8 +123,8 @@
                 <tr>
                     <td colspan="3" text-align="center"> Check all  :::></td>
                     <td><input type="radio" id="checkAllUserForbidden" value="-1" name="user_permission_check"/></td>
+                    <td><input type="radio" id="checkAllUserRead" value="2" name="user_permission_check"/></td>
                     <td><input type="radio" id="checkAllUserWrite" value="3" name="user_permission_check"/></td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Department</td>
@@ -146,10 +146,10 @@
                 <tr>
                     <td>{$user.last_name|escape:'html'}, {$user.first_name|escape:'html'}</td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="-1" {if $user.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="user_permission[{$user.id}]" value="1" {if $user.rights eq 1}checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="radio" name="user_permission[{$user.id}]" value="1" {if $user.rights eq 1}checked="checked"{/if} /></td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="2" {if $user.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="3" {if $user.rights eq 3}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="user_permission[{$user.id}]" value="4" {if $user.rights eq 4 || ($user.id eq $user_id && $user.rights eq '') }checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="radio" name="user_permission[{$user.id}]" value="4" {if $user.rights eq 4 || ($user.id eq $user_id && $user.rights eq '') }checked="checked"{/if} /></td>
                 </tr>
                 {/foreach}       
             </tbody>
