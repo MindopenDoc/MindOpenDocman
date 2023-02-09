@@ -29,26 +29,26 @@
 {/literal}
 
 <dl class="accordion">
-    <dt><a href="">{$g_lang_filepermissionspage_edit_department_permissions}</a></dt>
-    <dd>
-        <table id="department_permissions_table" class="display">
+        <table id="department_permissions_table" class="display dept_table">
             <thead>
                 <tr>
-                    <td></td>
+                    <td>Check All ::> </td>
                     <td><input type="radio" id="checkAllDepartmentForbidden" value="-1" name="department_permission_check"/></td>
-                    <td colspan="3"> <--- Check all ---> </td>
+                    <td class="hideTD"></td>
+                    <td class="hideTD"></td>
+                    <td class="hideTD"></td>
                     <td><input type="radio" id="checkAllDepartmentWrite" value="3" name="department_permission_check"/></td>
                     <td></td>
  
                 </tr>
                 <tr>
                     <td>Department</td>
-                    <td>Forbidden</td>
                     <td>None</td>
-                    <td>View</td>
-                    <td>Read</td>
+                    <td class="hideTD">None</td>
+                    <td class="hideTD">View</td>
+                    <td class="hideTD">Read</td>
                     <td>Write</td>
-                    <td>Admin</td>
+                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="DepartmentPermissionsAll" >
@@ -60,39 +60,38 @@
                     {/if}
                 <tr >
                     <td>{$dept.name|escape:'html'}</td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="0" {if $dept.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="1" {if $dept.rights eq 1}checked="checked"{/if} {$selected} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="2" {if $dept.rights eq 2}checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} /></td>
+                    <td ><input type="radio" name="department_permission[{$dept.id}]" value="0" {if $dept.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
+                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="1" {if $dept.rights eq 1}checked="checked"{/if} {$selected} /></td>
+                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="2" {if $dept.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="department_permission[{$dept.id}]" value="3" {if $dept.rights eq 3}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="4" {if $dept.rights eq 4}checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="4" {if $dept.rights eq 4}checked="checked"{/if} /></td>
                 </tr>
                     {assign var="selected" value=""}
                 {/foreach}       
             </tbody>
         </table>
-    </dd>
     <hr />
 <dt><a href="" id="DesignationEvent">Designation permission</a></dt>
     <dd>
         <table id="designation_permissions_table" class="display">
             <thead>
                 <tr>
-                    <td></td>
+                    <td colspan="2"> Check all :::> </td>
                     <td><input type="radio" id="checkAllDesignationForbidden" value="-1" name="designation_permission_check"/></td>
-                    <td colspan="3"> <--- Check all ---> </td>
                     <td><input type="radio" id="checkAllDesignationWrite" value="3" name="designation_permission_check"/></td>
                     <td></td>
  
                 </tr>
                 <tr>
+                    <td>Department</td>
                     <td>Designation</td>
                     <td>Forbidden</td>
-                    <td>None</td>
-                    <td>View</td>
-                    <td>Read</td>
+                    <td class="hideTD">None</td>
+                    <td class="hideTD">View</td>
+                    <td class="hideTD">Read</td>
                     <td>Write</td>
-                    <td>Admin</td>
+                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="DesignationPermissionsAll">
@@ -105,11 +104,11 @@
                 <tr>
                     <td>{$design.name|escape:'html'}</td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="-1" {if $design.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="designation_permission[{$design.id}]" value="0" {if $design.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
-                    <td><input type="radio" name="designation_permission[{$design.id}]" value="1" {if $design.rights eq 1}checked="checked"{/if} {$selected} /></td>
-                    <td><input type="radio" name="designation_permission[{$design.id}]" value="2" {if $design.rights eq 2}checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="0" {if $design.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
+                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="1" {if $design.rights eq 1}checked="checked"{/if} {$selected} /></td>
+                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="2" {if $design.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="3" {if $design.rights eq 3}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="designation_permission[{$design.id}]" value="4" {if $design.rights eq 4}checked="checked"{/if} /></td>
+                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="4" {if $design.rights eq 4}checked="checked"{/if} /></td>
                 </tr>
                     {assign var="selected" value=""}
                 {/foreach}       
@@ -117,24 +116,25 @@
         </table>
     </dd>
     <hr />
-    <dt><a href="">{$g_lang_filepermissionspage_edit_user_permissions}</a></dt>
+    <dt><a href="" id="UserEventAdding">{$g_lang_filepermissionspage_edit_user_permissions}</a></dt>
     <dd>
         <table  class="display">
             <thead>
                 <tr>
-                    <td></td>
-                    <td><input type="radio" id="checkAllUserForbidden" value="-1" name="designation_permission_check"/></td>
-                    <td colspan="3"> <---- Check all ----></td>
-                    <td><input type="radio" id="checkAllUserWrite" value="3" name="designation_permission_check"/></td>
+                    <td colspan="3" text-align="center"> Check all  :::></td>
+                    <td><input type="radio" id="checkAllUserForbidden" value="-1" name="user_permission_check"/></td>
+                    <td><input type="radio" id="checkAllUserWrite" value="3" name="user_permission_check"/></td>
                     <td></td>
                 </tr>
                 <tr>
+                    <td>Department</td>
+                    <td>Designation</td>
                     <td>User</td>
                     <td>Forbidden</td>
-                    <td>View</td>
+                    <td class="hideTD">View</td>
                     <td>Read</td>
                     <td>Write</td>
-                    <td>Admin</td>
+                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="UserPermissionsAllCheck">

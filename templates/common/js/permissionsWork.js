@@ -1,16 +1,16 @@
-const DeptChange = document.getElementById("selected");
+// const DeptChange = document.getElementById("selected");
     
-$(`#selected`).click (function(){
-    let selectedDept = $('#selected').val();
-    $.get(`Controller\\permissionsRelated\\checkDesignation.php?query=${selectedDept}`, (data, status)=>{
-            data = JSON.parse(data);
-            optionsElemt = "";
-            data.forEach(element => {
-                optionsElemt += `<option value="${element[0]}" >${element[1]}</option> `;
-            });
-            $('#selectedDesignation').html(optionsElemt); 
-        });
-})
+// $(`#selected`).click (function(){
+//     let selectedDept = $('#selected').val();
+//     $.get(`Controller\\permissionsRelated\\checkDesignation.php?query=${selectedDept}`, (data, status)=>{
+//             data = JSON.parse(data);
+//             optionsElemt = "";
+//             data.forEach(element => {
+//                 optionsElemt += `<option value="${element[0]}" >${element[1]}</option> `;
+//             });
+//             $('#selectedDesignation').html(optionsElemt); 
+//         });
+// })
 
 var uncheckedForBdn = true;
 var uncheckedWrite = true;
@@ -122,12 +122,12 @@ $('#checkAllDesignationForbidden').click(function(){
                 selectDeptms += `
                 <tr class="${count%2==0?"even":"odd"}">
                 <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" checked="checked"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="2"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3"  ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" checked="checked"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="0"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="2"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="3"  ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
                 </tr>   
                 `; 
                 // ${element[0]==selectedDept?"checked='checked'":""}
@@ -142,12 +142,12 @@ $('#checkAllDesignationForbidden').click(function(){
                 selectDeptms += `
                 <tr class="${count%2==0?"even":"odd"}">
                 <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="0" checked="checked"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="2" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="0" checked="checked"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="2" ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="3"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
                 </tr>   
                 `; 
                 count += 1; 
@@ -169,12 +169,12 @@ $('#checkAllDesignationWrite').click(function(){
                 selectDeptms += `
                 <tr class="${count%2==0?"even":"odd"}">
                 <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="2"  ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3" checked="checked"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="0"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="2"  ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="3" checked="checked"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
                 </tr>   
                 `; 
                 count += 1; 
@@ -187,12 +187,12 @@ $('#checkAllDesignationWrite').click(function(){
                 selectDeptms += `
                 <tr class="${count%2==0?"even":"odd"}">
                 <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="0" checked="checked"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="2" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="0" checked="checked"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="2" ></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="3"></td>
+                <td><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
                 </tr>   
                 `; 
                 count += 1; 
@@ -207,3 +207,99 @@ $('#checkAllDesignationWrite').click(function(){
 
 
 
+
+var UseruncheckedForBdn = true;
+var UseruncheckedWrite = true;
+$('#checkAllUserForbidden').click(function(){
+    console.log("Data");
+    selectDeptms = ``;
+    $.get(`Controller\\permissionsRelated\\getAllUsers.php`, (data, status)=>{
+        data = JSON.parse(data);
+        console.log(data);
+        count=1;
+        if (UseruncheckedForBdn){
+            data.forEach(element => {    
+                selectDeptms += `
+                <tr class="${count%2==0?"even":"odd"}">
+                <td class="sorting_1">${element[1]}</td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="-1" checked="checked"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="2"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="3"  ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
+                </tr>   
+                `; 
+                // ${element[0]==selectedDept?"checked='checked'":""}
+                count += 1; 
+            });
+            UseruncheckedForBdn = false;
+            UseruncheckedWrite = true;
+
+        }
+        else{
+            data.forEach(element => {    
+                selectDeptms += `
+                <tr class="${count%2==0?"even":"odd"}">
+                <td class="sorting_1">${element[1]}</td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="1" checked="checked"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="2" ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="3"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
+                </tr>   
+                `; 
+                count += 1; 
+            });
+            UseruncheckedForBdn = true;
+            UseruncheckedWrite = true;
+        }
+            $('#UserPermissionsAllCheck').html(selectDeptms);
+    });
+})
+
+$('#checkAllUserWrite').click(function(){
+    $.get(`Controller\\permissionsRelated\\getAllUsers.php`, (data, status)=>{
+        data = JSON.parse(data);
+        selectDeptms = "";
+        count=1;
+        if (UseruncheckedWrite){
+            data.forEach(element => {    
+                selectDeptms += `
+                <tr class="${count%2==0?"even":"odd"}">
+                <td class="sorting_1">${element[1]}</td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="1"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="2"  ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="3" checked="checked"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
+                </tr>   
+                `; 
+                count += 1; 
+            });
+            UseruncheckedWrite = false;
+            UseruncheckedForBdn = true;
+        }
+        else{
+            data.forEach(element => {    
+                selectDeptms += `
+                <tr class="${count%2==0?"even":"odd"}">
+                <td class="sorting_1">${element[1]}</td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="-1" ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="1" checked="checked"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="2" ></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="3"></td>
+                <td><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
+                </tr>   
+                `; 
+                count += 1; 
+            });
+            UseruncheckedWrite = true;
+            UseruncheckedForBdn = true;
+        }
+            $('#UserPermissionsAllCheck').html(selectDeptms);
+    });
+})
+
+
+
+// id="user_permissions_table"

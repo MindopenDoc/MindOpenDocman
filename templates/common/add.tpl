@@ -1,5 +1,14 @@
 
-
+{literal}
+    <style>
+        .hiderows{
+            display:none;
+        }
+        .hideTD{
+        display: none;
+        }
+    </style>
+    {/literal}
 <script type="text/javascript" src="functions.js"></script>
 
 <!-- file upload formu using ENCTYPE -->
@@ -63,7 +72,7 @@
     
     
 {/if}    
-    <tr>
+    <tr class="hiderows">
         <td>
             <a class="body" href="help.html#Add_File_-_Category"  onClick="return popup(this, 'Help')" style="text-decoration:none">{$g_lang_category}</a>
         </td>
@@ -76,7 +85,7 @@
         </td>
     </tr>
     <!-- Set Department rights on the file -->
-    <tr id="departmentSelect">
+    <tr id="departmentSelect" class="hiderows">
         <td>
             <a class="body" href="help.html#Add_File_-_Department" onClick="return popup(this, 'Help')" style="text-decoration:none">{$g_lang_addpage_permissions}</a>
         </td>
@@ -115,7 +124,7 @@
         
     </tr>
     <!-- anshuman code end -->
-    <tr>
+    <tr class="hiderows">
         <td>
             <a class="body" href="help.html#Add_File_-_Comment" onClick="return popup(this, 'Help')" style="text-decoration:none">{$g_lang_label_comment}</a>
         </td>
@@ -154,4 +163,5 @@ function showHint(data)
 }  
 {/literal}
 </script>
+<script type="text/javascript" src="{$g_base_url}/templates/common/js/SelectDept_Design.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/permissionsWork.js"></script>

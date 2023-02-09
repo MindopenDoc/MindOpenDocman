@@ -244,6 +244,12 @@ if ($status == 0 || ($status == -1 && $file_data_obj->isOwner($_SESSION['uid']))
         $GLOBALS['smarty']->assign('check_out_link', $check_out_link);
     }
 
+    if ($user_permission_obj->getAuthority($request_id, $file_data_obj) >= $user_permission_obj->ADMIN_RIGHT && !@isset($revision_id) && !$file_data_obj->isArchived()) {
+        // if user is also the owner of the file AND file is not checked out
+        // additional actions are available 
+        $File_permission_alter = "permission_alter_V.php?id=$request_id&state=" . ($state + 1);
+        $GLOBALS['smarty']->assign('File_permission_alter', $File_permission_alter);
+    }
 
     if ($user_permission_obj->getAuthority($request_id, $file_data_obj) >= $user_permission_obj->ADMIN_RIGHT && !@isset($revision_id) && !$file_data_obj->isArchived()) {
         // if user is also the owner of the file AND file is not checked out
