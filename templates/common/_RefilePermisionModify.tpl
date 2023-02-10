@@ -15,7 +15,7 @@
     </style>
 {/literal}
 <!-- file upload formu using ENCTYPE -->
-<form id="addeditform" name="main" class="display dataTable" action="{$smarty.server.PHP_SELF|escape:'html'}"
+<form id="EditPermissionform" name="EditPermissionform" class="display dataTable" action=""
     method="POST" enctype="multipart/form-data" onsubmit="return checksec(); ">
     <input type="hidden" id="db_prefix" value="{$db_prefix}" />
     <table border="0" cellspacing="5" cellpadding="5" class="PermissionTable">
@@ -122,5 +122,13 @@
             <td colspan="3"><textarea tabindex="6" name="comment" rows="4"
                     onchange="this.value=enforceLength(this.value, 255);">{$comment|escape:'html'}</textarea></td>
         </tr>
+        <tr>
+            <td colspan="4" align="center"><div class="buttons"><button class="positive" type="Submit" name="submit" value="Update Document permissions">{$g_lang_button_save}</button></div></td>
+        </tr>
     </table>
+</form>
+<script type="text/javascript" src="{$g_base_url}/templates/common/js/createPromise.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/refinePermission.js"></script>
+{* <script type="text/javascript" src="{$g_base_url}/templates/common/js/testAnRequest.js"></script> *}
+<input type="hidden" id="csrfp_hidden_data_token" value="csrfp_token">
+<input type="hidden" id="csrfp_hidden_data_urls" value='[]'><script type="text/javascript" src="http://localhost/opendoccopy/vendor/owasp/csrf-protector-php/js/csrfprotector.js"></script>

@@ -29,52 +29,42 @@
 {/literal}
 
 <dl class="accordion">
-        <table id="department_permissions_table" class="display dept_table">
+        <table class="display dept_table">
             <thead>
                 <tr>
                     <td>Check All ::> </td>
                     <td><input type="radio" id="checkAllDepartmentForbidden" value="-1" name="department_permission_check"/></td>
-                    <td class="hideTD"></td>
-                    <td class="hideTD"></td>
-                    <td class="hideTD"></td>
                     <td><input type="radio" id="checkAllDepartmentWrite" value="3" name="department_permission_check"/></td>
-                    <td></td>
  
                 </tr>
                 <tr>
                     <td>Department</td>
-                    <td>None</td>
-                    <td class="hideTD">None</td>
-                    <td class="hideTD">View</td>
-                    <td class="hideTD">Read</td>
+                    <td>Forbidden</td>
                     <td>Write</td>
-                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="DepartmentPermissionsAll" >
+                {assign var=count value=1}  
                 {foreach from=$avail_depts item=dept}
                     {if $dept.selected eq 'selected'}
                         {assign var="selected" value="checked='checked'"}
                     {else}
                         {assign var="noneselected" value="checked='checked'"}
                     {/if}
-                <tr >
-                    <td>{$dept.name|escape:'html'}</td>
-                    <td class="hideTD"><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td ><input type="radio" name="department_permission[{$dept.id}]" value="0" {if $dept.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
-                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="1" {if $dept.rights eq 1}checked="checked"{/if} {$selected} /></td>
-                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="2" {if $dept.rights eq 2}checked="checked"{/if} /></td>
-                    <td><input type="radio" name="department_permission[{$dept.id}]" value="3" {if $dept.rights eq 3}checked="checked"{/if} /></td>
-                    <td class="hideTD"><input type="hidden" name="department_permission[{$dept.id}]" value="4" {if $dept.rights eq 4}checked="checked"{/if} /></td>
-                </tr>
+                    {* <tr {if $count%2 eq 0}class="even"{/if}  {if $count%2 eq 1}class="odd"{/if} >
+                        <td>{$dept.name|escape:'html'}</td>
+                        <td ><input type="radio" name="department_permission[{$dept.id}]" value="-1" {if $dept.rights eq '-1'}checked="checked"{/if} {$noneselected}/></td>
+                        <td><input type="radio" name="department_permission[{$dept.id}]" value="3" {if $dept.rights eq 3}checked="checked"{/if} /></td>
+                    </tr> *}
                     {assign var="selected" value=""}
+                    <span style="display: none;" > {$count++} <span>
                 {/foreach}       
             </tbody>
         </table>
     <hr />
 <dt><a href="" id="DesignationEvent">Designation permission</a></dt>
     <dd>
-        <table id="designation_permissions_table" class="display">
+        <table class="display">
             <thead>
                 <tr>
                     <td colspan="2"> Check all :::> </td>
@@ -87,11 +77,7 @@
                     <td>Department</td>
                     <td>Designation</td>
                     <td>Forbidden</td>
-                    <td class="hideTD">None</td>
-                    <td class="hideTD">View</td>
-                    <td class="hideTD">Read</td>
                     <td>Write</td>
-                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="DesignationPermissionsAll">
@@ -104,11 +90,7 @@
                 <tr>
                     <td>{$design.name|escape:'html'}</td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="-1" {if $design.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="0" {if $design.rights eq '0'}checked="checked"{/if} {$noneselected}/></td>
-                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="1" {if $design.rights eq 1}checked="checked"{/if} {$selected} /></td>
-                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="2" {if $design.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="designation_permission[{$design.id}]" value="3" {if $design.rights eq 3}checked="checked"{/if} /></td>
-                    <td class="hideTD"><input type="radio" name="designation_permission[{$design.id}]" value="4" {if $design.rights eq 4}checked="checked"{/if} /></td>
                 </tr>
                     {assign var="selected" value=""}
                 {/foreach}       
@@ -131,10 +113,8 @@
                     <td>Designation</td>
                     <td>User</td>
                     <td>Forbidden</td>
-                    <td class="hideTD">View</td>
                     <td>Read</td>
                     <td>Write</td>
-                    <td class="hideTD">Admin</td>
                 </tr>
             </thead>
             <tbody id="UserPermissionsAllCheck">
@@ -143,14 +123,12 @@
                     {assign var="selected" value="checked='checked'"}
                 {/if} 
 
-                <tr>
+                {* <tr>
                     <td>{$user.last_name|escape:'html'}, {$user.first_name|escape:'html'}</td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="-1" {if $user.rights eq '-1'}checked="checked"{/if} /></td>
-                    <td class="hideTD"><input type="radio" name="user_permission[{$user.id}]" value="1" {if $user.rights eq 1}checked="checked"{/if} /></td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="2" {if $user.rights eq 2}checked="checked"{/if} /></td>
                     <td><input type="radio" name="user_permission[{$user.id}]" value="3" {if $user.rights eq 3}checked="checked"{/if} /></td>
-                    <td class="hideTD"><input type="radio" name="user_permission[{$user.id}]" value="4" {if $user.rights eq 4 || ($user.id eq $user_id && $user.rights eq '') }checked="checked"{/if} /></td>
-                </tr>
+                </tr> *}
                 {/foreach}       
             </tbody>
         </table>

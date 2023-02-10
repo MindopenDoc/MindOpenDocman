@@ -4,7 +4,6 @@
 session_start();
 $GLOBALS['state'] = 1;
 require_once '../../odm-load.php';
-
 $dataDir = $GLOBALS['CONFIG']['dataDir'];
 $userperms_obj = new UserPermission($_SESSION['uid'], $pdo);
 

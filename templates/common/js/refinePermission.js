@@ -1,274 +1,163 @@
-let UserValue = document.getElementById("FileOwner").value;
-$.get(`Controller\\permissionsRelated\\getAllUsers.php?userID=${UserValue}`, (data, status)=>{ 
+let DisplayDesignation = [];
+let selectedDesignations = [];
+let DisplayUser = [];
+let selectedUsers = [];
+let forbiddenUser = [];
+let ReadUser = [];
+
+
+const ReomoveSelected = (isDepart,value) =>{
+    if(isDepart){
+        forbiddenUser = forbiddenUser.filter(el=>el.depart!==value);
+        ReadUser = ReadUser.filter(el=>el.depart!==value);
+        selectedUsers = selectedUsers.filter(el=>el.depart!==value);
+    }
+    else{
+        forbiddenUser = forbiddenUser.filter(el=>el.desig!==value);
+        ReadUser = ReadUser.filter(el=>el.desig!==value);
+        selectedUsers = selectedUsers.filter(el=>el.desig!==value);
+
+    }
+}
+
+$.get(`Controller\\permissionsRelated\\APIFORDATA.php`, (data, status)=>{ 
     data = JSON.parse(data);
+    let departmentName = data.map((el)=>{return {id:el.id,name:el.name}});
     count=1;
-    UserNode = ``;
-    data.forEach(element => {    
-        UserNode += `
+    departTable="";
+    departmentName.forEach(element => {
+        departTable+=`
         <tr class="${count%2==0?"even":"odd"}">
-        ${count==1?`<td rowspan=${data.length}>Department </td>`:""}
-        ${count==1?`<td rowspan=${data.length}>Designation </td>`:""}
-        <td class="sorting_1">${element[1]}</td>
-        <td><input type="radio" name="user_permission[${element[0]}]" value="-1" ></td>
-        <td class="hideTD"><input type="radio" name="user_permission[${element[0]}]" value="1"></td>
-        <td><input type="radio" name="user_permission[${element[0]}]" value="2"></td>
-        <td><input type="radio" name="user_permission[${element[0]}]" value="3"></td>
-        <td class="hideTD"><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
+        <td class="sorting_1">${element.name}</td>
+        <td><input type="radio" name="department_permission[${element.id}]" value="-1" ></td>
+        <td><input type="radio" name="department_permission[${element.id}]" value="3"></td>
         </tr>   
-        `; 
-        count += 1; 
+        `
+        count+=1;
     });
-    $('#UserPermissionsAllCheck').html(UserNode);
+    $('#DepartmentPermissionsAll').html(departTable);
+    departmentName.forEach(element => {
+        let department_permissionEvn = document.getElementsByName(`department_permission[${element.id}]`);
+        department_permissionEvn.forEach(Nodeelement => {
+            Nodeelement.addEventListener("click", function (e) {
+                let selectedDepartmentDesignations = data.filter((el)=>el.id===element.id)[0];
+                let NodeEleValue = Nodeelement.value;
+                if(DisplayDesignation.includes(selectedDepartmentDesignations) && NodeEleValue=="-1"){
+                    DisplayDesignation = DisplayDesignation.filter(el=>el.id!==element.id)
+                    DisplayUser[`${element.name}`] = [];
+                    ReomoveSelected(true,element.name);
+                    BuildUserTable(DisplayUser);
+                    BuildDesiganationTable(DisplayDesignation);
+                    return;
+                }
+                if(NodeEleValue==="-1"){
+                    return;
+                }
+                if(DisplayDesignation.includes(selectedDepartmentDesignations) && NodeEleValue=="3"){
+                    return;
+                }
+                DisplayDesignation.push(selectedDepartmentDesignations);
+                BuildDesiganationTable(DisplayDesignation);
+            });
+        });
+    })
 });
 
+const BuildDesiganationTable = (displayList)=>{
 
-
-var AlreadyselectedDepartment = [];
-var AlreadyDesignations = [];
-$(document).ready(function(){
-    let selectedDeptVal = $('#file_department').val();
-    AlreadyselectedDepartment.push(selectedDeptVal);
-    if(AlreadyselectedDepartment.length>0){
-        AlreadyselectedDepartment.forEach(element => {
-            let DesignationNode = document.getElementById("DesignationPermissionsAll").innerHTML;
-                    $.get(`Controller\\permissionsRelated\\getAllDepts.php?query=${element[0]}`, (DeptNamedata, status)=>{
-                        DeptNamedata = JSON.parse(DeptNamedata);
-                        $.get(`Controller\\permissionsRelated\\getallDesignations.php?query=${element[0]}`, (data, status)=>{ 
-                            data = JSON.parse(data);
-                            if (data[0] === 'No records found!'){
-                                return;
-                            }
-                                count=1;
-                                data.forEach(element => {    
-                                    AlreadyDesignations.push(element[0]);
-                                    DesignationNode += `
-                                    <tr class="${count%2==0?"even":"odd"}">
-                                    ${count==1?`<td rowspan=${data.length}>${DeptNamedata[0][1]} </td>`:""}
-                                    <td class="sorting_1">${element[1]}</td>
-                                    <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" ></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="0"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="2"></td>
-                                    <td><input type="radio" name="designation_permission[${element[0]}]" value="3"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
-                                    </tr>   
-                                    `; 
-                                    count += 1; 
-                                });
-                                $('#DesignationPermissionsAll').html(DesignationNode);
-                        });
-                    });
-        });
-    }
-    $.get(`Controller\\permissionsRelated\\getAllDepts.php`, (data, status)=>{
-        data = JSON.parse(data);
+    desigTable="";
+    displayList.forEach((element)=>{
         count=1;
-        selectDeptms = "";
-        data.forEach(element => {    
-            let department_permissionEvn = document.getElementsByName(`department_permission[${element[0]}]`);
-            department_permissionEvn.forEach(Nodeelement => {
-                Nodeelement.addEventListener("click", function(e){
-                    if( AlreadyselectedDepartment.includes(element[0])){
+        departmentName = element.name;
+        element.designations.forEach((el)=>{
+            let checked = selectedDesignations.filter(ele=>ele.id===el.id).length>0;
+            desigTable+=`
+            <tr class="${count % 2 == 0 ? "even" : "odd"}">
+            ${count == 1 ? `<td rowspan=${element.designations.length}>${departmentName} </td>` : ""}
+            <td class="sorting_1">${el.name}</td>
+            <td><input type="radio" name="designation_permission[${el.id}]" value="-1" ></td>
+            <td><input type="radio" name="designation_permission[${el.id}]" value="3" ${checked?checked="checked":""}></td>
+            </tr>  
+            `
+            count+=1;
+        })
+    })
+    $("#DesignationPermissionsAll").empty();
+    $("#DesignationPermissionsAll").html(desigTable);
+    displayList.forEach((element)=>{
+        element.designations.forEach((el)=>{
+            let designation_permissionEvn = document.getElementsByName(`designation_permission[${el.id}]`);
+            designation_permissionEvn.forEach(DesignationNodeelement => {
+                DesignationNodeelement.addEventListener("click", function(e){
+                    let DesignationValue = DesignationNodeelement.value;
+                    if(DisplayUser[`${element.name}`] && DesignationValue=='-1'){
+                        DisplayUser[`${element.name}`] = DisplayUser[`${element.name}`].filter(ele=>ele.id!==el.id);
+                        ReomoveSelected(false,el.name);
+                        BuildUserTable(DisplayUser);
                         return;
                     }
-                    AlreadyselectedDepartment.push(element[0]);
-                    let DesignationNode = document.getElementById("DesignationPermissionsAll").innerHTML;
-                    $.get(`Controller\\permissionsRelated\\getAllDepts.php?query=${element[0]}`, (DeptNamedata, status)=>{
-                        DeptNamedata = JSON.parse(DeptNamedata);
-                        $.get(`Controller\\permissionsRelated\\getallDesignations.php?query=${element[0]}`, (data, status)=>{ 
-                            data = JSON.parse(data);
-                            if (data[0] === 'No records found!'){
-                                return;
-                            }
-                            count=1;
-                                data.forEach(element => {    
-                                    AlreadyDesignations.push(element[0]);
-                                    DesignationNode += `
-                                    <tr class="${count%2==0?"even":"odd"}">
-                                    ${count==1?`<td rowspan=${data.length}>${DeptNamedata[0][1]} </td>`:""}
-                                    <td class="sorting_1">${element[1]}</td>
-                                    <td><input type="radio" name="designation_permission[${element[0]}]" value="-1" ></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="0"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="1"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="2"></td>
-                                    <td><input type="radio" name="designation_permission[${element[0]}]" value="3"></td>
-                                    <td class="hideTD"><input type="radio" name="designation_permission[${element[0]}]" value="4"></td>
-                                    </tr>   
-                                    `; 
-                                    count += 1; 
-                                });
-                                $('#DesignationPermissionsAll').html(DesignationNode);
-                        });
-                    });
-                });
-            }); 
-        });
-    });
-});
+                    if(DisplayUser[`${element.name}`] && DesignationValue=='3'){ 
+                        let array = DisplayUser[`${element.name}`];
+                        DisplayUser = {...DisplayUser,[element.name]:[...array,el]};
+                        console.log(DisplayUser);
+                        selectedDesignations.push(element.id);
+                        BuildUserTable(DisplayUser);
+                        return;
+                    }
+                    if(!DisplayUser[`${element.name}`] && DesignationValue=='3')  DisplayUser[`${element.name}`] = [el];
+                    selectedDesignations.push({id : element.id,depart:element.name});
+                    BuildUserTable(DisplayUser);
+                })
+            })
+        })
+    })
+}
 
-// DESIGNATION SELECT  KRNA PA JO USER ANA CHAIYA WOH YHA SE AA PAYENGA 
-allselectedDesignations = [];
-$("#DesignationEvent").click(function(){  
-    AlreadyDesignations.forEach(selectedDesign => {
-        $.get(`Controller\\permissionsRelated\\getallDesignations.php?userQuery=${selectedDesign}`, (DesignationData, status)=>{
-            DesignationData = JSON.parse(DesignationData);
+const BuildUserTable = (display_user)=>{
+    let departnames = Object.keys(display_user);
+    UserNode = ``;
+    departnames.forEach((deptName)=>{
+        display_user[deptName].forEach((desig)=>{
             count=1;
-            DesignationData.forEach(Designationelement => {    
-                let designation_permissionEvn = document.getElementsByName(`designation_permission[${Designationelement[0]}]`);
-                designation_permissionEvn.forEach(DesignationNodeelement => {
-                    DesignationNodeelement.addEventListener("click", function(e){
-                        if( allselectedDesignations.includes(DesignationData[0][0])){
-                            return;
-                        }
-                        allselectedDesignations.push(DesignationData[0][0]);
-                        $.get(`Controller\\permissionsRelated\\getAllDepts.php?query=${DesignationData[0][2]}`, (DepartmentData, status)=>{
-                            DepartmentData = JSON.parse(DepartmentData);
-                            $.get(`Controller\\permissionsRelated\\getAllUsers.php?designation=${DesignationData[0][0]}&department=${DesignationData[0][2]}`, (Userdata, status)=>{ 
-                                Userdata = JSON.parse(Userdata);
-                                if (Userdata[0] === 'No records found!'){
-                                    return;
-                                }
-                                    let UserNode = document.getElementById("UserPermissionsAllCheck").innerHTML;
-                                    count=1;
-                                    Userdata.forEach(element => {    
-                                        UserNode += `
-                                        <tr class="${count%2==0?"even":"odd"}">
-                                        ${count==1?`<td rowspan=${Userdata.length}>${DepartmentData[0][1]} </td>`:""}
-                                        ${count==1?`<td rowspan=${Userdata.length}>${Designationelement[1]}  </td>`:""}
-                                        <td class="sorting_1">${element[1]}</td>
-                                        <td><input type="radio" name="user_permission[${element[0]}]" value="-1" ></td>
-                                        <td class="hideTD"><input type="radio" name="user_permission[${element[0]}]" value="1"></td>
-                                        <td><input type="radio" name="user_permission[${element[0]}]" value="2"></td>
-                                        <td><input type="radio" name="user_permission[${element[0]}]" value="3"></td>
-                                        <td class="hideTD"><input type="radio" name="user_permission[${element[0]}]" value="4"></td>
-                                        </tr>   
-                                        `; 
-                                        count += 1; 
-                                    });
-                                    $('#UserPermissionsAllCheck').html(UserNode);
-                            });
-                        });
-                    });
-                }); 
-            });
-        });
-    });
-})
+            let users = desig.users;
+            users.forEach(user=>{ 
+                    let fchecked = forbiddenUser.filter(el=>el.id==user.id).length>0;
+                    let rchecked = ReadUser.filter(el=>el.id==user.id).length>0;  
+                    let Wchecked = selectedUsers.filter(el=>el.id==user.id).length>0;    
+                    UserNode += `
+                    <tr class="${count%2==0?"even":"odd"}">
+                    ${count==1?`<td rowspan=${users.length}>${deptName} </td>`:""}
+                    ${count==1?`<td rowspan=${users.length}>${desig.name}  </td>`:""}
+                    <td class="sorting_1">${user.name}</td>
+                    <td><input type="radio" id="${deptName}_${desig.name}_${user.id}_0" class="user-select" name="user_permission[${user.id}]" value="-1" ${fchecked?"checked":""}></td>
+                    <td><input type="radio" id="${deptName}_${desig.name}_${user.id}_2"class="user-select" name="user_permission[${user.id}]" value="2" ${rchecked?"checked":""}></td>
+                    <td><input type="radio" id="${deptName}_${desig.name}_${user.id}_3"class="user-select" name="user_permission[${user.id}]" value="3" ${Wchecked?"checked":""}></td>
+                    </tr>   
+                    `; 
+                    count += 1; 
+                })
+            })
+        })
+        $('#UserPermissionsAllCheck').html(UserNode);
+        $(".user-select").on('click',(evt)=>{
+            let [depart,desig,id,value] = evt.target.id.split("_");
+            if(value==="3") {
+                selectedUsers.push({id,depart,desig});
+                forbiddenUser = forbiddenUser.filter(el=>el.id!==id);
+                ReadUser = ReadUser.filter(el=>el.id!==id);
+            }
+            else if(value=="2"){
+                selectedUsers = selectedUsers.filter(el=>el.id!==id);
+                forbiddenUser = forbiddenUser.filter(el=>el.id!==id);
+                ReadUser.push({id,depart,desig});
 
+            }
+            else if(value=="0"){
+                selectedUsers = selectedUsers.filter(el=>el.id!==id);
+                ReadUser = ReadUser.filter(el=>el.id!==id);
+                forbiddenUser.push({id,depart,desig});
+            }
+        
 
-// UserEventAdding
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var uncheckedForBdn = true;
-var uncheckedWrite = true;
-$('#checkAllDepartmentForbidden').click(function(){
-    // let selectedDept = $('#selected').val();
-    selectDeptms = ``;
-    $.get(`Controller\\permissionsRelated\\getAllDepts.php`, (data, status)=>{
-        data = JSON.parse(data);
-        count=1;
-        if (uncheckedForBdn){
-            data.forEach(element => {    
-                selectDeptms += `
-                <tr class="${count%2==0?"even":"odd"}">
-                <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" checked="checked"></td>
-                <td class="hideTD" ><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-                <td class="hideTD" ><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td class="hideTD" ><input type="radio" name="department_permission[${element[0]}]" value="2"></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3"  ></td>
-                <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
-                </tr>   
-                `; 
-                // ${element[0]==selectedDept?"checked='checked'":""}
-                count += 1; 
-            });
-            uncheckedForBdn = false;
-            uncheckedWrite = true;
-        }
-        else{
-            data.forEach(element => {    
-                selectDeptms += `
-                <tr class="${count%2==0?"even":"odd"}">
-                <td class="sorting_1">${element[1]}</td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-                <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-                <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-                <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="2" ></td>
-                <td><input type="radio" name="department_permission[${element[0]}]" value="3"></td>
-                <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
-                </tr>   
-                `; 
-                count += 1; 
-            });
-            uncheckedForBdn = true;
-            uncheckedWrite = true;
-        }
-            $('#DepartmentPermissionsAll').html(selectDeptms);
-    });
-})
-
-// $('#checkAllDepartmentWrite').click(function(){
-//     $.get(`Controller\\permissionsRelated\\getAllDepts.php`, (data, status)=>{
-//         data = JSON.parse(data);
-//         selectDeptms = "";
-//         count=1;
-//         if (uncheckedWrite){
-//             data.forEach(element => {    
-//                 selectDeptms += `
-//                 <tr class="${count%2==0?"even":"odd"}">
-//                 <td class="sorting_1">${element[1]}</td>
-//                 <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="2"  ></td>
-//                 <td><input type="radio" name="department_permission[${element[0]}]" value="3" checked="checked"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
-//                 </tr>   
-//                 `; 
-//                 count += 1; 
-//             });
-//             uncheckedWrite = false;
-//             uncheckedForBdn = true;
-//         }
-//         else{
-//             data.forEach(element => {    
-//                 selectDeptms += `
-//                 <tr class="${count%2==0?"even":"odd"}">
-//                 <td class="sorting_1">${element[1]}</td>
-//                 <td><input type="radio" name="department_permission[${element[0]}]" value="-1" ></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="0"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="1"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="2" ></td>
-//                 <td><input type="radio" name="department_permission[${element[0]}]" value="3"></td>
-//                 <td class="hideTD"><input type="radio" name="department_permission[${element[0]}]" value="4"></td>
-//                 </tr>   
-//                 `; 
-//                 count += 1; 
-//             });
-//             uncheckedWrite = true;
-//             uncheckedForBdn = true;
-//         }
-//             $('#DepartmentPermissionsAll').html(selectDeptms);
-//     });
-// })
-
-
-
-
-
+        })
+    }
