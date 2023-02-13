@@ -45,6 +45,7 @@ if ($user_obj->isAdmin()) {
 } else {
     $reviewIdCount = 0;
 }
+$GLOBALS['smarty']->assign('iadmin',$user_obj->isAdmin());
 if ($reviewIdCount > 0) {
     echo '<a href="toBePublished.php?state=1"> <button class="btn btn-large"><img src="images/exclamation.gif" /> '.msg('message_documents_waiting'). ': ' . e::h($reviewIdCount)  . '</button></a> </a><br />';
 }

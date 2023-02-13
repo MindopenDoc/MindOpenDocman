@@ -33,8 +33,8 @@
             <thead>
                 <tr>
                     <td>Check All ::> </td>
-                    <td><input type="radio" id="checkAllDepartmentForbidden" value="-1" name="department_permission_check"/></td>
-                    <td><input type="radio" id="checkAllDepartmentWrite" value="3" name="department_permission_check"/></td>
+                    <td><input type="radio" id="depart_forb"  class="all" value="-1" name="department_permission_check"/></td>
+                    <td><input type="radio" id="depart_write" class="all" value="3" name="department_permission_check"/></td>
  
                 </tr>
                 <tr>
@@ -68,8 +68,8 @@
             <thead>
                 <tr>
                     <td colspan="2"> Check all :::> </td>
-                    <td><input type="radio" id="checkAllDesignationForbidden" value="-1" name="designation_permission_check"/></td>
-                    <td><input type="radio" id="checkAllDesignationWrite" value="3" name="designation_permission_check"/></td>
+                    <td><input type="radio" id="design_forb"  class="all" value="-1" name="designation_permission_check"/></td>
+                    <td><input type="radio" id="design_write" class="all" value="3" name="designation_permission_check"/></td>
                     <td></td>
  
                 </tr>
@@ -104,9 +104,9 @@
             <thead>
                 <tr>
                     <td colspan="3" text-align="center"> Check all  :::></td>
-                    <td><input type="radio" id="checkAllUserForbidden" value="-1" name="user_permission_check"/></td>
-                    <td><input type="radio" id="checkAllUserRead" value="2" name="user_permission_check"/></td>
-                    <td><input type="radio" id="checkAllUserWrite" value="3" name="user_permission_check"/></td>
+                    <td><input type="radio" id="checkAllUserForbidden" class="all" value="-1" name="user_permission_check"/></td>
+                    <td><input type="radio" id="checkAllUserRead" class="all" value="2" name="user_permission_check"/></td>
+                    <td><input type="radio" id="checkAllUserWrite" class="all" value="3" name="user_permission_check"/></td>
                 </tr>
                 <tr>
                     <td>Department</td>

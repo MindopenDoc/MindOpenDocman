@@ -63,6 +63,7 @@ if (!defined('FileData_class')) {
         protected $connection;
         public $designation;
         public $keyword;
+        public $Title;
         
         public function __construct($id, $connection)
         {
@@ -122,7 +123,8 @@ if (!defined('FileData_class')) {
                 department,
                 Designation,
                 default_rights,
-                keyword
+                keyword,
+                Title
               FROM
                 {$GLOBALS['CONFIG']['db_prefix']}$this->tablename
               WHERE
@@ -145,6 +147,7 @@ if (!defined('FileData_class')) {
                     $this->designation = $row['Designation'];
                     $this->default_rights = $row['default_rights'];
                     $this->keyword = $row['keyword'];
+                    $this->Title = $row['Title'];
                 }
             } else {
                 $this->error = 'Non unique file id';
@@ -317,6 +320,10 @@ if (!defined('FileData_class')) {
             return $this->description;
         }
         //anshuman code start
+        public function Title()
+        {
+            return $this->Title;
+        }
         public function getkeyword()
         {
             return $this->keyword;

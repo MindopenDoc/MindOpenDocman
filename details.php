@@ -63,7 +63,17 @@ $user_permission_obj = new UserPermission($_SESSION['uid'], $pdo);
 $user_obj = new User($file_data_obj->getOwner(), $pdo);
 
 $owner_full_name = $file_data_obj->getOwnerFullName();
+//anshuman code start
+// $new_query="SELECT * FROM tbl_files WHERE fid=$request_id;";
 
+$versionquery = "SELECT * FROM tbl_files WHERE fid=$request_id;";
+$versionquery_stmt = $pdo->prepare($versionquery);
+$versionquery_stmt->execute(array());
+$version_list = $versionquery_stmt->fetchAll();
+$GLOBALS['smarty']->assign('version_list', $version_list);
+$a=end($version_list);
+$GLOBALS['smarty']->assign('lastversion',$a['filename']);
+//anshuman code end
 // comments Data 
 $comments_data_obj = new CommentsData($request_id, $pdo);
 $depth_data_comments =  $comments_data_obj->loadDepthData();

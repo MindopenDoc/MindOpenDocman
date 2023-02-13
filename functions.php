@@ -284,6 +284,7 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
         $description = $file_obj->getDescription();
         //anshuman code
         $keyword= $file_obj->getkeyword();
+        $Title= $file_obj->Title();
         //anshuman code end
         if ($file_obj->getStatus() == 0 and $userAccessLevel >= $userperms_obj->VIEW_RIGHT) {
             $lock = false;
@@ -302,7 +303,8 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
         }
 
         $full_name_array = $file_obj->getOwnerFullName();
-        $owner_name = $full_name_array[1] . ', ' . $full_name_array[0];
+        $owner_name = $full_name_array[0].','.$full_name_array[1];
+        // $owner_name = $full_name_array[1] . ', ' . $full_name_array[0];
         $dept_name = $file_obj->getDeptName();
         $realname = $file_obj->getRealname();
         //Get the file size in bytes.
@@ -353,7 +355,8 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
             'lock' => $lock,
             'showCheckbox' => $showCheckBox,
             'rejectpage' => $rejectpage,
-            'keyword' => $keyword
+            'keyword' => $keyword,
+            'Title' => $Title
         );
         // print_r($file_list_arr);
     }
@@ -363,6 +366,7 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
         $limit_reached = true;
     }
 
+    
     $GLOBALS['smarty']->assign('limit_reached', $limit_reached);
     $GLOBALS['smarty']->assign('showCheckBox', $showCheckBox);
     //print_r($file_list_arr);exit;

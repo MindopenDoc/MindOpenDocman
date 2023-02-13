@@ -207,6 +207,9 @@ if (!isset($_POST['submit'])) {
         } else {
             $publishable= '1';
         }
+        if($_POST['submit']=="Publish"){
+            $publishable=1;
+        }
         $result_array = array();
         
         // If the admin has chosen to assign the department
@@ -261,31 +264,37 @@ if (!isset($_POST['submit'])) {
             $owner_id = $_SESSION['uid'];
         }
         // print_r($_FILES['file']['name'][$count]);
-        //Anshuman Code start
-        $check =$_FILES['file']['name'][$count];
-        $file=(explode(".",$check));
-        $version=0;
-        $finalversion="";
-        $flag="SELECT count(id) FROM {$GLOBALS['CONFIG']['db_prefix']}data WHERE realname LIKE '$file[0]%'";
-        $ans=$pdo->prepare($flag);
-        $ans->execute();
-        $result = $ans->setFetchMode(PDO::FETCH_ASSOC);
-        foreach(($ans->fetchAll()) as $k=>$v) {
-         $version=($v['count(id)']);
-        if($version){
-            $str =$_FILES['file']['name'][$count];
-            $str2=(explode(".",$str));
-            $final=$str2[0].$version.".".$str2[1];
-        }
-        else{
-            $final=$_FILES['file']['name'][$count];
-        }
-        // die();
+        // //Anshuman Code start
+        // $check =$_FILES['file']['name'][$count];
+        // $file=(explode(".",$check));
+        // $version=0;
+        // $finalversion="";
+        // $flag="SELECT count(id) FROM {$GLOBALS['CONFIG']['db_prefix']}data WHERE realname LIKE '$file[0]%'";
+        // $ans=$pdo->prepare($flag);
+        // $ans->execute();
+        // $result = $ans->setFetchMode(PDO::FETCH_ASSOC);
+        // foreach(($ans->fetchAll()) as $k=>$v) {
+        //  $version=($v['count(id)']);
+        // if($version){
+        //     $str =$_FILES['file']['name'][$count];
+        //     $str2=(explode(".",$str));
+        //     $final=$str2[0].$version.".".$str2[1];
+        // }
+        // else{
+        //     $final=$_FILES['file']['name'][$count];
+        // }
+        // // die();
+        $final=$_FILES['file']['name'][$count];
         // INSERT file info into data table
         $keyworddata='No keyword Available';
         if(isset($_POST['keyword'])){
             $keyworddata=$_POST['keyword'];
         }
+        $title='No Title Available';
+        if(isset($_POST['title'])){
+            $title=$_POST['title'];
+        }
+        if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
         if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
             $dap=$_POST['file_department'];
             $cat=$_POST['cat'];
@@ -306,7 +315,8 @@ if (!isset($_POST['submit'])) {
             dep_category,
             sub_category,
             keyword,
-            Designation
+            Designation,
+            Title
         )
             VALUES
         (
@@ -324,7 +334,8 @@ if (!isset($_POST['submit'])) {
             $cat,
             $subcat,
             :keyworddata,
-            :designation
+            :designation,
+            :title
 
         )";
         }
@@ -343,7 +354,8 @@ if (!isset($_POST['submit'])) {
             default_rights,
             publishable,
             keyword,
-            Designation
+            Designation,
+            Title
         )
             VALUES
         (
@@ -358,7 +370,8 @@ if (!isset($_POST['submit'])) {
             0,
             $publishable,
             :keyworddata,
-            :designation
+            :designation,
+            :title
         )";
         }
         // die();
@@ -375,6 +388,7 @@ if (!isset($_POST['submit'])) {
         $file_data_stmt->bindParam(':comment', $_REQUEST['comment']);
         $file_data_stmt->bindParam(':keyworddata', $keyworddata);
         $file_data_stmt->bindParam(':designation', $_REQUEST['designation']);
+        $file_data_stmt->bindParam(':title', $_REQUEST['title']);
         $file_data_stmt->execute();
 
         // get id from INSERT operation

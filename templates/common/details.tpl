@@ -1,4 +1,4 @@
-
+ 
 <table border="0" width=100% cellspacing="4" cellpadding="1">
     <form name="data">
         <input type="hidden" name="to" value="{$file_detail.to_value|escape:'html'}" />
@@ -13,9 +13,15 @@
                 <img src="images/file_locked.png" alt="" border="0" align="absmiddle">
             {/if}
         </td>
+        {if $lastversion==""}
         <td align="left">
             <span style="font-size: larger; ">{$file_detail.realname|escape:'html'}</span>
         </td>
+        {else}
+            <td align="left">
+            <span style="font-size: larger; ">{$lastversion}</span>
+            </td>
+        {/if}
     </tr>
     <tr>
         <th valign=top align=right>{$g_lang_category}:</th><td>{$file_detail.category|escape:'html'}</td>
@@ -62,6 +68,29 @@
         <th valign=top align=right>{$g_lang_detailspage_file_checked_out_to}:</th><td><a href="mailto:{$checkout_person_email|escape:'html'}?Subject=Regarding%20your%20checked-out%20document:{$file_detail.realname|escape:'html'}&Body=Hello%20{$checkout_person_full_name.$fullname[0]|escape:'html'}"> {$checkout_person_full_name[1]|escape:'html'}, {$checkout_person_full_name[0]|escape:'html'}</a></td>
     </tr>
 {/if}
+<!--anshuman code start -->
+{if $version_list}
+<tr >
+<td colspan="2">
+    <table border="1" width=100% style="margin:2rem 0rem" cellspacing="4" cellpadding="1">
+        <tr>
+            <th style="text-align: center;">{"Id"}</th>
+            <th style="text-align: center;">{"File name"}</th>
+            <th style="text-align: center;">{"Control Options"}</th>
+        </tr>
+        {php}$prid = (int) $_GET['id'];{/php}</td></tr>
+        {foreach from=$version_list item=foo}
+            <tr>
+            
+                <td style="text-align: center;">{$foo.id}</td>
+                <td style="text-align: center;">{$foo.filename}</td>
+                <td style="text-align: center;"><button><a href="versionfile/{$foo.filename}" target="_blank">{"view"}</a></button><button><a href="versionfile/{$foo.filename}" download>{"Download"}</a></button></td>
+
+            </tr>
+        {/foreach}
+    </table>
+{/if}
+<!--anshuman code end -->
 
 <!-- available actions -->
     <tr>
@@ -101,6 +130,13 @@
                             <a href="{$history_link|escape}" class="regular"><img src="images/history.png" alt="history"/>{$g_lang_detailspage_history}</a>
                         </div>
                     </td>
+                    {if $edit_link ne ''}
+                    <td align="center">
+                        <div class="buttons">
+                            <a href="{$g_base_url}/newversion.php?pid={$file_id}" class="regular"><button class="btn btn-small btn-success"> Add new  version</button></a>
+                        </div>
+                    </td>
+                    {/if}
 
                 </tr>
                 <!-- inner table ends -->
@@ -109,7 +145,7 @@
     </tr>
 </table>
 {if $depth_data_comments }
-    <table border="1" width=100% cellspacing="4" cellpadding="1">
+    <table border="1" width=100% cellspacing="4" cellpadding="1" style="margin:2rem 0rem">
     <tr>
         <td style="text-align: center;"> Comments </td> 
         <td style="text-align: center;"> Comment by </td>

@@ -30,7 +30,12 @@
             <input tabindex="0" name="file[]" type="file" multiple="multiple">
         </td>
     </tr>
-    
+    <tr>
+        <td>
+            <a class="body" href="help.html#Add_File_-_Description" onClick="return popup(this, 'Help')" style="text-decoration:none">{"Title"}</a>
+        </td>
+        <td colspan="3"><input tabindex="5" type="Text" name="title" size="50"></td>
+    </tr>
 {if $is_admin == true }
     <tr>
         <td>
