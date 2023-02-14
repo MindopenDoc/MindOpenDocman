@@ -35,12 +35,14 @@
     <tr>
         <th valign=top align=right>{$g_lang_label_created_date}:</th><td> {$file_detail.created|escape:'html'}</td>
     </tr>
+    {if $File_Owner_bool or $isadmin eq 'yes' }
     <tr>
         <td colspan="2" align="right"><a href="{$File_permission_alter|escape}"><button class="btn btn-small btn-danger"> Edit permission</button></a> </td>
     </tr>
+    {/if}
     <tr>
         <th valign=top align=right>File Assign Designation:</th><td> {$file_detail.designation|escape:'html'}</td>
-        </tr>
+    </tr>
         <tr>
         <th valign=top align=right>{$g_lang_owner}:</th>
         <td>
@@ -76,6 +78,9 @@
         <tr>
             <th style="text-align: center;">{"Id"}</th>
             <th style="text-align: center;">{"File name"}</th>
+            <th style="text-align: center;">{"Date Uploaded"}</th>
+            <th style="text-align: center;">{"Uploaded By"}</th>
+            <th style="text-align: center;">{"Version"}</th>
             <th style="text-align: center;">{"Control Options"}</th>
         </tr>
         {php}$prid = (int) $_GET['id'];{/php}</td></tr>
@@ -84,6 +89,9 @@
             
                 <td style="text-align: center;">{$foo.id}</td>
                 <td style="text-align: center;">{$foo.filename}</td>
+                <td style="text-align: center;">{$foo.created|date_format:"%D"}</td>
+                <td style="text-align: center;">{$foo.id}</td>
+                <td style="text-align: center;">{$foo.id}</td>
                 <td style="text-align: center;"><button><a href="versionfile/{$foo.filename}" target="_blank">{"view"}</a></button><button><a href="versionfile/{$foo.filename}" download>{"Download"}</a></button></td>
 
             </tr>

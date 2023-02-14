@@ -44,28 +44,26 @@
         <td>
             <select name="file_owner">
             {foreach from=$avail_users item=user}
-                <option value="{$user.id}" {$user.selected}>{$user.last_name|escape:'html'}, {$user.first_name|escape:'html'}</option>
+                <option value="{$user.id}" {$user.selected}> {$user.first_name|escape:'html'} {$user.last_name|escape:'html'}</option>
             {/foreach}
             </select>
         </td>
     </tr>
     <tr>
         <td>
-            {$g_lang_editpage_assign_department}
+            {"Belongs to Department"}
         </td>
         <td>
                
             <select name="file_department" id="selected">
             {foreach from=$avail_depts item=dept}
                 <option value="{$dept.id}" {$dept.selected}>{$dept.name|escape:'html'}</option>
-            }
-            }
             {/foreach}
             </select>
         </td>
     </tr>
     <tr>
-        <td><b>Assign to Designation</b></td>
+        <td><b>Belongs to Designation</b></td>
         <td>
             <select name="designation" id="selectedDesignation">
                 {foreach from=$designation_list item=item name=designation_list}
@@ -103,9 +101,7 @@
     </tr>
       <tr id="departmentSelect">
           <td colspan=3>
-            <hr />
             {include file='../../templates/common/text.tpl'}
-            <hr />
         </td>
     </tr>     
     <tr>

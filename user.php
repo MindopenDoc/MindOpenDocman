@@ -279,7 +279,6 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] == 'adduser') {
     $designation_stmt = $pdo->prepare($designation_query);
     $designation_stmt->execute();
     $designation_list = $designation_stmt->fetchAll();
-   
     // DESIGNATION ENDS
     $GLOBALS['smarty']->assign('user', $user_obj);
     $GLOBALS['smarty']->assign('first_name', $user_obj->first_name);

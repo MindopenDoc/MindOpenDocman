@@ -1,6 +1,11 @@
 <tr>
-<td colspan="4" align="center"><div class="buttons"><button class="positive" type="Submit" name="submit" value="Update Document Properties">{$g_lang_button_save}</button></div></td>
-<td colspan="4" align="center"><div class="buttons"><button class="negative" type="Reset" name="reset" value="Reset">{$g_lang_button_reset}</button></div></td>
+	<td colspan="3" align="center">
+		 
+			<button class="positive" style="margin:0 1rem 0 0" type="Submit" name="submit" value="Update Document Properties">{$g_lang_button_save}</button>
+	 
+			<button class="negative" style="margin:0 1rem 0 0" type="Reset" name="reset" value="Reset">{$g_lang_button_reset}</button>
+		 
+	</td>
 
 	</tr>
 	</table>

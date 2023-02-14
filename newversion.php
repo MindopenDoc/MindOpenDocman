@@ -96,18 +96,50 @@ if (isset($_POST['submit']))
 // fetch files
 $sql = "select filename from tbl_files";
 $result =  $conn->query($sql);
+
+$request_id = (int) $_GET['pid'];
+$file_data_obj = new FileData($request_id, $pdo);
+$user_id = $_SESSION['uid'];
+
 ?>
-<div class="container">
+
+<ul class="breadcrumb">
+  <li> <?php echo $file_data_obj->getDeptName() ?> <span class="divider">/</span></li>
+  <li><?php echo $file_data_obj->get_dep_category() ?> <span class="divider">/</span></li>
+  <li><?php echo $file_data_obj->get_sub_category() ?> <span class="divider">/</span></li>
+  <li class="active"><?php echo $file_data_obj->Title() ?></li>
+</ul>
+
+<div class="container" align="center">
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 well">
         <form action="newversion.php" method="post" enctype="multipart/form-data">
-            <legend>Select File to Upload:</legend>
+            <legend>Version File to Upload:</legend>
             <div class="form-group">
-                <input type="file" name="file1" />
-                <input type="hidden" name="file2" value="<?php echo $_GET['pid'];?>"/>
+                <table style="width:100%">
+                    <tr>
+                        <td>Select the version file : </td>
+                        <td><input type="file" name="file1" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="hidden" name="file2" value="<?php echo $_GET['pid'];?>"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="hidden" name="user_id" value="<?php echo $user_id;?>"/></td>
+                    </tr>
+                    <tr>
+                        <td>Enter the version : </td>
+                        <td><input type="text" name="VersionNo" value=""/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" name="submit" value="submit" class="btn btn-info"/></td>
+                    </tr>
+                </table>
             </div>
             <div class="form-group">
-                <input type="submit" name="submit" value="submit" class="btn btn-info"/>
+                
             </div>
             <?php if(isset($_GET['st'])) { ?>
                 <div class="alert alert-danger text-center">

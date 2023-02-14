@@ -64,6 +64,8 @@ if (!defined('FileData_class')) {
         public $designation;
         public $keyword;
         public $Title;
+        public $dep_category;
+        public $sub_category;
         
         public function __construct($id, $connection)
         {
@@ -124,6 +126,8 @@ if (!defined('FileData_class')) {
                 Designation,
                 default_rights,
                 keyword,
+                dep_category,
+                sub_category,
                 Title
               FROM
                 {$GLOBALS['CONFIG']['db_prefix']}$this->tablename
@@ -148,6 +152,8 @@ if (!defined('FileData_class')) {
                     $this->default_rights = $row['default_rights'];
                     $this->keyword = $row['keyword'];
                     $this->Title = $row['Title'];
+                    $this->dep_category = $row['dep_category'];
+                    $this->sub_category = $row['sub_category'];
                 }
             } else {
                 $this->error = 'Non unique file id';
@@ -205,7 +211,55 @@ if (!defined('FileData_class')) {
          */
         public function getCategory()
         {
-            return $this->category;
+           
+            // return $this->category;
+        }
+        /**
+         * return this file's dep_category id
+         * @return int
+         */
+        public function get_dep_category()
+        {
+              $query = "
+              SELECT
+              cat_name
+              FROM
+                category
+              WHERE
+                id = :category_id
+            ";
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute(array(':category_id' => $this->dep_category));
+            $result = $stmt->fetch();
+
+            $name = $result['cat_name'];
+
+            return $name;
+            // return $this->dep_category;
+        }
+
+                /**
+         * return this file's sub_category id
+         * @return int
+         */
+        public function get_sub_category()
+        {
+              $query = "
+              SELECT
+                sub_cat_name
+              FROM
+                subcategory
+              WHERE
+                id = :sub_category_id
+            ";
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute(array(':sub_category_id' => $this->dep_category));
+            $result = $stmt->fetch();
+
+            $name = $result['sub_cat_name'];
+
+            return $name;
+            // return $this->sub_category;
         }
 
         /**

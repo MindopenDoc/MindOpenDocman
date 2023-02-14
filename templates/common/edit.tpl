@@ -1,5 +1,19 @@
 <script type="text/javascript" src="functions.js"></script>
+{literal}
+    <style>
+        .hiderows {
+            display: none;
+        }
 
+        .hideTD {
+            display: none;
+        }
+
+        .PermissionTable {
+            width: 70%;
+        }
+    </style>
+{/literal}
 <!-- file upload formu using ENCTYPE -->
 <form id="addeditform" name="main" class="display dataTable" action="{$smarty.server.PHP_SELF|escape:'html'}" method="POST" enctype="multipart/form-data" onsubmit="return checksec(); ">
     <input type="hidden" id="db_prefix" value="{$db_prefix}" />
@@ -26,33 +40,34 @@
         <td>
             <select name="file_owner">
             {foreach from=$avail_users|smarty:nodefaults item=user}
-                <option value="{$user.id|escape}" {if $pre_selected_owner eq $user.id}selected='selected'{/if}>{$user.last_name|escape:'html'}, {$user.first_name|escape:'html'}</option>
+                <option value="{$user.id|escape}" {if $pre_selected_owner eq $user.id}selected='selected'{/if}>{$user.first_name|escape:'html'} {$user.last_name|escape:'html'}</option>
             {/foreach}
             </select>
         </td>
     </tr>
+    
     <tr>
         <td>
-            Designation
+            {"Belongs to Department"}
         </td>
         <td>
                
-            <select name="designation">
-             {foreach from=$designation_list|smarty:nodefaults item=design}
-                <option value="{$design.id|escape}" {if $pre_selected_designation eq $design.id}selected='selected'{/if}>{$design.name|escape:'html'}</option>
-            {/foreach}
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {$g_lang_editpage_assign_department}
-        </td>
-        <td>
-               
-            <select name="file_department">
+            <select name="file_department" id="selected">
             {foreach from=$avail_depts|smarty:nodefaults item=dept}
                 <option value="{$dept.id|escape}" {if $pre_selected_department eq $dept.id}selected='selected'{/if}>{$dept.name|escape:'html'}</option>
+            {/foreach}
+            </select>
+        </td>
+    </tr>
+    <tr >
+        <td>
+            Belongs to Designation
+        </td>
+        <td>
+               
+            <select name="designation"  id="selectedDesignation">
+             {foreach from=$designation_list|smarty:nodefaults item=design}
+                <option value="{$design.id|escape}" {if $pre_selected_designation eq $design.id}selected='selected'{/if}>{$design.name|escape:'html'}</option>
             {/foreach}
             </select>
         </td>
@@ -71,7 +86,7 @@
         </td>
     </tr>
     <!-- Set Department rights on the file -->
-    <tr id="departmentSelect">
+    <tr id="departmentSelect" class="hiderows">
         <td>
             <a class="body" href="help.html#Add_File_-_Department" onClick="return popup(this, 'Help')" style="text-decoration:none">{$g_lang_addpage_permissions}</a>
         </td>
@@ -95,4 +110,5 @@
         <td colspan="3"><textarea tabindex="6" name="comment" rows="4" onchange="this.value=enforceLength(this.value, 255);">{$comment|escape:'html'}</textarea></td>
     </tr>
 </table>
+    <script type="text/javascript" src="{$g_base_url}/templates/common/js/SelectDept_Design.js"></script>
     <script type="text/javascript" src="{$g_base_url}/templates/common/js/permissionsWork.js"></script>

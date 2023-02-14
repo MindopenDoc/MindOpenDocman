@@ -39,8 +39,8 @@
                 </tr>
                 <tr>
                     <td>Department</td>
-                    <td>Forbidden</td>
-                    <td>Write</td>
+                    <td>No</td>
+                    <td>Yes</td>
                 </tr>
             </thead>
             <tbody id="DepartmentPermissionsAll" >
@@ -76,8 +76,8 @@
                 <tr>
                     <td>Department</td>
                     <td>Designation</td>
-                    <td>Forbidden</td>
-                    <td>Write</td>
+                    <td>NO</td>
+                    <td>Yes</td>
                 </tr>
             </thead>
             <tbody id="DesignationPermissionsAll">
@@ -112,11 +112,14 @@
                     <td>Department</td>
                     <td>Designation</td>
                     <td>User</td>
-                    <td>Forbidden</td>
+                    <td>No</td>
                     <td>Read</td>
                     <td>Write</td>
                 </tr>
             </thead>
+                <tr id="userOwnerSelect" class="hiderows">
+
+                </tr>
             <tbody id="UserPermissionsAllCheck">
                 {foreach from=$avail_users item=user}
                 {if $user.rights eq ''}
@@ -137,7 +140,16 @@
 {literal}
 <script>
     $(document).ready(function() {
-        
+        OwnerVal = $("#FileOwner").val();
+        $("#userOwnerSelect").html(`
+                    <td>${$("[name='file_department']").val()}</td>
+                    <td>${$("[name='designation']").val()}</td>
+                    <td>${$("[name='file_owner']").val()}</td>
+                    <td><input type="radio" name="user_permission[${OwnerVal}]" value="-1"/></td>
+                    <td><input type="radio" name="user_permission[${OwnerVal}]" value="2" /></td>
+                    <td><input type="radio" name="user_permission[${OwnerVal}]" value="4" checked="checked"/></td>
+        `);
+
         (function($) {
             var allPanels = $('.accordion > dd').hide();           
             $('.accordion > dt > a').click(function() {

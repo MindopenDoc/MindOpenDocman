@@ -282,6 +282,8 @@ $my_delete_link = 'delete.php?mode=tmpdel&id0=' . $request_id;
 $GLOBALS['smarty']->assign('history_link', $history_link);
 $GLOBALS['smarty']->assign('comments_link', $comments_link);
 $GLOBALS['smarty']->assign('my_delete_link', $my_delete_link);
+$GLOBALS['smarty']->assign('File_Owner_bool', $file_data_obj->isOwner($_SESSION['uid']));
+
 
 // Call the plugin API
 

@@ -77,7 +77,7 @@
                     {else}
                         <td><a href="{$item.details_link|escape}">{$item.Title|escape:'html'}</a></td>
                     {/if}
-                    <td>{$item.modified_date|escape:'html'}</td>
+                    <td>{$item.modified_date|date_format:"%D"}</td> 
                     <td>{$item.owner_name|escape:'html'}</td>
                     <td>{$item.dept_name|escape:'html'}</td>
                     {if $user_name eq $item.owner_name || ($iadmin eq 1)}
