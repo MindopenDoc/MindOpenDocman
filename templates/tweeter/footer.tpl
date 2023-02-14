@@ -18,10 +18,8 @@
                 <img src="{$g_base_url}/images/001logo.png" title="{$site_title|escape:'html'}" alt="{$site_title|escape:'html'}" border="0">
             </a>
         
-        <p><a href="http://www.opendocman.com/" target="_new">OpenDocMan</a> | 
-            <a href="http://www.opendocman.com/forum/" target="_new">Support</a> |
-            <a href="http://opendocman.uservoice.com" target="_new">Feedback</a> |
-            <a href="https://github.com/opendocman/opendocman/issues" target="_new">Bugs</a> |
+        <p><a href="http://www.mindruby.com/" target="_new">MindRuby</a> | 
+            <a href="http://www.mindruby.com/" target="_new">Support</a> 
         </p>
       </footer>
 

@@ -12,10 +12,10 @@
 
 <div class="contianer" style="margin:2rem 0rem">
         <div class="row">
-        <div class="span3">
+        <div class="span2">
             <div id="tree1"></div>
         </div>
-        <div class="span9">
+        <div class="span10">
         <div id="filetable_wrapper">
         <form name="table" method="post" action="{$smarty.server.PHP_SELF|escape:'html'}">
             <table id="filetable" class="display" border="0" cellpadding="1" cellspacing="1">
@@ -68,9 +68,9 @@
                     {if $item.view_link eq 'none'}
                         &nbsp;
                     {elseif $version_list eq ""}
-                        <a href="{$item.view_link|escape:'html'}"><button class="btn btn-small btn-success"> {$g_lang_outpage_view} </button></a></td>
+                        <a href="{$item.view_link|escape:'html'}" class="btn btn-small btn-success">{$g_lang_outpage_view}</a></td>
                     {else}
-                        <a href="versionfile/{$version_list|escape:'html'}"><button class="btn btn-small btn-success"> {$g_lang_outpage_view} </button></a></td>
+                        <a href="versionfile/{$version_list|escape:'html'}" class="btn btn-small btn-success">{$g_lang_outpage_view}</a></td>
                     {/if}
                     {if $item.Title eq ''}
                         <td> <a href="{$item.details_link|escape}">{"View Details"}</a> </td>
@@ -82,8 +82,8 @@
                     <td>{$item.dept_name|escape:'html'}</td>
                     {if $user_name eq $item.owner_name || ($iadmin eq 1)}
                         <td>
-                            <a style="margin:0rem 0.5rem" href="{$g_base_url}/edit.php?id={$item.id}&state=3"><button class="btn btn-small btn-warning">Edit</button>  </a> 
-                            <a style="margin:0rem 0.5rem" href="{$g_base_url}/delete.php?mode=tmpdel&id0={$item.id}"><button class="btn btn-small btn-danger">Delete</button></a>
+                            <a style="margin:0rem 0.5rem 0rem 0rem" class="btn btn-small btn-warning" href="{$g_base_url}/edit.php?id={$item.id}&state=3"> Edit </a> 
+                            <a style="margin:0rem 0.5rem 0rem 0rem" class="btn btn-small btn-danger" href="{$g_base_url}/delete.php?mode=tmpdel&id0={$item.id}"> Delete</a>
                         </td>
                     {else}
                         <td>None</td>
@@ -141,9 +141,9 @@
     </div>
 </div>
 
-<!-- /container -->   
-     <script type="text/javascript" src="{$g_base_url}/templates/common/js/TreeJSCreate.js"></script>
-    <!-- JQTREE JS -->
 
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/JqTree/tree.jquery.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/JqTree/tree.jquery.js.map"></script>
+<!-- /container -->   
+     <script type="text/javascript" src="{$g_base_url}/templates/common/js/TreeJSCreate.js"></script>
+    <!-- JQTREE JS -->
