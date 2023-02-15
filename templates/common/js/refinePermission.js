@@ -34,19 +34,21 @@ const ReomoveSelected = (isDepart, value) => {
     }
 }
 
-$.get(`Controller\\permissionsRelated\\APIFORDATA.php`, (data, status) => {
+$.get(`Controller\\permissionsRelated\\APIFORDATA.php?id=15`, (data, status) => {
     data = JSON.parse(data);
-    let departmentName = data.map((el) => { return { id: el.id, name: el.name } });
+    let departmentName = data.map((el) => { return { id: el.id, name: el.name } }); //, rights:el.rights
     count = 1;
     departTable = "";
     departmentName.forEach(element => {
         departTable += `
         <tr class="${count % 2 == 0 ? "even" : "odd"}">
         <td class="sorting_1">${element.name}</td>
-        <td><input type="radio" class="depart_forb" name="department_permission[${element.id}]" value="-1" ></td>
-        <td><input type="radio" class="depart_write" name="department_permission[${element.id}]" value="3"></td>
+        <td><input type="radio" class="depart_forb" name="department_permission[${element.id}]" value="-1"></td>
+        <td><input type="radio" class="depart_write" name="department_permission[${element.id}]" value="3" ></td>
         </tr>   
-        `
+        `;
+        // ${!element.rights?checked="checked":""}
+        // ${element.rights?checked="checked":""}
         count += 1;
 
     });
@@ -203,3 +205,44 @@ $(".all").on("click", (evt) => {
 
 })
 
+$.get(`Controller\\permissionsRelated\\preselectedAll.php?id=${$('#id').val()}`, (data, status) => {
+    data = JSON.parse(data);
+    alldepts = data['pre_selected_department'];
+    alldepts.forEach((ElDept)=>{
+        if (ElDept.rights === "3"){
+            $(`.depart_write[name="department_permission[${ElDept.id}]"]`).click();
+        }
+        else if(ElDept.rights === "-1"){
+            $(`.depart_forb[name="department_permission[${ElDept.id}]"]`).click();
+        }
+        else{
+            $(`.depart_forb[name="department_permission[${ElDept.id}]"]`).click();
+        }
+    })
+    allDesign = data['pre_selected_designation'];
+    allDesign.forEach(ElemDesign=>{
+        if(ElemDesign.rights === "3"){
+            $(`.design_write[name="designation_permission[${ElemDesign.id}]"]`).click();
+        }
+        else if(ElemDesign.rights === "-1"){
+            $(`.design_forb[name="designation_permission[${ElemDesign.id}]"]`).click();
+        }
+        else {
+            $(`.design_forb[name="designation_permission[${ElemDesign.id}]"]`).click();
+        }
+    })
+    allUsersEac = data['pre_selected_owner'];
+    allUsersEac.forEach(eachUser=>{
+        if(eachUser.rights === "3"){
+            $(`.checkAllUserWrite[name="user_permission[${eachUser.id}]"]`).click();
+        }
+        else if(eachUser.rights === "2"){
+            $(`.checkAllUserRead[name="user_permission[${eachUser.id}]"]`).click(); 
+        }
+        else{
+            $(`.checkAllUserForbidden[name="user_permission[${eachUser.id}]"]`).click();
+        }
+    })
+
+
+});

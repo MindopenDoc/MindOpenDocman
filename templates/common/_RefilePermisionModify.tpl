@@ -129,6 +129,5 @@
 </form>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/createPromise.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/refinePermission.js"></script>
-{* <script type="text/javascript" src="{$g_base_url}/templates/common/js/testAnRequest.js"></script> *}
 <input type="hidden" id="csrfp_hidden_data_token" value="csrfp_token">
 <input type="hidden" id="csrfp_hidden_data_urls" value='[]'><script type="text/javascript" src="http://localhost/opendoccopy/vendor/owasp/csrf-protector-php/js/csrfprotector.js"></script>

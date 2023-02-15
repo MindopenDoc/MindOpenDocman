@@ -5,14 +5,21 @@ session_start();
 $GLOBALS['state'] = 1;
 require_once '../../odm-load.php';
 $dataDir = $GLOBALS['CONFIG']['dataDir'];
+include('../../udf_functions.php');
+require_once("../../AccessLog_class.php");
+require_once("../../User_Perms_class.php");
 $userperms_obj = new UserPermission($_SESSION['uid'], $pdo);
-
+if (!isset($_REQUEST['id']) || $_REQUEST['id'] == '') {
+    print_r(json_encode("Error while Handling Data !"));
+    die();
+}
 $showCheckBox = false;
 $rejectpage = false;
 if(isset($_GET['query'])){
      echo "Nothing !";
 }
 else{
+    $filedata = new FileData($_REQUEST['id'], $pdo);
     $query = "SELECT * FROM {$GLOBALS['CONFIG']['db_prefix']}department ORDER BY `odm_department`.`name` ASC";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
@@ -42,10 +49,10 @@ else{
                             array_push($user_result_array,array("id"=>$user_row['id'],"name"=>$user_row['first_name']));
                         }
                     }
-                    array_push($design_result_array, array("id"=>$design_row['id'],"name"=>$design_row['name'],"users"=>$user_result_array));
+                    array_push($design_result_array, array("id"=>$design_row['id'],"name"=>$design_row['name'],"rights"=> $filedata->getDesignRights($design_row['id']),"users"=>$user_result_array));
                 }
             }
-            array_push($result_Send,array("id"=>$row['id'],"name"=>$row['name'],"designations"=>$design_result_array));
+            array_push($result_Send,array("id"=>$row['id'],"name"=>$row['name'],"rights"=> $filedata->getDeptRights($row['id']),"designations"=>$design_result_array));
         }
         print_r(json_encode($result_Send));
     }

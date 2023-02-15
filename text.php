@@ -125,12 +125,12 @@
     display: none;
 }
 </style>
-<form action="text.php" method="post" target="_blank">
+<form action="text.php" method="post" target="_blank" onsubmit="return validateForm()">
     <table>
         <tr>
             <td>Select Department</td>
             <td colspan="2">
-                <select id="selected" class="form-control m-2" name="dep">
+                <select id="DeptSelected" class="form-control m-2" name="dep">
                     <option>Select An Department</option>
                     <?php while($row = $result->fetch_assoc()) {?>
                     <option value="<?php echo $row['id']  ?>"><?php echo $row["name"]?></option>
@@ -152,9 +152,13 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td></td>
+            <td colspan="1">
                 <input type="text" id="selectedCategoryinput" name="icat" class="form-control m-2 "
                     placeholder="Enter category">
+            </td>
+            <td id="errormsg_cat">
+
             </td>
         </tr>
         <tr>
@@ -171,51 +175,151 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td></td>
+            <td colspan="1">
                 <input type="text" id="selectedCategoryinput1" name="isubcat" class="form-control m-2 "
                     placeholder="Enter subcategory">
             </td>
+            <td id="errormsg_sub_cat"></td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="3" align="center">
                 <input id="submit1" type="submit" value="Submit" disabled>
             </td>
         </tr>
     </table>
 </form>
+<?php
+
+    $query = "SELECT id,name FROM {$GLOBALS['CONFIG']['db_prefix']}department ORDER BY `id` ASC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $Dept_result = $stmt->fetchAll();
+    
+    $num_rows = $stmt->rowCount();
+    $Dept_name = array();
+    // Set the values for the hidden sub-select fields
+    foreach ($Dept_result as $DeptData) {
+        $dept_id = $DeptData['id'];
+        $CategoryQuery = "SELECT id,pr_id,cat_name FROM category WHERE pr_id = $dept_id";
+        $CategoryStmt = $pdo->prepare($CategoryQuery);
+        $CategoryStmt->execute();
+        $Category_result = $CategoryStmt->fetchAll();
+        $Category_name  = array();
+        foreach($Category_result as $CateData){
+            $cat_id = $CateData['id'];
+            $SubCategoryQuery = "SELECT id,pr_id,sub_cat_name FROM subcategory WHERE pr_id = $dept_id";
+            $SubCategoryStmt = $pdo->prepare($SubCategoryQuery);
+            $SubCategoryStmt->execute();
+            $SubCategory_result = $SubCategoryStmt->fetchAll();
+            $SubCategory_name  = array();
+            foreach($SubCategory_result as $subCatData){
+                array_push($SubCategory_name,array("id"=>$subCatData['id'],"name"=>$subCatData['sub_cat_name']));
+            }
+            array_push($Category_name,array("id"=>$CateData['id'],"name"=>$CateData['cat_name'],"sub_category"=>$SubCategory_name));
+        }
+        array_push($Dept_name,array("id"=>$DeptData['id'],"name"=>$DeptData['name'],"category"=>$Category_name));
+    }
+?>
+<table border="3" cellspacing="5" cellpadding="5" style="width:100%">
+    <tr>
+        <th>Department</th>
+        <th>Category</th>
+    </tr>
+ 
+    <?php foreach($Dept_name as $Dept) { ?>
+    <tr>
+        <td> <?php  echo $Dept['name']  ?></td>
+        <td>
+            <table  border="2"  cellspacing="4" cellpadding="4" style="width:100%">
+                    <?php foreach($Dept['category'] as $Categ) { ?>
+                    <tr><td>
+                        <?php  echo $Categ['name'] ?>
+                        </td>
+                        <td>
+                        <table  border="1"  cellspacing="3" cellpadding="3" style="width:100%">
+                            <?php foreach($Categ['sub_category'] as $SubCateg) {?>
+                            <tr><td><?php echo $SubCateg['name']  ?></td></tr>
+                            <?php } ?>
+                        </table>
+                        </td>
+                    </tr>
+                    <?php } ?>
+            </table>
+            </td>
+    </tr>
+    <?php } ?>
+</table>
+
+
 <script>
-const myElement = document.getElementById("selected");
-const myElement2 = document.getElementById("selectedCategory");
-const myElement3 = document.getElementById("selectedSubCategory");
-const myElement4 = document.getElementById("addinput");
-const myElement5 = document.getElementById("addinput2");
-const myElement6 = document.getElementById("selectedCategoryinput");
-myElement.addEventListener('change', (e) => {
+const DeptElement = document.getElementById("DeptSelected");
+const CategoryElement2 = document.getElementById("selectedCategory");
+const SubCategoryElement3 = document.getElementById("selectedSubCategory");
+const inputCategory = document.getElementById("addinput");
+const inputSubCateory = document.getElementById("addinput2");
+const inputBoxCategoryinput = document.getElementById("selectedCategoryinput");
+
+function validateForm() {
+    let x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+}
+
+$("#selectedCategoryinput").blur(() => {
+    evtVal = $("#selectedCategoryinput").val();
+    if (evtVal.length < 2) {
+        $('#submit1').prop('disabled', true);
+        $('#errormsg_cat').html("<b>The Entered Category is not a Valid.</b>");
+    } else if (evtVal.length > 30) {
+        $('#submit1').prop('disabled', true);
+        $('#errormsg_cat').html("<b>The Category must be less than 30 characters.</b>");
+    } else {
+        $('#submit1').prop('disabled', false);
+        $('#errormsg_cat').html("");
+    }
+})
+$("#selectedCategoryinput1").blur(() => {
+    evtVal = $("#selectedCategoryinput1").val();
+    console.log(evtVal);
+    if (evtVal.length < 2) {
+        $('#submit1').prop('disabled', true);
+        $('#errormsg_sub_cat').html("<b>The Entered sub-Category is not a Valid.</b>");
+    } else if (evtVal.length > 30) {
+        $('#submit1').prop('disabled', true);
+        $('#errormsg_sub_cat').html("<b>The sub-Category must be less than 30 characters.</b>");
+    } else {
+        $('#submit1').prop('disabled', false);
+        $('#errormsg_sub_cat').html("");
+    }
+})
+
+
+DeptElement.addEventListener('change', (e) => {
     let a = 0;
-    a = myElement2.value;
-    myElement4.disabled = false;
-    showuser(myElement.value);
+    a = CategoryElement2.value;
+    inputCategory.disabled = false;
+    showuser(DeptElement.value);
 })
-myElement2.addEventListener('change', (e) => {
-    myElement5.disabled = false;
-
+CategoryElement2.addEventListener('change', (e) => {
+    inputSubCateory.disabled = false;
 })
-myElement3.addEventListener('change', (e) => {
-    // myElement5.disabled = true;
+SubCategoryElement3.addEventListener('change', (e) => {
     submit1.disabled = false;
-    myElement5.disabled = false;
-
+    inputSubCateory.disabled = false;
 })
-myElement4.addEventListener('click', (e) => {
+inputCategory.addEventListener('click', (e) => {
     selectedCategoryinput.style.display = 'inline'
 })
-myElement5.addEventListener('click', (e) => {
+inputSubCateory.addEventListener('click', (e) => {
     selectedCategoryinput1.style.display = 'inline'
     submit1.disabled = false;
 
 })
-myElement6.addEventListener('keyup', (e) => {
-    myElement5.disabled = false;
+inputBoxCategoryinput.addEventListener('keyup', (e) => {
+    inputSubCateory.disabled = false;
 })
 
 function showuser(data) {
@@ -232,16 +336,16 @@ function showuser(data) {
             for (const key in ReturnData) {
                 CreateOptions += `<option value=${key}>${ReturnData[key]}</option>`;
             }
-            myElement2.disabled = false;
-            myElement2.innerHTML = CreateOptions;
+            CategoryElement2.disabled = false;
+            CategoryElement2.innerHTML = CreateOptions;
             // document.getElementById("txtHint").innerHTML = this.responseText;
         }
     }
     xmlhttp.open("GET", "getuser.php?q=" + data, true);
     xmlhttp.send();
 }
-myElement2.addEventListener('change', (e) => {
-    showSubCategory(myElement2.value)
+CategoryElement2.addEventListener('change', (e) => {
+    showSubCategory(CategoryElement2.value)
 });
 
 function showSubCategory(data) {
@@ -257,10 +361,10 @@ function showSubCategory(data) {
             for (const key in ReturnData) {
                 CreateOptions += `<option value=${key}>${ReturnData[key]}</option>`;
             }
-            myElement3.disabled = false;
-            myElement4.disabled = true;
+            SubCategoryElement3.disabled = false;
+            inputCategory.disabled = true;
 
-            myElement3.innerHTML = CreateOptions;
+            SubCategoryElement3.innerHTML = CreateOptions;
         }
     }
     xmlhttp.open("GET", "getSubCategory.php?q=" + data, true);

@@ -23,7 +23,7 @@
                     <label> Enter Designation </label>
                 </td>
                 <td colspan=3>
-                    <input name="InputDesignation" type="text">
+                    <input id="inptDesign" name="InputDesignation" type="text">
                 </td>
                 <td>
                     <select name="SelectDepartment">
@@ -36,8 +36,33 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" align="center"><div class="buttons"><button class="positive" tabindex=7 type="Submit" name="submit" value="Add Designation">{$g_lang_submit}</button></div></td>
+                    <td> </td>
+                    <td id="errormsg"> </td>
+                    <td> </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center"><div class="buttons"><button class="positive" tabindex=7 type="Submit" id="submitbtn" name="submit" value="Add Designation">{$g_lang_submit}</button></div></td>
             </tr>
         </table>
     </form>
 </div>
+
+{literal}
+    <script>
+        $("#inptDesign").blur(function() {
+            let inputDeign = $('#inptDesign').val(); 
+            if(inputDeign.length<2 ){
+                $('#submitbtn').prop('disabled', true);
+                $('#errormsg').html("<b>The Entered Designation is not a Valid.</b>");
+            }
+            else if(inputDeign.length>30){
+                $('#submitbtn').prop('disabled', true);
+                $('#errormsg').html("<b>The Designation must be less than 30 characters.</b>");
+            }
+            else{
+                $('#submitbtn').prop('disabled', false);
+                $('#errormsg').html("");
+            }
+        })
+    </script>
+{/literal}
