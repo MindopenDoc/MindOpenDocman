@@ -1,3 +1,5 @@
+
+<div class="container">
 <table class="form-table" style="width: 200px;">
         <thead>
             <tr>
@@ -30,3 +32,4 @@
 
         <tbody>
     </table>
+    </div>

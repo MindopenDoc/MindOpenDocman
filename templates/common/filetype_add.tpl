@@ -1,3 +1,4 @@
+    <div class="container">
     <table>
         <thead>
             <tr>
@@ -26,3 +27,4 @@
         </tr>
     </tbody>
     </table>
+    </div>

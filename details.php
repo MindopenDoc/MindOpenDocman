@@ -39,7 +39,22 @@ if (!isset($_GET['id']) || $_GET['id'] == "") {
     header('Location:error.php?ec=2');
     exit;
 }
+function get_base_url(){
+    // We don't want to re-write the base_url value when we are being called by a plugin
+    if(!preg_match('/plug-ins*/', $_SERVER['REQUEST_URI'])) {
+        return sprintf(
+            "%s://%s",
+            isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+            $_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI'])
+        );
+    } else {
+        // Set the base url relative to the plug-ins folder when being called from there
+        return "../../";
 
+    }
+}
+$a=get_base_url();
+$GLOBALS['smarty']->assign('baseurl', $a);
 $full_requestId = $_GET['id'];
 
 if (strchr($_GET['id'], '_')) {
@@ -66,7 +81,7 @@ $owner_full_name = $file_data_obj->getOwnerFullName();
 //anshuman code start
 // $new_query="SELECT * FROM tbl_files WHERE fid=$request_id;";
 
-$versionquery = "SELECT * FROM tbl_files WHERE fid=$request_id;";
+$versionquery = "SELECT * FROM tbl_files WHERE fid=$request_id order by id DESC;";
 $versionquery_stmt = $pdo->prepare($versionquery);
 $versionquery_stmt->execute(array());
 $version_list = $versionquery_stmt->fetchAll();
@@ -224,7 +239,8 @@ $file_detail_array = array(
     'file_under_review' => $file_under_review,
     'reviewer' => $reviewer,
     'status' => $status,
-    'designation'=>$designation
+    'designation'=>$designation,
+    'Title'=>$file_data_obj->Title()
 );
 
 if ($status > 0) {
@@ -242,34 +258,30 @@ if ($user_permission_obj->getAuthority($request_id, $file_data_obj) >= $user_per
     $view_link = 'view_file.php?id=' . e::h($full_requestId) . '&state=' . ($state + 1);
     $GLOBALS['smarty']->assign('view_link', $view_link);
 }
-
 // Lets figure out which buttons to show
 if ($status == 0 || ($status == -1 && $file_data_obj->isOwner($_SESSION['uid']))) {
     // check if user has modify rights
-
+    
     $user_perms = new UserPermission($_SESSION['uid'], $GLOBALS['pdo']);
     if ($user_perms->getAuthority($request_id, $file_data_obj) >= $user_perms->WRITE_RIGHT && !isset($revision_id) && !$file_data_obj->isArchived()) {
         // if so, display link for checkout
         $check_out_link = "check-out.php?id=$request_id" . '&state=' . ($state + 1) . '&access_right=modify';
         $GLOBALS['smarty']->assign('check_out_link', $check_out_link);
     }
-
+    
     if ($user_permission_obj->getAuthority($request_id, $file_data_obj) >= $user_permission_obj->ADMIN_RIGHT && !@isset($revision_id) && !$file_data_obj->isArchived()) {
         // if user is also the owner of the file AND file is not checked out
         // additional actions are available 
         $File_permission_alter = "permission_alter_V.php?id=$request_id&state=" . ($state + 1);
         $GLOBALS['smarty']->assign('File_permission_alter', $File_permission_alter);
     }
-
+    
     if ($user_permission_obj->getAuthority($request_id, $file_data_obj) >= $user_permission_obj->ADMIN_RIGHT && !@isset($revision_id) && !$file_data_obj->isArchived()) {
         // if user is also the owner of the file AND file is not checked out
         // additional actions are available 
         $edit_link = "edit.php?id=$request_id&state=" . ($state + 1);
         $GLOBALS['smarty']->assign('edit_link', $edit_link);
     }
-    echo "<br>  User permisson as an admin :: ";
-    echo $user_permission_obj->ADMIN_RIGHT;
-    echo "<br>";
 }
 
 ////end if ($status == 0)
@@ -279,6 +291,7 @@ $history_link = "history.php?id=$request_id&state=" . ($state + 1);
 $comments_link = 'toBePublished.php?submit=comments&id=' . $request_id;
 $my_delete_link = 'delete.php?mode=tmpdel&id0=' . $request_id;
 
+$GLOBALS['smarty']->assign('File_version_add_pemission', $user_permission_obj->getAuthority($request_id, $file_data_obj)); 
 $GLOBALS['smarty']->assign('history_link', $history_link);
 $GLOBALS['smarty']->assign('comments_link', $comments_link);
 $GLOBALS['smarty']->assign('my_delete_link', $my_delete_link);

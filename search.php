@@ -46,18 +46,27 @@ echo '<body bgcolor="white">';
 if (!isset($_GET['submit'])) {
     ?>
 <p>
+
+<div class="table_wrapper">
 <table border="0" cellspacing="5" cellpadding="5">
     <form action="search.php" method="get">
 
         <tr>
             <td valign="top"><b><?php echo msg('label_search_term');
     ?></b></td>
-            <td><input type="Text" name="keyword" size="50"></td>
+ 
         </tr>
+        <tr>
+        <td><input type="Text" name="keyword" size="50"></td>
+</tr>
         <tr>
             <td valign="top"><b><?php echo msg('search');
     ?></b></td>
-            <td><select name="where">
+            
+        </tr>
+        <tr>
+
+        <td><select name="where">
                     <option value="author"><?php echo msg('author'). "(".msg('label_last_name')." ".msg('label_first_name').")";
     ?></option>
                     <option value="department"><?php echo msg('department');
@@ -79,13 +88,26 @@ if (!isset($_GET['submit'])) {
                     <option value="all" selected><?php echo msg('searchpage_all_meta');
     ?></option>
                 </select></td>
-        </tr>
+</tr>
 
         <tr>
-            <td><?php echo msg('label_exact_phrase');
-    ?>: <input type="checkbox" name="exact_phrase"></td>
-            <td><?php echo msg('label_case_sensitive');
-    ?><input type="checkbox" name="case_sensitivity"></td>
+            <td >
+                
+               <div class="chk-box">
+                <div class="box-inner">
+               <span> <?php echo msg('label_exact_phrase');
+    ?>:</span> <input type="checkbox" name="exact_phrase">
+</div>
+<div class="box-inner">
+<span><?php echo msg('label_case_sensitive');
+    ?></span> <input type="checkbox" name="case_sensitivity">
+</div>      
+</div>
+                
+                
+              
+</td>
+            
         </tr>
         <tr>
             <td>
@@ -95,7 +117,7 @@ if (!isset($_GET['submit'])) {
         </tr>
     </form>
 </table>
-
+</div>
 <?php
     //echo '<br><b>Load Time: ' . time() - $start_time;
     draw_footer();

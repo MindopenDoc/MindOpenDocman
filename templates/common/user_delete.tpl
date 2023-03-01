@@ -1,3 +1,6 @@
+
+<div class="container">
+
 <table border="0" cellspacing="5" cellpadding="5">
     <form action="user.php" method="POST" enctype="multipart/form-data">
         <tr>
@@ -14,3 +17,4 @@
         </tr>
     </form>
 </table>
+</div>

@@ -51,7 +51,7 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'view_checkedout') {
     if ($list_status != -1) {
         echo PHP_EOL . '<BR><div class="buttons"><button class="positive" type="submit" name="submit" value="Clear Status">' . msg('button_clear_status') . '</button></div><br />';
         echo PHP_EOL . '</form>';
-    }
+    }     
     draw_footer();
 } elseif (isset($_POST['submit']) && $_POST['submit'] == 'Clear Status') {
     if (isset($_POST["checkbox"])) {

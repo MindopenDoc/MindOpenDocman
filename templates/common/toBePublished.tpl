@@ -1,24 +1,29 @@
-
-
-<table>
-		<tr>
-		<td>
-                        <div class="buttons">
-                            <!--
+<div class="container">
+	<table style="background:transparent!important;border:none!important;float: right;
+    margin-right: 1%;">
+			<tr>
+		
+				<td>
+					<div class="buttons">
+						<!--
 		<button class="positive" type="button" name="submit" value="Authorize" onClick="checkedBoxesNumber(); authcomment()"><?php echo msg('button_authorize')?></button>
 		<button class="negative" type="button" name="submit" value="Reject" onClick="checkedBoxesNumber(); rejectcomment()"><?php echo msg('button_reject')?></button>
 		-->
-                <button class="positive" type="submit" name="submit" value="commentAuthorize">{$g_lang_button_authorize}</button>
-		<button class="negative" type="submit" name="submit" value="commentReject">{$g_lang_button_reject}</button>
-                        </div>
-                    <input type="hidden" name="mode" value="{$lmode|escape:'html'}" />
-		<input type="hidden" name="Docflag" value="-1" />
-
-     </table>
-</form>
-                {literal}
-		<script text="text/javascript">
-/*
+						<button class="positive" type="submit" name="submit"
+							value="commentAuthorize">{$g_lang_button_authorize}</button>
+						<button class="negative" type="submit" name="submit"
+							value="commentReject">{$g_lang_button_reject}</button>
+					</div>
+					<input type="hidden" name="mode" value="{$lmode|escape:'html'}" />
+					<input type="hidden" name="Docflag" value="-1" />
+				</td>
+			</tr>
+          </table>
+		</form>
+	</div>
+{literal}
+	<script text="text/javascript">
+		/*
  	function checkedBoxesNumber()
 		{
                     	counter=0;
@@ -118,4 +123,4 @@
 	}
 */
 	</script>
-                {/literal}
+{/literal}

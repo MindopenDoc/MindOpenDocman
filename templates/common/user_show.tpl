@@ -1,3 +1,7 @@
+
+<div class="container">
+
+
 <table border=0>
     <th>{$g_lang_userpage_user_info}</th>
         <tr><td>{$g_lang_userpage_id}</td><td>{$user->id|escape:'html'}</td></tr>
@@ -39,3 +43,5 @@
         </tr>
     </form>
 </table>
+
+</div>

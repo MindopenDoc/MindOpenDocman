@@ -1,4 +1,6 @@
 
+<div class="table_wrapper">
+<div class="container">
 <form name="add_user" id="add_user" action="user.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
         {$onBeforeAddUser}
@@ -94,6 +96,8 @@
         </tr>
     </table>
 </form>
+</div>
+</div>
 <script>
     {literal}
     $(document).ready(function(){

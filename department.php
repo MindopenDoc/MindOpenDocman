@@ -49,7 +49,7 @@ if (!$user_obj->isAdmin() == true) {
 if (isset($_GET['submit']) && $_GET['submit']=='add') {
     draw_header(msg('area_add_new_department'), $last_message);
     ?>
-
+<div class="container">
         <form id="addDepartmentForm" action="department.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
             <tr>
@@ -77,6 +77,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
             </tr>
     </table>
            </form>
+</div>
    <script>
   $(document).ready(function(){
     $('#addDepartmentForm').validate();
@@ -225,7 +226,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'showpick') {
     draw_header(msg('area_choose_department'), $last_message);
     $showpick='';
-    ?>
+    ?>                       <div class="container">
                             <table border="0" cellspacing="5" cellpadding="5">
                                 <form action="department.php" method="POST" enctype="multipart/form-data">
                                     <tr>
@@ -260,6 +261,8 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
                                 </tr>
                             </table>
                      </form>
+</div>
+<div class="container">
                      <table border="1" cellspacing="5" cellpadding="5">
                             <tr>
                                 <td>Department id </td>
@@ -272,6 +275,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
                                     </tr>
                            <?php } ?>
                     </table>
+                            </div>
  <?php
     draw_footer();
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'delete') {
@@ -293,7 +297,8 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
 
 
     // query to show item
-    echo '    <form action="department.php" method="POST" enctype="multipart/form-data">';
+    echo'<div class="container">';
+    echo '<form action="department.php" method="POST" enctype="multipart/form-data">';
     echo '<table border=0>';
     $query = "SELECT id, name FROM {$GLOBALS['CONFIG']['db_prefix']}department where id = :item";
     $stmt = $pdo->prepare($query);
@@ -325,17 +330,24 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
         </tr>
         <tr>
             <td valign="top"><?php echo msg('message_are_you_sure_remove')?></td>
-            <td align="center">
-                <div class="buttons">
-                    <button class="positive" type="submit" name="deletedepartment" value="Yes"><?php echo msg('button_yes')?></button>
-                </div>
-                <div class="buttons">
-                    <button class="negative" type="submit" name="submit" value="Cancel"><?php echo msg('button_cancel')?></button>
-                </div>
-            </td>
+           
 </tr>
+<tr>
+
+<td align="left">
+            
+                    <button class="positive" type="submit" name="deletedepartment" value="Yes"><?php echo msg('button_yes')?></button>
+                
+
+                    <button class="negative" type="submit" name="submit" value="Cancel"><?php echo msg('button_cancel')?></button>
+             
+            </td>
+           
+              
+                        </tr>
 </table>
     </form>
+                        </div>
     <?php
 
     }
@@ -343,6 +355,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'deletepick') {
     draw_header(msg('department') . ': ' . msg('label_delete'), $last_message);
     ?>
+    <div class="container">
     <table border="0" cellspacing="5" cellpadding="5">
         <form action="department.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="state" value="<?php echo(e::h($_REQUEST['state']+1));
@@ -379,6 +392,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
             </tr>
         </form>
     </table>
+    </div>
     <?php
     draw_footer();
 } elseif (isset($_REQUEST['deletedepartment'])) {
@@ -433,7 +447,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'modify') {
     $dept_obj = new Department($_REQUEST['item'], $pdo);
     draw_header(msg('area_update_department') .': ' . $dept_obj->getName(), $last_message);
-    ?>  
+    ?>      <div class="container">
                         <form action="department.php" id="modifyDeptForm" method="POST" enctype="multipart/form-data">                                        
                             <table border="0" cellspacing="5" cellpadding="5">
                                 
@@ -465,19 +479,16 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
     ?>
                                     </tr>
                                     <tr>
-                                        <td align="center">
-                                            <div class="buttons">
+                                        <td >
+                                   
                                                 <button class="positive" type="Submit" name="submit" value="Update Department"><?php echo msg('button_save')?></button>
-                                            </div>
-                                        </td>
-                                        <td align="center">
-                                            <div class="buttons">
                                                 <button class="negative cancel" type="Submit" name="submit" value="Cancel"><?php echo msg('button_cancel')?></button>
-                                            </div>
                                         </td>
+                                      
                                     </tr>
                             </table>
                         </form>
+</div>
    <script>
   $(document).ready(function(){
     $('#modifyDeptForm').validate();
@@ -488,6 +499,8 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'updatepick') {
     draw_header(msg('area_choose_department'), $last_message);
     ?>
+
+        <div class="container">
                             <form action="department.php" method="GET" enctype="multipart/form-data">
                                 <INPUT type="hidden" name="state" value="<?php echo(e::h($_REQUEST['state']+1));
     ?>">
@@ -520,6 +533,7 @@ if (isset($_GET['submit']) && $_GET['submit']=='add') {
                                     </tr>
                                 </table>
                             </form>
+</div>
     <?php
     draw_footer();
 } elseif (isset($_POST['submit']) && 'Update Department' == $_POST['submit']) {

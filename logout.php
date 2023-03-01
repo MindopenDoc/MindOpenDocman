@@ -30,6 +30,7 @@ if ($GLOBALS["CONFIG"]["authen"] == 'kerbauth') {
     ?>
     <html>
     <body bgcolor="#FFFFFF" link="#000000" vlink="#000000" background="images/background_blue.gif">
+    <div class="container">
     <table width="633" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td width="4">&nbsp;&nbsp;&nbsp;</td>
@@ -77,6 +78,7 @@ if ($GLOBALS["CONFIG"]["authen"] == 'kerbauth') {
             </td>
         </tr>
     </table>
+</div>
     <?php
 
     draw_footer();

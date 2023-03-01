@@ -124,7 +124,8 @@ if (
 	$last_message = (isset($_REQUEST['last_message']) ? $_REQUEST['last_message'] : '');
         draw_header(msg('forgot_password'), $last_message);
         ?>
-
+<div class="container">
+  <div class="table_wrapper">
             <p><?php echo msg('message_set_your_new_password')?></p>
 
             <form action="forgot_password.php" method="post">
@@ -142,11 +143,12 @@ if (
             </tr>
             <tr>
             <td>&nbsp;</td>
-            <td><input type="submit" value="Reset Password"></td>
+            <td><input type="submit" value="Reset Password" class="positive"></td>
             </tr>
             </table>
             </form>
-
+    </div>
+    </div>
             <?php
 	draw_footer();
             // build the footer
@@ -242,7 +244,8 @@ else {
 	$last_message = (isset($_REQUEST['last_message']) ? $_REQUEST['last_message'] : '');
         draw_header(msg('forgot_password'), $last_message);
     ?>
-
+<div class="container">
+  <div class="table_wrapper">
         <p><?php echo msg('message_this_site_has_high_security')?></p>
 
 
@@ -254,11 +257,12 @@ else {
         </tr>
         <tr>
         <td>&nbsp;</td>
-        <td><input type="submit" value="Reset Password"></td>
+        <td><input type="submit" value="Reset Password" class="positive"></td>
         </tr>
         </table>
         </form>
-
+</div>
+</div>
         <?php
 	draw_footer();
 

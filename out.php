@@ -47,7 +47,12 @@ if ($user_obj->isAdmin()) {
 }
 $GLOBALS['smarty']->assign('iadmin',$user_obj->isAdmin());
 if ($reviewIdCount > 0) {
-    echo '<a href="toBePublished.php?state=1"> <button class="btn btn-large"><img src="images/exclamation.gif" /> '.msg('message_documents_waiting'). ': ' . e::h($reviewIdCount)  . '</button></a> </a><br />';
+    echo '
+    
+    <div class="container">
+    <a href="toBePublished.php?state=1"> <button class="btn-custom"><img src="images/exclamation.gif" /> '.msg('message_documents_waiting').
+   ': ' . e::h($reviewIdCount)  . '</button></a> </a><br />';
+   echo' </div> ';
 }
 
 $rejected_files_obj = $user_obj->getRejectedFileIds();

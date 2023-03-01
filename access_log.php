@@ -86,9 +86,14 @@ $view->setData([
     'showCheckBox' => false,
     'form' => 0
 ]);
-
+?>
+    <div class="container" > 
+<?php
 $view->setView('access_log');
 $view->setLayout('default');
 echo $view->__invoke();
+?>
+    </div>
+<?php
 
 draw_footer();

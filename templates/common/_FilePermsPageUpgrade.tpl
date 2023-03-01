@@ -27,7 +27,7 @@
 }
 </style>
 {/literal}
-
+<div class="container">
 <dl class="accordion">
         <table class="display dept_table">
             <thead>
@@ -137,6 +137,7 @@
         </table>
     </dd>
 </dl>
+</div>
 {literal}
 <script>
     $(document).ready(function() {

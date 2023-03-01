@@ -101,7 +101,9 @@ if ($GLOBALS['CONFIG']['allow_signup'] == 'True') {
         include("signup_header.html");
     }
     ?>
-                
+           
+<div class="container">
+<div class="table_wrapper">     
             <font size=6>Sign Up</font>
         <br><script type="text/javascript" src="FormCheck.js"></script>
 
@@ -173,6 +175,8 @@ if ($GLOBALS['CONFIG']['allow_signup'] == 'True') {
         </td>
         </tr>
         </table>
+</div>
+</div>
 <?php
    if (is_readable("signup_footer.html")) {
        include("signup_footer.html");

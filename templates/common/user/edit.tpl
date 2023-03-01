@@ -1,3 +1,6 @@
+
+<div class="container">
+
 <form name="update" id="modifyUserForm" action="user.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>
@@ -103,6 +106,7 @@
         </tr>
     </table>
 </form>
+</div>
 <script>
     {literal}
         $(document).ready(function () {

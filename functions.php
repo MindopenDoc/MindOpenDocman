@@ -274,7 +274,9 @@ function list_files($fileid_array, $userperms_obj, $dataDir, $showCheckBox = fal
     global $pdo;
 
     if (sizeof($fileid_array) == 0 || !isset($fileid_array[0])) {
-        echo '<img src="images/exclamation.gif">' . msg('message_no_files_found') . PHP_EOL;
+        echo '<div ><div class="container" style="background:#fff;padding:20px;"> <img src="images/exclamation.gif">' . msg('message_no_files_found') . PHP_EOL;
+        echo '</div>';
+        echo '</div>';
         return -1;
     }
 

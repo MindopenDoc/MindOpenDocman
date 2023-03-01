@@ -72,7 +72,9 @@
             </ul>          
               <p class="navbar-text pull-right">
 {$g_lang_label_logged_in_as}
-<a href="{$base_url|escape:'html'}/profile.php">{$userName}</a>
+<a href="{$base_url|escape:'html'}/profile.php">
+
+<span class="user_name"> : {$userName}</span></a>
 </p>
           </div><!--/.nav-collapse -->
         </div>
@@ -83,10 +85,12 @@
     <h1>Demo resets once per hour</h1>
 {/if}
       <div class="container">
-        <div class="row">
-            <div class="span4">
-                You are here: {$breadCrumb}
-            </div>
+       
+           
+            <span class="brudcrums">
+                You are here > {$breadCrumb}
+            </span>
+           
         </div>
         <p></p>
         {if $lastmessage ne ''}

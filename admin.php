@@ -44,9 +44,10 @@ draw_header(msg('label_admin'), $last_message);
 
 $request_state = e::h(($_REQUEST['state']+1));
 ?>
+<div class="table_wrapper new_tbl">
     <table border="1" cellspacing="5" cellpadding="5" >
-        <th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('users')?></font></th><th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('label_department')?></font></th><th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('category')?></font></th><?php if ($user_obj->isRoot()) {
-    echo '<th bgcolor ="#83a9f7"><font color="#FFFFFF">' . msg('file') . '</th></font>';
+        <th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('users')?></font></th><th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('label_department')?></font></th><th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('category')?></font></th><?php if ($user_obj->isRoot()) {
+    echo '<th bgcolor ="#38c4cb"><font color="#FFFFFF">' . msg('file') . '</th></font>';
 } ?>
         <?php
         if ($user_obj->isRoot()) {
@@ -54,11 +55,11 @@ $request_state = e::h(($_REQUEST['state']+1));
         }
         ?>
         <tr>
-            <td>
+            <td valign="top" >
                 <!-- User Admin -->
                 <table border="0">
                     <tr>
-                        <td><b><a href="<?php echo 'user.php?submit=adduser&state=' . ($request_state); ?>"><?php echo msg('label_add')?></a></b></td>
+                        <td ><b><a href="<?php echo 'user.php?submit=adduser&state=' . ($request_state); ?>"><?php echo msg('label_add')?></a></b></td>
                     </tr>
                     <tr>
                         <td><b><a href="<?php echo 'user.php?submit=deletepick&state=' . ($request_state); ?>"><?php echo msg('label_delete')?></a></b></td>
@@ -75,11 +76,11 @@ $request_state = e::h(($_REQUEST['state']+1));
                     </tr>
                 </table>
             </td>
-            <td>
+            <td valign="top" >
                 <!-- Department Admin -->
                 <table border="0">
                     <tr>
-                        <td><b><a href="<?php echo 'department.php?submit=add&state=' . ($request_state); ?>"><?php echo msg('label_add')?></a></b></td>
+                        <td align="top"><b><a href="<?php echo 'department.php?submit=add&state=' . ($request_state); ?>"><?php echo msg('label_add')?></a></b></td>
                     </tr>
                     <tr>
                         <td><b><a href="<?php echo 'department.php?submit=deletepick&state=' . ($request_state); ?>"><?php echo msg('label_delete')?></a></b></td>
@@ -93,9 +94,13 @@ $request_state = e::h(($_REQUEST['state']+1));
                     <tr>
                         <td><hr><b><a href="text.php"><?php echo ('Add Category & subcategory')?></a></b></td>
                     </tr>
+                    <tr>
+                        <td><b><a class="btn btn-small" href="move_subcat.php"><?php echo ('Move subcategory')?></a></b></td>
+                    </tr>
+                    
                 </table>
             </td>
-<td>
+<td valign="top" >
     <!-- Category Admin -->
     <table border="0">
         <tr>
@@ -114,7 +119,7 @@ $request_state = e::h(($_REQUEST['state']+1));
 </td>
 <?php if ($user_obj->isRoot()) {
     ?>
-<td>
+<td valign="top" >
     <!-- Root-Only Section -->
     <table border="0" valign="top">
         <tr>
@@ -147,7 +152,7 @@ $request_state = e::h(($_REQUEST['state']+1));
     <td>
         <table>
             <tr>
-                <th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('label_settings')?></font></th>
+                <th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('label_settings')?></font></th>
             </tr>
             <tr>
                 <td><b><a href="<?php echo 'settings.php?submit=update&state=' . $request_state;
@@ -159,12 +164,16 @@ $request_state = e::h(($_REQUEST['state']+1));
     ?>"><?php echo msg('adminpage_edit_filetypes');
     ?></a></b></td>
             </tr>
+            <tr>
+                <td>&nbsp;</td>
+
+</tr>
         </table>
     </td>
      <td>
          <table>
              <tr>
-                 <th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('adminpage_reports');
+                 <th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('adminpage_reports');
     ?></font></th>
              </tr>
              <tr>
@@ -176,12 +185,16 @@ $request_state = e::h(($_REQUEST['state']+1));
                  <td><b><a href="reports/file_list.php"><?php echo msg('adminpage_reports_file_list');
     ?></a></b></td>
              </tr>
+             <tr>
+                <td>&nbsp;</td>
+
+</tr>
          </table>
      </td>
      <td>
          <table>
              <tr>
-                 <th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('adminpage_about_section_title');
+                 <th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('adminpage_about_section_title');
     ?></font></th>
              </tr>
              <tr>
@@ -203,12 +216,14 @@ $request_state = e::h(($_REQUEST['state']+1));
 } ?>
 
 </table>
+
+
     <?php
 
 if (is_array($GLOBALS['plugin']->getPluginsList()) && $user_obj->isRoot()) {
     ?>
-            <table border="1" cellspacing="5" cellpadding="5" >
-            <th bgcolor ="#83a9f7"><font color="#FFFFFF"><?php echo msg('label_plugins')?></font></th>
+            <table border="1" cellspacing="5" cellpadding="5" style="width:100%">
+            <th bgcolor ="#38c4cb"><font color="#FFFFFF"><?php echo msg('label_plugins')?></font></th>
                 <tr>
                     <td>
             <?php
@@ -222,5 +237,6 @@ if (is_array($GLOBALS['plugin']->getPluginsList()) && $user_obj->isRoot()) {
 
 }
     ?>
+    </div>
     <?php
 draw_footer();

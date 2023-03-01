@@ -10,7 +10,7 @@
 
 {/php}
 
-<div class="contianer" style="margin:2rem 0rem">
+<div class="container" style="margin-top:50px">
         <div class="row">
         <div class="span2">
             <div id="tree1"></div>
@@ -63,14 +63,25 @@
                         }
                         $GLOBALS['smarty']->assign('version_list', $fileid);
                         $GLOBALS['smarty']->assign('user_name', $uname);
-                    {/php}
+                        $arr=(explode(".",$fileid));
+                        if (end($arr)=="pdf"){
+                            $GLOBALS['smarty']->assign('pdf',"tr");
+                        }
+                        else{
+                            $GLOBALS['smarty']->assign('pdf',"");
+                        }
+                        {/php}
                     <td class="center" style="width: 50px;">
                     {if $item.view_link eq 'none'}
                         &nbsp;
                     {elseif $version_list eq ""}
                         <a href="{$item.view_link|escape:'html'}" class="btn btn-small btn-success">{$g_lang_outpage_view}</a></td>
                     {else}
-                        <a href="versionfile/{$version_list|escape:'html'}" class="btn btn-small btn-success">{$g_lang_outpage_view}</a></td>
+                        {if $pdf eq "tr"}
+                            <a href="versionfile\{$version_list}" class="btn btn-small btn-success">{$g_lang_outpage_view}</a></td>
+                            {else}
+                            <a href="versionfile\{$version_list}" class="btn btn-small btn-success" download>{$g_lang_outpage_view}</a></td>
+                        {/if}
                     {/if}
                     {if $item.Title eq ''}
                         <td> <a href="{$item.details_link|escape}">{"View Details"}</a> </td>

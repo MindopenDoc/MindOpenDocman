@@ -1,3 +1,7 @@
+
+<div class="container">
+
+
 <form action="udf.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
 
@@ -6,8 +10,9 @@
             <td><b><?php echo msg('label_user_defined_field')?></b></td>
             <td colspan=3>
                 <select name="item">
+                    <option >select an field </option>
                     {foreach from=$udfs item=item}
-                        <option value="{$item.table_name|escape:'html'}">{$item.display_name|escape:'html'}</option>
+                        <option value="{$item.table_name|escape:'html'}"> {$item.display_name|escape:'html'}</option>
                     {/foreach}
                 </select>
             </td>
@@ -25,3 +30,4 @@
 
     </table>
 </form>
+</div>

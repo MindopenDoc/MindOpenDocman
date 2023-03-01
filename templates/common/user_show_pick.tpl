@@ -1,3 +1,7 @@
+
+<div class="container">
+
+
 <table border="0" cellspacing="5" cellpadding="5">
     <form action="user.php" method="POST" enctype="multipart/form-data">
         <INPUT type="hidden" name="state" value="{$state|escape:'html'}" />
@@ -23,3 +27,5 @@
         </tr>
     </form>
 </table>
+
+</div>

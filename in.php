@@ -66,7 +66,9 @@ $result = $stmt->fetchAll();
 // how many records?
 $count = $stmt->rowCount();
 if ($count == 0) {
+    echo '<div class="container">';
     echo '<img src="images/exclamation.gif"> ' . msg('message_no_documents_checked_out');
+    echo '</div>';
 } else {
     echo '<table border="0" hspace="0" hgap="0" cellpadding="1" cellspacing="1">';
     echo '<caption><b>' . msg('message_document_checked_out_to_you'). ' : ' . e::h($count) . '</caption>';

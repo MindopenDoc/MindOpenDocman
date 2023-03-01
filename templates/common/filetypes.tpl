@@ -1,3 +1,6 @@
+
+
+<div class="container">
 <form action="filetypes.php" method="POST" enctype="multipart/form-data">    
 <table class="form-table" style="width: 200px;">
         <thead>
@@ -33,3 +36,4 @@
         <tbody>
     </table>
 </form>
+</div>

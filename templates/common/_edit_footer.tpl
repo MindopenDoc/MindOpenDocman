@@ -1,5 +1,5 @@
 <tr>
-	<td colspan="3" align="center">
+	<td >
 		 
 			<button class="positive" style="margin:0 1rem 0 0" type="Submit" name="submit" value="Update Document Properties">{$g_lang_button_save}</button>
 	 

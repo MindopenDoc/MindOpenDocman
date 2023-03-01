@@ -43,6 +43,8 @@ draw_header(msg('Add New version'), $last_message);
 
 if (isset($_POST['submit']))
 {
+    $user_id=$_POST['user_id'];
+    $version_nu=$_POST['VersionNo'];
     $pid=$_POST['file2'];
     $filename = $_FILES['file1']['name'];
     //upload file
@@ -73,7 +75,7 @@ if (isset($_POST['submit']))
             move_uploaded_file($_FILES['file1']['tmp_name'],($path . $filename));
             
             // insert file details into database
-            $sql = "INSERT INTO tbl_files(filename, created,fid) VALUES('$filename', '$created','$pid')";
+            $sql = "INSERT INTO tbl_files(filename, created,fid,user_id,version_number) VALUES('$filename', '$created','$pid','$user_id','$version_nu')";
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
               } else {
@@ -119,11 +121,11 @@ $user_id = $_SESSION['uid'];
                 <table style="width:100%">
                     <tr>
                         <td>Select the version file : </td>
-                        <td><input type="file" name="file1" /></td>
+                        <td><input type="file" name="file1" required/></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="hidden" name="file2" value="<?php echo $_GET['pid'];?>"/></td>
+                        <td><input type="hidden" name="file2" value="<?php echo $_GET['pid'];?>" required/></td>
                     </tr>
                     <tr>
                         <td></td>

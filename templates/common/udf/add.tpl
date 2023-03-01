@@ -1,9 +1,14 @@
+
+
+<div class="container">
+
 <form id="udfAddForm" action="udf.php?last_message={$last_message|escape:'html'}" method="GET" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>
             <td><b>{$g_lang_label_name}(limit 5)</b></td>
             <td colspan="3"><input maxlength="5" name="table_name" type="text" class="required"></td>
         </tr>
+       
         <tr>
             <td><b>{$g_lang_label_display} {$g_lang_label_name}</b></td>
             <td colspan="3"><input maxlength="16" name="display_name" type="text" class="required"></td>
@@ -19,12 +24,12 @@
             </td>
         </tr>
         <tr>
-            <td align="center">
+            <td >
                 <div class="buttons">
                     <button class="positive" type="Submit" name="submit" value="Add User Defined Field">{$g_lang_button_save}</button>
                 </div>
             </td>
-            <td align="center">
+            <td >
                 <div class="buttons">
                     <button class="negative cancel" type="Submit" name="cancel" value="Cancel">{$g_lang_button_cancel}</button>
                 </div>
@@ -32,6 +37,7 @@
         </tr>
     </table>
 </form>
+</div>
 <script>
     {literal}
     $(document).ready(function(){

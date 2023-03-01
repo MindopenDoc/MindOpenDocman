@@ -30,7 +30,6 @@
          die("Connection failed: " . $conn->connect_error);
     }
     if(isset($_POST["dep"]) && (isset($_POST["cat"]) or isset($_POST["icat"])) && (isset($_POST["subcat"]) or isset($_POST["isubcat"]))){
-        print_r($_POST);
         // die();
         // $subcat=$_POST['subcat'];
         $dap=$_POST['dep'];
@@ -125,6 +124,7 @@
     display: none;
 }
 </style>
+<div class="container">
 <form action="text.php" method="post" target="_blank" onsubmit="return validateForm()">
     <table>
         <tr>
@@ -189,6 +189,7 @@
         </tr>
     </table>
 </form>
+                    </div>
 <?php
 
     $query = "SELECT id,name FROM {$GLOBALS['CONFIG']['db_prefix']}department ORDER BY `id` ASC";
@@ -221,6 +222,7 @@
         array_push($Dept_name,array("id"=>$DeptData['id'],"name"=>$DeptData['name'],"category"=>$Category_name));
     }
 ?>
+<div class="container">
 <table border="3" cellspacing="5" cellpadding="5" style="width:100%">
     <tr>
         <th>Department</th>
@@ -250,6 +252,7 @@
     </tr>
     <?php } ?>
 </table>
+                            </div>
 
 
 <script>

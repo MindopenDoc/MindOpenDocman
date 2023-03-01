@@ -42,6 +42,9 @@ $last_message = (isset($_REQUEST['last_message']) ? $_REQUEST['last_message'] : 
 if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
     draw_header(msg('area_add_new_category'), $last_message);
     ?>
+    
+<div class="container">
+
     <form id="categoryAddForm" action="category.php" method="GET" enctype="multipart/form-data">
         <table border="0" cellspacing="5" cellpadding="5">
             <tr>
@@ -60,6 +63,7 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
             </tr>
         </table>
     </form>
+</div>
      <script>
   $(document).ready(function(){
     $('#categoryAddForm').validate();
@@ -104,6 +108,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
     echo '<tr><td>' .msg('label_id'). ' # :</td><td>' . e::h($result['id']) . '</td></tr>';
     echo '<tr><td>'.msg('label_name').' :</td><td>' . e::h($result['name']) . '</td></tr>';
     ?>
+    <div class="container">
+
     <form action="category.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo e::h($item);
     ?>">
@@ -129,17 +135,23 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
         </tr>
         <tr>
             <td valign="top"><?php echo msg('message_are_you_sure_remove')?></td>
-            <td align="center">
-                <div class="buttons">
-                    <button class="positive" type="submit" name="deletecategory" value="Yes"><?php echo msg('button_yes')?></button>
-                </div>
-                <div class="buttons">
-                    <button class="negative cancel" type="submit" name="cancel" value="Cancel"><?php echo msg('button_cancel')?></button>
-                </div>
-            </td>
-    </form>
+           
+    
 </tr>
+<tr>
+<td >
+         
+                    <button class="positive" type="submit" name="deletecategory" value="Yes"><?php echo msg('button_yes')?></button>
+              
+           
+                    <button class="negative cancel" type="submit" name="cancel" value="Cancel"><?php echo msg('button_cancel')?></button>
+             
+            </td>
+</tr>
+</form>
 </TABLE>
+</div>
+
     <?php
     draw_footer();
 } elseif (isset($_REQUEST['deletecategory'])) {
@@ -171,6 +183,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
     $deletepick='';
     draw_header(msg('area_delete_category'). ' : ' .msg('choose'), $last_message);
     ?>
+     <div class="container">
+
     <table border="0" cellspacing="5" cellpadding="5">
         <form action="category.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="state" value="<?php echo(e::h($_REQUEST['state']+1));
@@ -203,6 +217,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
             </tr>
         </form>
     </table>
+</div>
+
     <?php
     draw_footer();
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Show Category') {
@@ -233,6 +249,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
     </tr>
 </form>
 </table>
+</div>
+</div>
 <!-- ADD THE LIST OF FILES HERE -->
 <?php
     echo msg('categoryviewpage_list_of_files_title') . '<br />';
@@ -251,6 +269,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'showpick') {
     draw_header(msg('area_view_category') . ' : ' . msg('choose'), $last_message);
     ?>
+    <div class="container">
+      
     <table border="0" cellspacing="5" cellpadding="5">
         <form action="category.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="state" value="<?php echo(e::h($_REQUEST['state']+1));
@@ -280,6 +300,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
             </tr>
         </form>
     </table>
+</div>
+
 </body>
 </html>
     <?php
@@ -287,6 +309,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Update') {
     draw_header(msg('area_update_category'), $last_message);
     ?>
+      <div class="container">
+
 <form id="updateCategoryForm" action="category.php" method="POST" enctype="multipart/form-data">
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>
@@ -322,6 +346,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
         </tr>
     </table>
  </form>
+</div>
+
  <script>
   $(document).ready(function(){
     $('#updateCategoryForm').validate();
@@ -332,6 +358,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
 } elseif (isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'updatepick') {
     draw_header(msg('area_update_category'). ': ' .msg('choose'), $last_message);
     ?>
+      <div class="container">
+
     <form action="category.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="state" value="<?php echo(e::h($_REQUEST['state']+1));
     ?>">
@@ -366,6 +394,8 @@ if (isset($_GET['submit']) && $_GET['submit'] == 'add') {
     </form></TD>
 </tr>
 </table>
+</div>
+
     <?php
     draw_footer();
 } elseif (isset($_REQUEST['updatecategory'])) {

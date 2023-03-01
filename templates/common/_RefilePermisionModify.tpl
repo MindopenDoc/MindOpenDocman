@@ -15,6 +15,7 @@
     </style>
 {/literal}
 <!-- file upload formu using ENCTYPE -->
+<div class="container">
 <form id="EditPermissionform" name="EditPermissionform" class="display dataTable" action=""
     method="POST" enctype="multipart/form-data" onsubmit="return checksec(); ">
     <input type="hidden" id="db_prefix" value="{$db_prefix}" />
@@ -127,6 +128,7 @@
         </tr>
     </table>
 </form>
+</div>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/createPromise.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/refinePermission.js"></script>
 <input type="hidden" id="csrfp_hidden_data_token" value="csrfp_token">

@@ -1,3 +1,5 @@
+
+<div class="container">
 <table class="form-table">
 		<tr>
 		<td>
@@ -13,6 +15,7 @@
 		<input type="hidden" name="Docflag" value="-1" />
      </table>
 </form>
+</div>
                 {literal}
 		<script text="text/javascript">
 /*

@@ -80,7 +80,7 @@ $list_status = list_files($fileid_array, $user_perms_obj, $GLOBALS['CONFIG']['da
 </form>
 
 <?php
-           draw_footer();
+draw_footer();
 } elseif (isset($_POST['submit']) && $_POST['submit'] == 'resubmit') {
     if (!isset($_REQUEST['checkbox'])) {
         header('Location:rejects.php?last_message=' . urlencode(msg('message_you_did_not_enter_value')));

@@ -1,19 +1,6 @@
 <script type="text/javascript" src="functions.js"></script>
-<table border="1" cellspacing="5" cellpadding="5">
-        <tr>
-            <td>S.no</td>
-            <td>Designation</td>
-            <td>Department</td>
-        </tr>
-        {foreach from=$design_perms_array  item="myitem"}
-                <tr>
-                    <td>{ $myitem.id }</td>
-                    <td>{ $myitem.name  }</td>
-                    <td>{ $myitem.dept_id  }</td>
-                </tr>
-        {/foreach}
-</table>
-<div class="container" style="margin:2rem">
+
+<div class="container">
     <form id="addeditform" name="main" action="addDesignation_V.php" method="POST" enctype="multipart/form-data" onsubmit="return checksec();">
         <input type="hidden" id="db_prefix" value="{$db_prefix|escape:'html'}" />
         <table border="0" cellspacing="5" cellpadding="5">
@@ -46,7 +33,22 @@
         </table>
     </form>
 </div>
-
+<div class="container">
+<table border="1" cellspacing="5" cellpadding="5">
+        <tr>
+            <td>S.no</td>
+            <td>Designation</td>
+            <td>Department</td>
+        </tr>
+        {foreach from=$design_perms_array  item="myitem"}
+                <tr>
+                    <td>{ $myitem.id }</td>
+                    <td>{ $myitem.name  }</td>
+                    <td>{ $myitem.dept_id  }</td>
+                </tr>
+        {/foreach}
+</table>
+</div>
 {literal}
     <script>
         $("#inptDesign").blur(function() {

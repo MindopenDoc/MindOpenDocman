@@ -1,3 +1,7 @@
+
+
+<div class="container">
+
 <form action="view_file.php" name="view_file_form" method="get">
     <input type="hidden" name="id" value="{$file_id|escape:'html'}">
     <input type="hidden" name="mimetype" value="{$mimetype|escape:'html'}">
@@ -14,3 +18,5 @@
     {$g_lang_message_if_you_are_unable_to_view2}
     {$g_lang_message_if_you_are_unable_to_view3}
 </form>
+
+</div>

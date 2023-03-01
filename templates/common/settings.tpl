@@ -1,5 +1,7 @@
-        <form action="settings.php" method="POST" enctype="multipart/form-data" id="settingsForm">    
-        <table class="form-table">        
+        <form action="settings.php" method="POST" enctype="multipart/form-data" id="settingsForm">   
+        <div class="container"> 
+        <div class="table_wrapper data_table_new">
+        <table>        
             <tr>
                 <th>{$g_lang_label_name}</th><th>{$g_lang_value}</th><th>{$g_lang_label_description}</th>{$g_lang_label_settings}</th>
             </tr>
@@ -48,16 +50,18 @@
                 <td><em>{$i.description|escape:'html'}</em></td>
             </tr>
             {/foreach}
-                <td align="center">
+                <td>
                     <div class="buttons">
                         <button class="positive" type="submit" name="submit" value="Save">{$g_lang_button_save}</button>
                     </div>
                 </td>
-                <td align="center">
+                <td>
                     <div class="buttons">
                         <button class="negative" type="submit" name="submit" value="Cancel">{$g_lang_button_cancel}</button>
                     </div>
                 </td>
          </tr>
     </table>
+        </div>
+        </div>
         </form>

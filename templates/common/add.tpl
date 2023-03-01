@@ -12,6 +12,7 @@
 <script type="text/javascript" src="functions.js"></script>
 
 <!-- file upload formu using ENCTYPE -->
+<div class="table_wrapper">
 <form id="addeditform" name="main" action="add.php" method="POST" enctype="multipart/form-data" onsubmit="return checksec();">
     <input type="hidden" id="db_prefix" value="{$db_prefix|escape:'html'}" />
 <table border="0" cellspacing="5" cellpadding="5">
@@ -166,3 +167,4 @@ function showHint(data)
 </script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/SelectDept_Design.js"></script>
 <script type="text/javascript" src="{$g_base_url}/templates/common/js/permissionsWork.js"></script>
+</div>

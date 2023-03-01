@@ -15,6 +15,8 @@
     </style>
 {/literal}
 <!-- file upload formu using ENCTYPE -->
+
+<div class="table_wrapper">
 <form id="addeditform" name="main" class="display dataTable" action="{$smarty.server.PHP_SELF|escape:'html'}" method="POST" enctype="multipart/form-data" onsubmit="return checksec(); ">
     <input type="hidden" id="db_prefix" value="{$db_prefix}" />
 <table border="0" cellspacing="5" cellpadding="5">
@@ -109,6 +111,7 @@
         </td>
         <td colspan="3"><textarea tabindex="6" name="comment" rows="4" onchange="this.value=enforceLength(this.value, 255);">{$comment|escape:'html'}</textarea></td>
     </tr>
-</table>
+</div>
+
     <script type="text/javascript" src="{$g_base_url}/templates/common/js/SelectDept_Design.js"></script>
     <script type="text/javascript" src="{$g_base_url}/templates/common/js/permissionsWork.js"></script>
