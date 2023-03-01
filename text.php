@@ -125,134 +125,72 @@
 }
 </style>
 <div class="container">
-<form action="text.php" method="post" target="_blank" onsubmit="return validateForm()">
-    <table>
-        <tr>
-            <td>Select Department</td>
-            <td colspan="2">
-                <select id="DeptSelected" class="form-control m-2" name="dep">
-                    <option>Select An Department</option>
-                    <?php while($row = $result->fetch_assoc()) {?>
-                    <option value="<?php echo $row['id']  ?>"><?php echo $row["name"]?></option>
-                    <?php } ?>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Select / Add Category
-            </td>
-            <td>
-                <select id="selectedCategory" class="form-control m-2" name="cat" disabled>
-                    <option value="">Select An Category</option>
-                </select>
-            </td>
-            <td>
-                <input type="button" id="addinput" value="Add new Category" disabled />
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="1">
-                <input type="text" id="selectedCategoryinput" name="icat" class="form-control m-2 "
-                    placeholder="Enter category">
-            </td>
-            <td id="errormsg_cat">
+    <form action="text.php" method="post" target="_blank" onsubmit="return validateForm()">
+        <table>
+            <tr>
+                <td>Select Department</td>
+                <td colspan="2">
+                    <select id="DeptSelected" class="form-control m-2" name="dep">
+                        <option>Select An Department</option>
+                        <?php while($row = $result->fetch_assoc()) {?>
+                        <option value="<?php echo $row['id']  ?>"><?php echo $row["name"]?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select / Add Category
+                </td>
+                <td>
+                    <select id="selectedCategory" class="form-control m-2" name="cat" disabled>
+                        <option value="">Select An Category</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" id="addinput" value="Add new Category" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="1">
+                    <input type="text" id="selectedCategoryinput" name="icat" class="form-control m-2 "
+                        placeholder="Enter category">
+                </td>
+                <td id="errormsg_cat">
 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Select / Add SubCategory
-            </td>
-            <td>
-                <select id="selectedSubCategory" class="form-control m-2" name="subcat" disabled>
-                    <option value="">Select An Sub-category</option>
-                </select>
-            </td>
-            <td>
-                <input type="button" id="addinput2" value="Add new sub-Category" disabled />
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="1">
-                <input type="text" id="selectedCategoryinput1" name="isubcat" class="form-control m-2 "
-                    placeholder="Enter subcategory">
-            </td>
-            <td id="errormsg_sub_cat"></td>
-        </tr>
-        <tr>
-            <td colspan="3" align="center">
-                <input id="submit1" type="submit" value="Submit" disabled>
-            </td>
-        </tr>
-    </table>
-</form>
-                    </div>
-<?php
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select / Add SubCategory
+                </td>
+                <td>
+                    <select id="selectedSubCategory" class="form-control m-2" name="subcat" disabled>
+                        <option value="">Select An Sub-category</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" id="addinput2" value="Add new sub-Category" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="1">
+                    <input type="text" id="selectedCategoryinput1" name="isubcat" class="form-control m-2 "
+                        placeholder="Enter subcategory">
+                </td>
+                <td id="errormsg_sub_cat"></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <input id="submit1" type="submit" value="Submit" disabled>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
-    $query = "SELECT id,name FROM {$GLOBALS['CONFIG']['db_prefix']}department ORDER BY `id` ASC";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $Dept_result = $stmt->fetchAll();
-    
-    $num_rows = $stmt->rowCount();
-    $Dept_name = array();
-    // Set the values for the hidden sub-select fields
-    foreach ($Dept_result as $DeptData) {
-        $dept_id = $DeptData['id'];
-        $CategoryQuery = "SELECT id,pr_id,cat_name FROM category WHERE pr_id = $dept_id";
-        $CategoryStmt = $pdo->prepare($CategoryQuery);
-        $CategoryStmt->execute();
-        $Category_result = $CategoryStmt->fetchAll();
-        $Category_name  = array();
-        foreach($Category_result as $CateData){
-            $cat_id = $CateData['id'];
-            $SubCategoryQuery = "SELECT id,pr_id,sub_cat_name FROM subcategory WHERE pr_id = $dept_id";
-            $SubCategoryStmt = $pdo->prepare($SubCategoryQuery);
-            $SubCategoryStmt->execute();
-            $SubCategory_result = $SubCategoryStmt->fetchAll();
-            $SubCategory_name  = array();
-            foreach($SubCategory_result as $subCatData){
-                array_push($SubCategory_name,array("id"=>$subCatData['id'],"name"=>$subCatData['sub_cat_name']));
-            }
-            array_push($Category_name,array("id"=>$CateData['id'],"name"=>$CateData['cat_name'],"sub_category"=>$SubCategory_name));
-        }
-        array_push($Dept_name,array("id"=>$DeptData['id'],"name"=>$DeptData['name'],"category"=>$Category_name));
-    }
-?>
-<div class="container">
-<table border="3" cellspacing="5" cellpadding="5" style="width:100%">
-    <tr>
-        <th>Department</th>
-        <th>Category</th>
-    </tr>
- 
-    <?php foreach($Dept_name as $Dept) { ?>
-    <tr>
-        <td> <?php  echo $Dept['name']  ?></td>
-        <td>
-            <table  border="2"  cellspacing="4" cellpadding="4" style="width:100%">
-                    <?php foreach($Dept['category'] as $Categ) { ?>
-                    <tr><td>
-                        <?php  echo $Categ['name'] ?>
-                        </td>
-                        <td>
-                        <table  border="1"  cellspacing="3" cellpadding="3" style="width:100%">
-                            <?php foreach($Categ['sub_category'] as $SubCateg) {?>
-                            <tr><td><?php echo $SubCateg['name']  ?></td></tr>
-                            <?php } ?>
-                        </table>
-                        </td>
-                    </tr>
-                    <?php } ?>
-            </table>
-            </td>
-    </tr>
-    <?php } ?>
-</table>
-                            </div>
 
 
 <script>

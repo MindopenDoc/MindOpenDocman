@@ -53,8 +53,8 @@ function get_base_url(){
 
     }
 }
-$a=get_base_url();
-$GLOBALS['smarty']->assign('baseurl', $a);
+$aa=get_base_url();
+$GLOBALS['smarty']->assign('baseurl', $aa);
 $full_requestId = $_GET['id'];
 
 if (strchr($_GET['id'], '_')) {
@@ -80,12 +80,15 @@ $user_obj = new User($file_data_obj->getOwner(), $pdo);
 $owner_full_name = $file_data_obj->getOwnerFullName();
 //anshuman code start
 // $new_query="SELECT * FROM tbl_files WHERE fid=$request_id;";
-
 $versionquery = "SELECT * FROM tbl_files WHERE fid=$request_id order by id DESC;";
 $versionquery_stmt = $pdo->prepare($versionquery);
 $versionquery_stmt->execute(array());
 $version_list = $versionquery_stmt->fetchAll();
 $GLOBALS['smarty']->assign('version_list', $version_list);
+if(count($version_list)){
+    $qwert=$version_list[0];
+    $GLOBALS['smarty']->assign('latestfile',$qwert["filename"]);
+}
 $a=end($version_list);
 $GLOBALS['smarty']->assign('lastversion',$a['filename']);
 //anshuman code end

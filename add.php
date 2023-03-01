@@ -294,11 +294,16 @@ if (!isset($_POST['submit'])) {
         if(isset($_POST['title'])){
             $title=$_POST['title'];
         }
-        if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
-        if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
+        // if(isset($_POST['file_department']) && isset($_POST['cat']) && isset($_POST['subcat'])){
+            if(isset($_POST['file_department']) && isset($_POST['cat'])){
+                $subcat="NULL";
+                if (isset($_POST['subcat'])){
+                    $subcat=$_POST['subcat'];
+                }
+                echo gettype($subcat);
             $dap=$_POST['file_department'];
             $cat=$_POST['cat'];
-            $subcat=$_POST['subcat'];
+            // $subcat=$_POST['subcat'];
             $file_data_query = "INSERT INTO 
         {$GLOBALS['CONFIG']['db_prefix']}data (
             status,
@@ -526,7 +531,7 @@ if (!isset($_POST['submit'])) {
     header('Location: details.php?id=' . $fileId . '&last_message=' . urlencode($message));
     exit;
 }
-}
+
 
 draw_footer();
 

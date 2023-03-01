@@ -85,6 +85,10 @@
             if (this.readyState == 4 && this.status == 200) {
                 let ReturnData = JSON.parse(this.responseText);
                 let CreateOptions = " <option >Select An Sub-category</option>";
+                if(ReturnData[0] === "0 results"){
+                    console.warn("This is 0 cond!");
+                    return
+                }
                 for (const key in ReturnData) {
                     CreateOptions += `<option value=${key}>${ReturnData[key]}</option>`;
                 }

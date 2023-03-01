@@ -58,16 +58,38 @@ if (isset($_POST['submit']))
         {
             // get last record id
             $temp=0;
-            $sql = 'select max(id) as id from tbl_files';
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0)
-            {
-                $row = mysqli_fetch_array($result);
-                $filename = ($row['id']+1) . '-' . $filename;
-            }
-            else{
-                $filename = '1' . '-' . $filename;
-            }
+            // $sql = 'select max(id) as id from tbl_files';
+            // $result = $conn->query($sql);
+            // if ($result->num_rows > 0)
+            // {
+            //     $row = mysqli_fetch_array($result);
+            //     $filename = ($row['id']+1) . '-' . $filename;
+            // }
+            // else{
+            //     $filename = '1' . '-' . $filename;
+            // }
+            
+            // print_r (explode(".",$filename));
+            // echo strlen($filename);
+            // echo gettype($filename)."\n";
+            $flag=0;
+            $tempfile="";
+            $extension="";
+            for ($x = strlen($filename)-1; $x>-1; $x--) {
+                $extension.=$filename[$x];
+                if($filename[$x]=="."){
+                    $flag=$x-1;
+                    break;
+                }
+              }
+              for ($i = 0; $i<strlen($filename); $i++) {
+                $tempfile.=$filename[$i];
+                if ($i==$flag){
+                    $tempfile.="-".$version_nu.strrev($extension);
+                    break;
+                }
+              }
+              $filename=$tempfile;
             //set target directory
             $path = 'versionfile/';
                 
