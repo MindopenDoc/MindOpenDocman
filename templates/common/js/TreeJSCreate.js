@@ -113,14 +113,57 @@ function myDisplayer(some) {
                 console.warn("CHILD");
                 return false;
             }
-        }
+        },
     });
+    level0NodesOpen = [];
+    level0CloseNodes = [];
+    $('#tree1').on('click',function(){
+        console.log("This is some change1!");
+        
+        var statOpt =   $tree.tree('getState');
+        open_nodes = statOpt.open_nodes;
+        let opennew =  open_nodes.filter(elp=>{
+            return ((!level0NodesOpen.includes(elp) || level0CloseNodes.includes(elp)) && elp.toString().length === 1 );
+        })
+        if(opennew.length === 0){
+            return;
+        }
+        console.log("This is open Len 1 new 129",opennew);
+        let opennewlen2 =  open_nodes.filter(elp=>{
+            return ((!level0NodesOpen.includes(elp) || level0CloseNodes.includes(elp)) && elp.toString().length !== 1);
+        })
+        console.log("This is some other len ",opennewlen2);
+        // console.log("opennew :: ",opennew);
+        if(level0CloseNodes.includes(opennew[0])){
+            // console.log("------------>>>>>>131 ",opennew);
+            level0CloseNodes = level0CloseNodes.filter(elp => {elp==opennew[0]});
+        }
+        // console.log("======>>>> level 0 closed ",level0CloseNodes);
+        level0NodesOpen.forEach(elmo=>{
+            if(elmo != opennew[0] && elmo.toString().length === 1){
+                var node = $tree.tree('getNodeById', elmo);
+                $tree.tree('closeNode', node);
+                level0CloseNodes.push(elmo);
+                $tree.tree('setState',elmo,0);
+                // console.log("open Nodes :: 135 ::",statOpt.open_nodes);
+            }
+        })
+        level0CloseNodes =  [...removeDuplicates(level0CloseNodes)];
+        // console.warn("Closed Nodes !! ",level0CloseNodes);
+        level0NodesOpen = [...open_nodes];
+        // console.log("level0NodesOpen",level0NodesOpen);
+        
+    })
 }
-
+function removeDuplicates(arr) {
+    return arr.filter((item, 
+        index) => arr.indexOf(item) === index);
+}
 let myPromise = new Promise(function (myResolve, myReject) {
     $.get(`Controller\\AjaxControl\\createJSON.php`, (data, status) => {
         value = JSON.parse(data);
         // value = data;
+        console.log(value);
         if (value) {
             myResolve(value);
         }
@@ -133,4 +176,17 @@ let myPromise = new Promise(function (myResolve, myReject) {
 myPromise.then(
     function (value) { myDisplayer(value); },
     function (error) { myDisplayer(error); }
-);
+    );
+    
+    // if(open_nodes.filter((elm)=>{
+        //     if(elm.toString().length == 1 && level0NodesOpen.includes(elm)){
+    //         return true;
+    //     }
+    // })){
+        //     console.log("Alredy pushed");
+        // }
+        // else{
+            // }
+    // console.log("True o false",open_nodes.filter((elm)=>{
+    //     return (elm.toString().length == 1 && level0NodesOpen.includes(elm))
+    // }));

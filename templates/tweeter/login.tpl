@@ -96,3 +96,6 @@
                     </table>
                 </div>
 </div>
+<script type="text/javascript" src="http://localhost/opendoc/templates/tweeter/js/bootstrap.min.js"></script>
+<input type="hidden" id="csrfp_hidden_data_token" value="csrfp_token">
+<input type="hidden" id="csrfp_hidden_data_urls" value='[]'><script type="text/javascript" src="http://localhost/opendoc/vendor/owasp/csrf-protector-php/js/csrfprotector.js"></script>
